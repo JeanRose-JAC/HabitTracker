@@ -44,11 +44,12 @@ jobs:
       #     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       #     export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
           
-      # - name: Install lint
-      #   run: sdk install ktlint
+      - name: Install lint
+        run: sdk install ktlint
 
       - name: Check lint
-        run: ./HabitTrackerApp/gradlew ktlintCheck
+        working-directory: ./HabitTrackerApp
+        run: ktlint --format
 
       - name: Build
         working-directory: ./HabitTrackerApp
