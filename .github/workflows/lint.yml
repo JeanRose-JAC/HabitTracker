@@ -39,6 +39,15 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: Install brew
+        run : |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/marko/.profile
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          
+      - name: Install lint
+        run: brew install ktlint
+
       - name: Check lint
         working-directory: ./HabitTrackerApp
         run: ktlint --format
