@@ -38,9 +38,6 @@ jobs:
         
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-      
-      - name: Install lint
-        run: brew install ktlint
 
       - name: Check lint
         working-directory: ./HabitTrackerApp
