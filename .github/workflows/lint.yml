@@ -38,17 +38,16 @@ jobs:
         
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-      
+          
       - name: Install lint
-        run: brew install ktlint
+        run: curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.49.0/ktlint && chmod a+x ktlint && sudo mv ktlint /usr/local/bin/
 
       - name: Check lint
-        working-directory: ./HabitTrackerApp
-        run: ktlint --format
-
+        run: ktlint -F './HabitTrackerApp/app/src/main/java/com/example/habittrackerapp/*.kt' 
+        
       - name: Build
         working-directory: ./HabitTrackerApp
-        run: ./HabitTrackerApp/gradlew  build
+        run: ./gradlew  build
 
       - name: Upload build reports
         if: always()
