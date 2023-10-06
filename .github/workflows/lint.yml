@@ -42,7 +42,7 @@ jobs:
       - name: Install brew
         run : |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
           
       - name: Install lint
         run: brew install ktlint
