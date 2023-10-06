@@ -1,21 +1,6 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jlleitschuh.gradle.ktlint") version "11.6.0"
-}
-
-ktlint {
-    verbose.set(true)
-    outputToConsole.set(true)
-    coloredOutput.set(true)
-    reporters {
-        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
-        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.JSON)
-        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML)
-    }
-    filter {
-        exclude("**/style-violations.kt")
-    }
 }
 
 android {
