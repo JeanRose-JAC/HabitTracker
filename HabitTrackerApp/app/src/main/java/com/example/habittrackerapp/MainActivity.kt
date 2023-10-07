@@ -15,10 +15,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.habittrackerapp.layout.MainLayout
 import com.example.habittrackerapp.navigation.rememberMutableStateListOf
+import com.example.habittrackerapp.noteInput.Note
 import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
 
 val LocalNavController = compositionLocalOf<NavController> { error("No NavController found!") }
 val data= compositionLocalOf<SnapshotStateList<String>>{ error("No list found!")}
+val LocalNotesList = compositionLocalOf<SnapshotStateList<Note>> { error("No notes found!") }
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +34,9 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     val userInput = rememberMutableStateListOf<String>("","","","","","","")
+                    val notesList = rememberMutableStateListOf<Note>()
 
-                    CompositionLocalProvider(LocalNavController provides navController, data provides userInput) {
+                    CompositionLocalProvider(LocalNavController provides navController, data provides userInput,LocalNotesList provides notesList) {
                         MainLayout("Habit Minder") {
                             Router()
                         }

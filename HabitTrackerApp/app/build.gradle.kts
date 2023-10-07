@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jlleitschuh.gradle.ktlint-idea") version "11.6.0"
+    id("kotlin-parcelize")
 }
 
 ktlint {
