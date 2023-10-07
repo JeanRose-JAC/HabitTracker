@@ -62,7 +62,7 @@ enum class Input(val index:Int){
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun UserSignUp(modifier: Modifier = Modifier){
+fun UserSignUp(modifier: Modifier = Modifier) {
     val navController = LocalNavController.current
     val userInput= data.current
     // all of the variable needed
@@ -129,7 +129,7 @@ fun UserSignUp(modifier: Modifier = Modifier){
 @Preview
 @Composable
 fun tryDark(){
-    HabitTrackerAppTheme(darkTheme = true){
+    HabitTrackerAppTheme(darkTheme = true) {
         UserSignUp();
     }
 }
@@ -165,7 +165,7 @@ fun <T: Any> rememberMutableStateListOf(vararg elements: T): SnapshotStateList<T
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FirstName(modifier: Modifier = Modifier){
+fun FirstName(modifier: Modifier = Modifier) {
     //the different input
     val userInput= data.current
     Card(
@@ -188,7 +188,7 @@ fun FirstName(modifier: Modifier = Modifier){
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LastName(modifier: Modifier = Modifier){
+fun LastName(modifier: Modifier = Modifier) {
     val userInput= data.current
     Card(
         modifier = modifier
@@ -211,7 +211,7 @@ fun LastName(modifier: Modifier = Modifier){
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Email(modifier: Modifier = Modifier){
+fun Email(modifier: Modifier = Modifier) {
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
     val userInput= data.current
     Card(
@@ -237,7 +237,7 @@ fun Email(modifier: Modifier = Modifier){
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Password(modifier: Modifier=Modifier){
+fun Password(modifier: Modifier=Modifier) {
     val userInput= data.current
     Card(
         modifier = modifier
@@ -259,7 +259,7 @@ fun Password(modifier: Modifier=Modifier){
  * and save it in the input list
  */
 @Composable
-fun PasswordConfimation(modifier:Modifier=Modifier){
+fun PasswordConfimation(modifier:Modifier=Modifier) {
     val userInput= data.current
     Card(
         modifier = modifier
@@ -281,7 +281,7 @@ fun PasswordConfimation(modifier:Modifier=Modifier){
  * and save it in the input list
  */
 @Composable
-fun Gender(){
+fun Gender() {
     val userInput= data.current
 
     val isSelectedItem: (String) -> Boolean = { userInput.get(Input.GENDER.index) == it }
@@ -328,7 +328,7 @@ fun Gender(){
  * @return {Boolean} true if it's all good and will enable the button else it will and return false
  */
 @Composable
-fun Validate(list: SnapshotStateList<String>):Boolean{
+fun Validate(list: SnapshotStateList<String>):Boolean {
 
     val userInput= data.current
 
@@ -353,7 +353,7 @@ fun Validate(list: SnapshotStateList<String>):Boolean{
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfilePicture(modifier: Modifier=Modifier){
+fun ProfilePicture(modifier: Modifier=Modifier) {
     val userInput= data.current
 
     Card(

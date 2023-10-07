@@ -16,7 +16,7 @@ import com.example.habittrackerapp.LocalNavController
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarScreen(title:String){
+fun TopBarScreen(title:String) {
     val navController = LocalNavController.current
     CenterAlignedTopAppBar(
         title={Text(title)},

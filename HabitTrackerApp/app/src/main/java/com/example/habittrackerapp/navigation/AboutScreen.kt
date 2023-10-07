@@ -23,13 +23,12 @@ import com.example.habittrackerapp.R
  * Composable for the About screen
  */
 @Composable
-fun AboutScreen(modifier : Modifier = Modifier){
+fun AboutScreen(modifier : Modifier = Modifier) {
     Column (
         modifier = Modifier
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
-
         Text(
             text = "Track your daily progress effortlessly with Habit Minder. " +
                     "Build positive habits and break old routines with ease. " +

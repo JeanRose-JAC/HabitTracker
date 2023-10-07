@@ -15,8 +15,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun MainLayout(
     screenName:String,
-    content:@Composable ()->Unit){
-
+    content:@Composable ()->Unit) {
     Scaffold(
         modifier = Modifier,
         topBar = { TopBarScreen(title = screenName)},
@@ -27,6 +26,5 @@ fun MainLayout(
             content()
         }
     }
-
 
 }
