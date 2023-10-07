@@ -12,7 +12,7 @@ import com.example.habittrackerapp.noteInput.ViewNote
 
 
 @Composable
-fun NoteScreen(){
+fun NoteScreen() {
 
     Column {
         Text(text = "Notes",
