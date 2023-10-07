@@ -41,7 +41,7 @@ jobs:
         
       - name: Build
         working-directory: ./HabitTrackerApp
-        run: ./HabitTrackerApp/gradlew build
+        run: ./gradlew build
 
 
 
