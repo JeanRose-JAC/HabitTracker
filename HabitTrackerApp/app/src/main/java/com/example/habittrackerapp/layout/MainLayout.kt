@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.habittrackerapp.LocalNavController
 
 /**
  * The MainLayout, using the helps us seperate the code into a tapbar, a content and a bottom bar
@@ -14,10 +13,9 @@ import com.example.habittrackerapp.LocalNavController
  */
 
 @Composable
-fun MainLayout(screenName:String,content:@Composable ()->Unit){
-
-
-    val navController = LocalNavController.current
+fun MainLayout(
+    screenName:String,
+    content:@Composable ()->Unit){
 
     Scaffold(
         modifier = Modifier,

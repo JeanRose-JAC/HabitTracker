@@ -1,11 +1,13 @@
 package com.example.habittrackerapp.navigation
 
 
-import android.graphics.drawable.Drawable
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Button
@@ -17,7 +19,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.listSaver
@@ -61,7 +62,7 @@ enum class Input(val index:Int){
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun UserSignUp(){
+fun UserSignUp(modifier: Modifier = Modifier){
     val navController = LocalNavController.current
     val userInput= data.current
     // all of the variable needed
@@ -71,6 +72,27 @@ fun UserSignUp(){
     ) { it->
         LazyColumn(contentPadding = it){
             item{
+                Row (
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
+                ){
+
+                    Image(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .padding(8.dp),
+                        painter= painterResource(R.drawable.logo),
+                        contentDescription = null
+                    )
+
+                    Text(
+                        text = "User Sign Up",
+                        style = MaterialTheme.typography.displaySmall,
+                    )
+
+                }
+
                 ProfilePicture()
                 FirstName()
                 LastName()
@@ -96,13 +118,8 @@ fun UserSignUp(){
 
                 }
             }
-
-
         }
     }
-
-
-
 }
 
 
@@ -163,7 +180,6 @@ fun FirstName(modifier: Modifier = Modifier){
             isError=userInput.get(Input.FIRSTNAME.index).toString().isEmpty()
         )
     }
-
 }
 
 /**
@@ -297,12 +313,7 @@ fun Gender(){
                 )
             }
         }
-
-
     }
-
-
-
 }
 
 
@@ -322,23 +333,17 @@ fun Validate(list: SnapshotStateList<String>):Boolean{
     val userInput= data.current
 
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
-    if(userInput.get(Input.FIRSTNAME.index).toString().isEmpty() ){
-        return false
+    return if(userInput.get(Input.FIRSTNAME.index).toString().isEmpty() ){
+        false
     }
     else if (userInput.get(Input.LASTNAME.index).toString().isEmpty() ){
-        return false
+        false
     }else if( userInput.get(Input.EMAIL.index).toString().matches(regex)){
-        return false
+        false
     }    else if(userInput.get(Input.PASSWORD.index).toString()!=userInput.get(Input.PASSWORDCONFIRMATION.index).toString()){
-        return false
+        false
     }
-    else if( userInput.get(Input.PASSWORD.index).toString().length<8 || userInput.get(Input.GENDER.index).toString().isEmpty()){
-        return false
-    }
-    else{
-        return true
-    }
-
+    else !(userInput.get(Input.PASSWORD.index).toString().length<8 || userInput.get(Input.GENDER.index).toString().isEmpty())
 }
 
 /**
@@ -369,7 +374,9 @@ fun ProfilePicture(modifier: Modifier=Modifier){
     AsyncImage(
         model = Input.PROFILEPIC.index,
         contentDescription = "Translated description of what the image contains",
-        error = painterResource( R.drawable.notgood)
+        error = painterResource( R.drawable.notgood),
+        alignment = Alignment.Center,
+        modifier = Modifier.fillMaxWidth()
     )
 
 }
