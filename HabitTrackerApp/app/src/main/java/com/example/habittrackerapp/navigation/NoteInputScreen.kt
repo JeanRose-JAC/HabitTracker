@@ -13,6 +13,7 @@ import com.example.habittrackerapp.noteInput.ViewNote
 
 @Composable
 fun NoteScreen(){
+
     Column {
         Text(text = "Notes",
             modifier = Modifier

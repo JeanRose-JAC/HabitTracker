@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
  * Formats the note elements to look prettier*/
 @Composable
 fun NoteLayout(){
+
     Column() {
         Card(
             modifier = Modifier
