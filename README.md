@@ -12,7 +12,14 @@ Our application is a habit tracker app. Users must create an account to use it. 
 
 
 ## Screenshots of application
-- (by Sprint 1): Screenshots from each of the main screens of your application.
+### About Page
+![image](./AppScreenshots/about.png)
+
+### Sign Up Page
+![image](./AppScreenshots/signup.png)
+
+### Notes Page
+![image](./AppScreenshots/note.png)
 
 ## Team members
 - Cindy Coulibaly (cindycoulibaly10@gmail.com)
