@@ -128,7 +128,7 @@ fun UserSignUp(modifier: Modifier = Modifier) {
  */
 @Preview
 @Composable
-fun tryDark(){
+fun tryDark() {
     HabitTrackerAppTheme(darkTheme = true) {
         UserSignUp();
     }
