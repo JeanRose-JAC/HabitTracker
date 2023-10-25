@@ -5,6 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jlleitschuh.gradle.ktlint-idea") version "11.6.0"
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
 }
 
 ktlint {
@@ -66,6 +67,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.core:core-ktx:1.9.0")
     implementation("io.coil-kt:coil-compose:2.4.0")
     val nav_version = "2.7.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")
@@ -86,4 +88,9 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
+    //    implementation("com.firebaseui:firebase-ui-auth:7.2.0")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }
