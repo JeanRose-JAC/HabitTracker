@@ -36,6 +36,7 @@ import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
+import com.example.habittrackerapp.user.User
 
 
 /**
@@ -106,7 +107,7 @@ fun UserSignUp(modifier: Modifier = Modifier) {
                     onClick = {
                         showList.value=true
                     },
-                    enabled = Validate(userInput)
+                    enabled = Validate()
 
                 ){
                     Text("Submit ")
@@ -114,7 +115,7 @@ fun UserSignUp(modifier: Modifier = Modifier) {
             }
             item{
                 if(showList.value){
-                    navController.navigate("UserWelcomeScreenRoute/${userInput.get(Input.FIRSTNAME.index).toString()}")
+                    navController.navigate("UserWelcomeScreenRoute/${userInput.FirstName.toString()}")
 
                 }
             }
@@ -174,10 +175,10 @@ fun FirstName(modifier: Modifier = Modifier) {
             .padding(8.dp)
     ) {
         TextField(
-            value = userInput.get(Input.FIRSTNAME.index),
-            onValueChange = {userInput.set(Input.FIRSTNAME.index,it)},
+            value = userInput.FirstName,
+            onValueChange = {userInput.FirstName=it},
             label={ Text("Please enter your first name") },
-            isError=userInput.get(Input.FIRSTNAME.index).toString().isEmpty()
+            isError=userInput.FirstName.toString().isEmpty()
         )
     }
 }
@@ -196,10 +197,10 @@ fun LastName(modifier: Modifier = Modifier) {
             .padding(8.dp)
     ){
         TextField(
-            value = userInput.get(Input.LASTNAME.index),
-            onValueChange = {userInput.set(Input.LASTNAME.index,it)},
+            value = userInput.LastName,
+            onValueChange = {userInput.LastName=it},
             label={ Text("Please enter your last name") },
-            isError=userInput.get(Input.LASTNAME.index).toString().isEmpty()
+            isError=userInput.LastName.toString().isEmpty()
         )
     }
 
@@ -220,10 +221,10 @@ fun Email(modifier: Modifier = Modifier) {
             .padding(8.dp)
     ){
         TextField(
-            value = userInput.get(Input.EMAIL.index),
-            onValueChange = {userInput.set(Input.EMAIL.index,it)},
+            value = userInput.Email,
+            onValueChange = {userInput.Email=it},
             label={ Text("Please enter your email") },
-            isError=userInput.get(Input.EMAIL.index).toString().matches(regex)
+            isError=userInput.Email.toString().matches(regex)
 
         )
     }
@@ -245,10 +246,10 @@ fun Password(modifier: Modifier=Modifier) {
             .padding(8.dp)
     ){
         TextField(
-            value = userInput.get(Input.PASSWORD.index),
-            onValueChange = {userInput.set(Input.PASSWORD.index,it)},
+            value = userInput.Password,
+            onValueChange = {userInput.Password=it},
             label={ Text("Please enter your Password") },
-            isError=userInput.get(Input.PASSWORD.index).toString()!=userInput.get(Input.PASSWORDCONFIRMATION.index).toString() && userInput.get(Input.PASSWORD.index).toString().length<8
+            isError=userInput.Password.toString()!=userInput.PasswordConfirmation.toString() && userInput.Password.toString().length<8
         )
     }
 }
@@ -267,10 +268,10 @@ fun PasswordConfimation(modifier:Modifier=Modifier) {
             .padding(8.dp)
     ){
         TextField(
-            value = userInput.get(Input.PASSWORD.index),
-            onValueChange = {userInput.set(Input.PASSWORD.index,it)},
+            value = userInput.PasswordConfirmation,
+            onValueChange = {userInput.PasswordConfirmation=it},
             label={ Text("Please confirm your password ") },
-            isError=userInput.get(Input.PASSWORD.index).toString()!=userInput.get(Input.PASSWORDCONFIRMATION.index).toString()
+            isError=userInput.Password.toString()!=userInput.PasswordConfirmation.toString()
         )
     }
 }
@@ -284,8 +285,8 @@ fun PasswordConfimation(modifier:Modifier=Modifier) {
 fun Gender() {
     val userInput= data.current
 
-    val isSelectedItem: (String) -> Boolean = { userInput.get(Input.GENDER.index) == it }
-    val onChangeState: (String) -> Unit = { userInput.set(Input.GENDER.index,it) }
+    val isSelectedItem: (String) -> Boolean = { userInput.Gender == it }
+    val onChangeState: (String) -> Unit = { userInput.Gender=it }
 
     val genders=listOf("no","female","male","non-binary")
 
@@ -328,22 +329,22 @@ fun Gender() {
  * @return {Boolean} true if it's all good and will enable the button else it will and return false
  */
 @Composable
-fun Validate(list: SnapshotStateList<String>):Boolean {
+fun Validate():Boolean {
 
     val userInput= data.current
 
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
-    return if(userInput.get(Input.FIRSTNAME.index).toString().isEmpty() ){
+    return if(userInput.FirstName.toString().isEmpty() ){
         false
     }
-    else if (userInput.get(Input.LASTNAME.index).toString().isEmpty() ){
+    else if (userInput.LastName.toString().isEmpty() ){
         false
-    }else if( userInput.get(Input.EMAIL.index).toString().matches(regex)){
+    }else if( userInput.Email.toString().matches(regex)){
         false
-    }    else if(userInput.get(Input.PASSWORD.index).toString()!=userInput.get(Input.PASSWORDCONFIRMATION.index).toString()){
+    }    else if(userInput.Password.toString()!=userInput.PasswordConfirmation.toString()){
         false
     }
-    else !(userInput.get(Input.PASSWORD.index).toString().length<8 || userInput.get(Input.GENDER.index).toString().isEmpty())
+    else !(userInput.Password.toString().length<8 || userInput.Gender.toString().isEmpty())
 }
 
 /**
@@ -363,8 +364,8 @@ fun ProfilePicture(modifier: Modifier=Modifier) {
     ){
         Column {
             TextField(
-                value = userInput.get(Input.PROFILEPIC.index),
-                onValueChange = {userInput.set(Input.PROFILEPIC.index,it)},
+                value = userInput.ProfilePicture,
+                onValueChange = {userInput.ProfilePicture=it},
                 label={ Text("Please input a profile pic ") }
             )
 
