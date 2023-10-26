@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    var userInput by rememberSaveable { mutableStateOf(User("")) }
+                    val userInput by rememberSaveable { mutableStateOf(User("")) }
 
 
                     val notesList = rememberMutableStateListOf<Note>()
