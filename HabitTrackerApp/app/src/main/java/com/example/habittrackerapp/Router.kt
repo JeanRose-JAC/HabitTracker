@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.habittrackerapp.LocalNavController
+import com.example.habittrackerapp.habit.screens.HabitEditScreen
 import com.example.habittrackerapp.habit.screens.HabitItemScreen
 import com.example.habittrackerapp.habit.screens.HabitListScreen
 import com.example.habittrackerapp.habit.screens.HabitQuestionnaireScreen
@@ -27,6 +28,9 @@ sealed class Routes(val route:String)  {
         fun go(id : String) = "HabitItemRoute/$id"
     }
     object HabitList: Routes("HabitListRoute")
+    object EditHabit: Routes("HabitEditRoute/{id}"){
+        fun go(id : String) = "HabitEditRoute/$id"
+    }
 
 
 }
@@ -49,6 +53,8 @@ fun Router() {
         composable(Routes.HabitQuestionnaire.route){ HabitQuestionnaireScreen()}
         composable(Routes.HabitItem.route){ HabitItemScreen(it.arguments?.getString("id") ?: "") }
         composable(Routes.HabitList.route){ HabitListScreen() }
+        composable(Routes.EditHabit.route){ HabitEditScreen(it.arguments?.getString("id") ?: "") }
+
     }
 
 }

@@ -102,6 +102,13 @@ fun HabitItemScreen(idString: String,
         ){
             Text("View all habits")
         }
+
+        Button(
+            onClick = {navController.navigate(Routes.EditHabit.go(item.id.toString()))},
+            modifier = Modifier.padding(16.dp)
+        ){
+            Text("Edit Habit")
+        }
     }
 
 }
