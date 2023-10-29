@@ -2,6 +2,7 @@ package com.example.habittrackerapp.layout
 
 import Routes
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Home
@@ -23,7 +24,9 @@ data class NavBarIcon(
 val items = listOf(
     NavBarIcon(route= Routes.About.route, icon= Icons.Filled.Home),
     NavBarIcon(route= Routes.SignUp.route, icon= Icons.Filled.Create),
-    NavBarIcon(route= Routes.Note.route, icon= Icons.Filled.AddCircle),)
+    NavBarIcon(route= Routes.Note.route, icon= Icons.Filled.AddCircle),
+    NavBarIcon(route= Routes.HabitQuestionnaire.route, icon= Icons.Filled.Add),
+    )
 
 /**
  * Composable for the shared bottom bar.
