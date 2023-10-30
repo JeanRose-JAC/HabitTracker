@@ -33,7 +33,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.example.habittrackerapp.Auth.AuthViewModel
+import com.example.habittrackerapp.Auth.AuthViewModelFactory
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data
@@ -56,7 +59,9 @@ import com.example.habittrackerapp.user.User
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun UserSignUp(modifier: Modifier = Modifier) {
+fun UserSignUp(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
+    viewModel(factory= AuthViewModelFactory())) {
+
     var firstName by rememberSaveable { mutableStateOf("") }
     var lastName by rememberSaveable { mutableStateOf("") }
     var profilePicture by rememberSaveable { mutableStateOf("") }
@@ -116,6 +121,8 @@ fun UserSignUp(modifier: Modifier = Modifier) {
                     userInput.Gender=gender
                     userInput.LastName=lastName
                     userInput.Password=password
+                    authViewModel.signUp(userInput.Email,userInput.FirstName,userInput.LastName,userInput.Gender,userInput.ProfilePicture,userInput.Password)
+
 
                 }
             }

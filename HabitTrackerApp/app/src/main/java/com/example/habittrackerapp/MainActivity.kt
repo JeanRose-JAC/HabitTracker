@@ -22,6 +22,7 @@ import com.example.habittrackerapp.navigation.rememberMutableStateListOf
 import com.example.habittrackerapp.noteInput.Note
 import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
 import com.example.habittrackerapp.user.User
+import com.google.firebase.FirebaseApp
 
 val LocalNavController = compositionLocalOf<NavController> { error("No NavController found!") }
 val data= compositionLocalOf<User>{ error("No User found!")}
@@ -30,6 +31,7 @@ val LocalNotesList = compositionLocalOf<SnapshotStateList<Note>> { error("No not
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
         setContent {
             HabitTrackerAppTheme {
                 // A surface container using the 'background' color from the theme
