@@ -9,6 +9,8 @@ import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.navigation.AboutScreen
 import com.example.habittrackerapp.navigation.NoteScreen
 import com.example.habittrackerapp.navigation.UserSignUp
+import com.example.habittrackerapp.noteInput.screens.NoteList
+import com.example.habittrackerapp.noteInput.screens.SingleNote
 
 
 /**
@@ -19,6 +21,11 @@ sealed class Routes(val route:String)  {
     object SignUp : Routes("SignUpScreenRoute")
     object About : Routes("AboutScreenRoute")
     object Note: Routes("NoteScreenRoute")
+    object ViewSingle: Routes("SingleNoteScreenRoute/{id}"){
+        fun go(id: String) = "ContactScreenRoute/$id"
+    }
+
+    object ViewList: Routes("NoteListScreenRoute")
 }
 
 /**
@@ -36,6 +43,11 @@ fun Router() {
         composable(Routes.SignUp.route) { UserSignUp() }
         composable(Routes.About.route) { AboutScreen()}
         composable(Routes.Note.route){ NoteScreen() }
+        composable(Routes.ViewList.route){ NoteList()}
+        //how to extract the elements from the text fields.....
+        composable(Routes.ViewSingle.route){
+            SingleNote(it.arguments?.getString("id")?:"")
+        }
     }
 
 }
