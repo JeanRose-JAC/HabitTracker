@@ -19,10 +19,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
@@ -46,15 +48,6 @@ import com.example.habittrackerapp.user.User
 /**
  * the different type of Input the user as
  */
-enum class Input(val index:Int){
-    FIRSTNAME(0),
-    LASTNAME(1),
-    GENDER(2),
-    EMAIL(3),
-    PASSWORD(4),
-    PASSWORDCONFIRMATION(5),
-    PROFILEPIC(6)
-}
 
 /**
  * this is where most of the information abt the sign Up page is
@@ -64,9 +57,16 @@ enum class Input(val index:Int){
 @Preview
 @Composable
 fun UserSignUp(modifier: Modifier = Modifier) {
+    var firstName by rememberSaveable { mutableStateOf("") }
+    var lastName by rememberSaveable { mutableStateOf("") }
+    var profilePicture by rememberSaveable { mutableStateOf("") }
+    var gender by rememberSaveable { mutableStateOf("") }
+    var email by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+
+
     val navController = LocalNavController.current
     val userInput= data.current
-    // all of the variable needed
     val showList=remember{ mutableStateOf(false)};
 
     Scaffold(
@@ -94,28 +94,34 @@ fun UserSignUp(modifier: Modifier = Modifier) {
 
                 }
 
-                ProfilePicture()
-                FirstName()
-                LastName()
-                Gender()
-                Email()
-                Password()
-                PasswordConfimation()
+                ProfilePicture(profilePicture,{profilePicture=it})
+                FirstName(firstName,{firstName=it})
+                LastName(lastName,{lastName=it})
+                Gender(gender,{gender=it})
+                Email(email,{email=it})
+                Password(password,{password=it})
             }
             item{
                 Button(
                     onClick = {
                         showList.value=true
                     },
-                    enabled = Validate()
+                    enabled = Validate(firstName,lastName,email,password)
 
                 ){
                     Text("Submit ")
+                    userInput.FirstName=firstName
+                    userInput.ProfilePicture=profilePicture
+                    userInput.Email=email
+                    userInput.Gender=gender
+                    userInput.LastName=lastName
+                    userInput.Password=password
+
                 }
             }
             item{
                 if(showList.value){
-                    navController.navigate("UserWelcomeScreenRoute/${userInput.FirstName.toString()}")
+                    Text(text = "yes")
 
                 }
             }
@@ -166,19 +172,17 @@ fun <T: Any> rememberMutableStateListOf(vararg elements: T): SnapshotStateList<T
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FirstName(modifier: Modifier = Modifier) {
-    //the different input
-    val userInput= data.current
+fun FirstName(firstName:String,onChange:(String)->Unit,modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp)
     ) {
         TextField(
-            value = userInput.FirstName,
-            onValueChange = {userInput.FirstName=it},
+            value = firstName,
+            onValueChange = onChange,
             label={ Text("Please enter your first name") },
-            isError=userInput.FirstName.toString().isEmpty()
+            isError=firstName.isEmpty()
         )
     }
 }
@@ -189,18 +193,17 @@ fun FirstName(modifier: Modifier = Modifier) {
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LastName(modifier: Modifier = Modifier) {
-    val userInput= data.current
+fun LastName(lastName:String,onChange:(String)->Unit,modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp)
     ){
         TextField(
-            value = userInput.LastName,
-            onValueChange = {userInput.LastName=it},
+            value = lastName,
+            onValueChange = onChange,
             label={ Text("Please enter your last name") },
-            isError=userInput.LastName.toString().isEmpty()
+            isError=lastName.isEmpty()
         )
     }
 
@@ -212,19 +215,18 @@ fun LastName(modifier: Modifier = Modifier) {
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Email(modifier: Modifier = Modifier) {
+fun Email(email:String, onChange:(String)->Unit,modifier: Modifier = Modifier) {
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
-    val userInput= data.current
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp)
     ){
         TextField(
-            value = userInput.Email,
-            onValueChange = {userInput.Email=it},
+            value = email,
+            onValueChange = onChange,
             label={ Text("Please enter your email") },
-            isError=userInput.Email.toString().matches(regex)
+            isError=!email.matches(regex)
 
         )
     }
@@ -238,43 +240,22 @@ fun Email(modifier: Modifier = Modifier) {
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Password(modifier: Modifier=Modifier) {
-    val userInput= data.current
+fun Password(password:String, onChange: (String) -> Unit, modifier: Modifier=Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp)
     ){
         TextField(
-            value = userInput.Password,
-            onValueChange = {userInput.Password=it},
+            value = password,
+            onValueChange = onChange,
             label={ Text("Please enter your Password") },
-            isError=userInput.Password.toString()!=userInput.PasswordConfirmation.toString() && userInput.Password.toString().length<8
+            isError = password.length<8
         )
     }
 }
 
-/**
- * this gets the Passsword Confirmation and validates it, to make sure
- * that the password correspond to the password confirmation section
- * and save it in the input list
- */
-@Composable
-fun PasswordConfimation(modifier:Modifier=Modifier) {
-    val userInput= data.current
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ){
-        TextField(
-            value = userInput.PasswordConfirmation,
-            onValueChange = {userInput.PasswordConfirmation=it},
-            label={ Text("Please confirm your password ") },
-            isError=userInput.Password.toString()!=userInput.PasswordConfirmation.toString()
-        )
-    }
-}
+
 
 
 /**
@@ -282,11 +263,10 @@ fun PasswordConfimation(modifier:Modifier=Modifier) {
  * and save it in the input list
  */
 @Composable
-fun Gender() {
-    val userInput= data.current
+fun Gender(gender:String,onChange: (String) -> Unit) {
 
-    val isSelectedItem: (String) -> Boolean = { userInput.Gender == it }
-    val onChangeState: (String) -> Unit = { userInput.Gender=it }
+    val isSelectedItem: (String) -> Boolean = { gender == it }
+    val onChangeState: (String) -> Unit = onChange
 
     val genders=listOf("no","female","male","non-binary")
 
@@ -329,22 +309,25 @@ fun Gender() {
  * @return {Boolean} true if it's all good and will enable the button else it will and return false
  */
 @Composable
-fun Validate():Boolean {
+fun Validate(firstName: String,lastName: String,email: String,password: String):Boolean {
 
     val userInput= data.current
 
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
-    return if(userInput.FirstName.toString().isEmpty() ){
+    return if(firstName.isEmpty() ){
         false
     }
-    else if (userInput.LastName.toString().isEmpty() ){
-        false
-    }else if( userInput.Email.toString().matches(regex)){
-        false
-    }    else if(userInput.Password.toString()!=userInput.PasswordConfirmation.toString()){
+    else if (lastName.isEmpty() ){
         false
     }
-    else !(userInput.Password.toString().length<8 || userInput.Gender.toString().isEmpty())
+    else if( !email.matches(regex)){
+        false
+    }
+    else if(password.length<8){
+        false
+    }
+    else true
+
 }
 
 /**
@@ -354,7 +337,7 @@ fun Validate():Boolean {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfilePicture(modifier: Modifier=Modifier) {
+fun ProfilePicture(profilePic:String, onChange: (String) -> Unit, modifier: Modifier=Modifier) {
     val userInput= data.current
 
     Card(
@@ -364,8 +347,8 @@ fun ProfilePicture(modifier: Modifier=Modifier) {
     ){
         Column {
             TextField(
-                value = userInput.ProfilePicture,
-                onValueChange = {userInput.ProfilePicture=it},
+                value = profilePic,
+                onValueChange = onChange,
                 label={ Text("Please input a profile pic ") }
             )
 
@@ -373,7 +356,7 @@ fun ProfilePicture(modifier: Modifier=Modifier) {
 
     }
     AsyncImage(
-        model = Input.PROFILEPIC.index,
+        model = profilePic,
         contentDescription = "Translated description of what the image contains",
         error = painterResource( R.drawable.notgood),
         alignment = Alignment.Center,
