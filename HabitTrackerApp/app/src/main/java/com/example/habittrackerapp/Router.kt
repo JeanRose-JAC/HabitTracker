@@ -9,8 +9,10 @@ import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.navigation.AboutScreen
 import com.example.habittrackerapp.navigation.NoteScreen
 import com.example.habittrackerapp.navigation.UserSignUp
+import com.example.habittrackerapp.noteInput.EditNote
 import com.example.habittrackerapp.noteInput.screens.NoteList
 import com.example.habittrackerapp.noteInput.screens.SingleNote
+import com.example.habittrackerapp.noteInput.screens.SingleNoteEdit
 
 
 /**
@@ -24,7 +26,7 @@ sealed class Routes(val route:String)  {
     object ViewSingle: Routes("SingleNoteScreenRoute/{id}"){
         fun go(id: String) = "ContactScreenRoute/$id"
     }
-
+    object EditNote: Routes("EditNoteScreenRoute/{id}")
     object ViewList: Routes("NoteListScreenRoute")
 }
 
@@ -48,6 +50,7 @@ fun Router() {
         composable(Routes.ViewSingle.route){
             SingleNote(it.arguments?.getString("id")?:"")
         }
+        composable(Routes.EditNote.route){ SingleNoteEdit(it.arguments?.getString("id")?:"" ) }
     }
 
 }

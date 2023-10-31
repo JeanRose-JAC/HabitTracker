@@ -1,9 +1,11 @@
-package com.example.assignment3.singleNote
+package com.example.habittrackerapp.noteInput.screens.singleNote
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +21,9 @@ import com.example.habittrackerapp.LocalNavController
 @Composable
 fun SingleNoteElementDisplay(note: Note) {
     val navController = LocalNavController.current
-    Column(modifier = Modifier.padding(20.dp))
+    Column(modifier = Modifier
+        .padding(20.dp)
+        .verticalScroll(rememberScrollState()))
     {
         Button(onClick = { navController.navigate(Routes.ViewList.route) }) {
             Text("View List");

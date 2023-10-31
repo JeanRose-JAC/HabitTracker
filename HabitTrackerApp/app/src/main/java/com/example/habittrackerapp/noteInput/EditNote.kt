@@ -1,37 +1,46 @@
 package com.example.habittrackerapp.noteInput
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
+import androidx.compose.material3.Text
+import androidx.compose.material3.Button
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.Composable
+import androidx.compose.material3.TextField
+import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextFieldDefaults
 import com.example.habittrackerapp.LocalNavController
-import com.example.habittrackerapp.LocalNotesList
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.material3.ExperimentalMaterial3Api
 
-
+/**
+ * It contains text-fields for user input and saves it to a list
+ * */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditNote() {
-    var title by rememberSaveable { mutableStateOf("") }
+fun EditNote(note: Note) {
+
+    var title by rememberSaveable { mutableStateOf(note.title) }
     val maxLength = 20
-    var urlImage by rememberSaveable { mutableStateOf("") }
+    var urlImage by rememberSaveable { mutableStateOf(note.urlImage!!) }
     var context = LocalContext.current;
-    var notesList= LocalNotesList.current
     var navController= LocalNavController.current
-    var description by rememberSaveable { mutableStateOf("") }
+    var description by rememberSaveable { mutableStateOf(note.description) }
     val scrollState = rememberScrollState()
+
     Column(modifier = Modifier.padding(2.dp))
     {
         //title text field
@@ -45,7 +54,7 @@ fun EditNote() {
                     Toast.LENGTH_SHORT
                 ).show()
             },
-            placeholder = { Text("Title") },
+            placeholder = { Text(note.title) },
             singleLine = true,
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = Color.Transparent
@@ -62,7 +71,7 @@ fun EditNote() {
                 .height(250.dp)
                 .padding(20.dp, 0.dp)
                 .verticalScroll(scrollState),
-            placeholder = { Text("Enter Text...") },
+            placeholder = { Text(note.description) },
             colors = TextFieldDefaults.textFieldColors(
                 disabledTextColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
@@ -71,43 +80,34 @@ fun EditNote() {
             ),
         )
 
-        OutlinedTextField(
-            value = urlImage, onValueChange = { urlImage = it },
+        OutlinedTextField(value = urlImage, onValueChange = { urlImage = it },
             modifier = Modifier
                 .padding(10.dp, 40.dp, 10.dp, 10.dp)
                 .fillMaxWidth()
                 .verticalScroll(scrollState),
-            placeholder = { Text("Enter Image URL...") },
-            singleLine = true
-        )
+            singleLine = true)
+
+
+
         //Buttons
-        Row(
-            modifier = Modifier
-                .padding(0.dp, 0.dp, 20.dp, 0.dp)
-                .align(Alignment.End)
-        )
+        Row(modifier = Modifier
+            .padding(0.dp, 0.dp, 20.dp, 0.dp)
+            .align(Alignment.End))
         {
             //saves input to the list
             Button(
                 onClick =
                 {
-                    val popUp = addToList(
-                        title = title,
-                        description = description,
-                        urlImage = urlImage,
-                        notesList = notesList
-                    )
-
-                    title = ""
-                    description = ""
-                    urlImage = ""
+                        note.title = title;
+                        note.description = description;
+                        note.urlImage = urlImage;
 
                 },
                 modifier = Modifier.padding(0.dp),
             ) { Text("save") }
-            //clears user input
+            //goes back to list screen
             Button(onClick = {
-
+                navController.navigate(Routes.ViewList.route)
             }, modifier = Modifier.padding(10.dp, 0.dp)) { Text("cancel") }
         }
     }
