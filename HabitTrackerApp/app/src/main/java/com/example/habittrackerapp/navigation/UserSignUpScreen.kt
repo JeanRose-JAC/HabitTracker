@@ -106,7 +106,7 @@ fun UserSignUp(modifier: Modifier = Modifier) {
                     onClick = {
                         showList.value=true
                     },
-                    enabled = Validate(userInput)
+                    enabled = Validate()
 
                 ){
                     Text("Submit ")
@@ -114,7 +114,7 @@ fun UserSignUp(modifier: Modifier = Modifier) {
             }
             item{
                 if(showList.value){
-                    navController.navigate("UserWelcomeScreenRoute/${userInput.get(Input.FIRSTNAME.index).toString()}")
+                    navController.navigate(Routes.Profile.route)
 
                 }
             }
@@ -267,10 +267,9 @@ fun PasswordConfimation(modifier:Modifier=Modifier) {
             .padding(8.dp)
     ){
         TextField(
-            value = userInput.get(Input.PASSWORD.index),
-            onValueChange = {userInput.set(Input.PASSWORD.index,it)},
+            value = userInput.get(Input.PASSWORDCONFIRMATION.index),
+            onValueChange = {userInput.set(Input.PASSWORDCONFIRMATION.index,it)},
             label={ Text("Please confirm your password ") },
-            isError=userInput.get(Input.PASSWORD.index).toString()!=userInput.get(Input.PASSWORDCONFIRMATION.index).toString()
         )
     }
 }
@@ -328,7 +327,7 @@ fun Gender() {
  * @return {Boolean} true if it's all good and will enable the button else it will and return false
  */
 @Composable
-fun Validate(list: SnapshotStateList<String>):Boolean {
+fun Validate():Boolean {
 
     val userInput= data.current
 
@@ -340,10 +339,8 @@ fun Validate(list: SnapshotStateList<String>):Boolean {
         false
     }else if( userInput.get(Input.EMAIL.index).toString().matches(regex)){
         false
-    }    else if(userInput.get(Input.PASSWORD.index).toString()!=userInput.get(Input.PASSWORDCONFIRMATION.index).toString()){
-        false
     }
-    else !(userInput.get(Input.PASSWORD.index).toString().length<8 || userInput.get(Input.GENDER.index).toString().isEmpty())
+    else userInput.get(Input.PASSWORDCONFIRMATION.index)==userInput.get(Input.PASSWORD.index)
 }
 
 /**

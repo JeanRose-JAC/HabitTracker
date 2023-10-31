@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.navigation.AboutScreen
 import com.example.habittrackerapp.navigation.NoteScreen
+import com.example.habittrackerapp.navigation.UserProfileScreen
 import com.example.habittrackerapp.navigation.UserSignUp
 
 
@@ -19,6 +20,7 @@ sealed class Routes(val route:String)  {
     object SignUp : Routes("SignUpScreenRoute")
     object About : Routes("AboutScreenRoute")
     object Note: Routes("NoteScreenRoute")
+    object Profile:Routes("ProfileScreenRoute")
 }
 
 /**
@@ -36,6 +38,7 @@ fun Router() {
         composable(Routes.SignUp.route) { UserSignUp() }
         composable(Routes.About.route) { AboutScreen()}
         composable(Routes.Note.route){ NoteScreen() }
+        composable(Routes.Profile.route){ UserProfileScreen()}
     }
 
 }
