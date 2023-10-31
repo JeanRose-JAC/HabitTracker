@@ -32,6 +32,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material3.TextField
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun UserProfileScreen(){
@@ -86,16 +89,13 @@ fun DisplayUserInformation(){
             ) {
                 Column {
                     Text(
-                        text = name,
-                        modifier = Modifier
-                            .padding(16.dp),
-                        textAlign = TextAlign.Center
+                        text = name, fontSize = 20.sp,fontWeight = FontWeight.Bold
                     )
 
                     Row {
-                        Text(text = item,
-                            modifier = Modifier
-                                .padding(8.dp))
+                        TextField(value = item,
+                            onValueChange = {userInput.set(index,it)}
+                                )
 
                         IconButton(onClick = { userInput.remove(item) }) {
                             Icon(Icons.Filled.Clear, contentDescription = "remove")
