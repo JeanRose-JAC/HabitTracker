@@ -56,7 +56,7 @@ fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel
         Button(onClick = {
             println(email)
             println(password)
-            authViewModel.signIn(email,password)
+            authViewModel.signIn("anjeli@gmail.com","Anjeli123")
             //go to user profile
         }) {
             Text(text = "Sign in")
