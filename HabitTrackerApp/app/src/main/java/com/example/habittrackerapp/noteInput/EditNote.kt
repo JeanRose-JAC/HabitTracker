@@ -23,8 +23,10 @@ import androidx.compose.material3.TextFieldDefaults
 import com.example.habittrackerapp.LocalNavController
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TextButton
 
 /**
  * It contains text-fields for user input and saves it to a list
@@ -40,6 +42,8 @@ fun EditNote(note: Note) {
     var navController= LocalNavController.current
     var description by rememberSaveable { mutableStateOf(note.description) }
     val scrollState = rememberScrollState()
+    var openDialog by rememberSaveable { mutableStateOf(true)}
+    var clicked by rememberSaveable { mutableStateOf(false) };
 
     Column(modifier = Modifier.padding(2.dp))
     {
@@ -97,18 +101,39 @@ fun EditNote(note: Note) {
             //saves input to the list
             Button(
                 onClick =
-                {
-                        note.title = title;
-                        note.description = description;
-                        note.urlImage = urlImage;
-
-                },
-                modifier = Modifier.padding(0.dp),
-            ) { Text("save") }
+                {   clicked=true;
+                    openDialog=true;
+                }, modifier = Modifier.padding(0.dp))
+            { Text("save") }
             //goes back to list screen
             Button(onClick = {
                 navController.navigate(Routes.ViewList.route)
             }, modifier = Modifier.padding(10.dp, 0.dp)) { Text("cancel") }
+
+            if(clicked){
+                if(openDialog){
+                    AlertDialog(
+                        onDismissRequest = {  openDialog=false },
+                        confirmButton = {
+                            TextButton(
+                                onClick = {
+                                    openDialog=false
+                                    note.title = title;
+                                    note.description = description;
+                                    note.urlImage = urlImage;
+                                    navController.navigate(Routes.ViewList.route)
+                                }
+                            ) {Text("confirm")}
+                        },
+                        title={
+                            Text("Edit")
+                        },
+                        text = {
+                            Text(text = "Save the modified note of the title\n$title")
+                        }
+                    )
+                }
+            }
         }
     }
 }

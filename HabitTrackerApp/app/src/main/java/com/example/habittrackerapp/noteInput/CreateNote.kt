@@ -23,9 +23,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.res.stringResource
 
 
 /**
@@ -42,6 +45,8 @@ fun CreateNote() {
     var notesList= LocalNotesList.current
     var description by rememberSaveable { mutableStateOf("") }
     val scrollState = rememberScrollState()
+    var openDialog by rememberSaveable { mutableStateOf(true)}
+    var clicked by rememberSaveable { mutableStateOf(false) };
 
     Column(modifier = Modifier.padding(2.dp))
     {
@@ -82,55 +87,67 @@ fun CreateNote() {
             ),
         )
 
-        OutlinedTextField(value = urlImage, onValueChange = { urlImage = it },
+        OutlinedTextField(
+            value = urlImage, onValueChange = { urlImage = it },
             modifier = Modifier
                 .padding(10.dp, 40.dp, 10.dp, 10.dp)
                 .fillMaxWidth()
                 .verticalScroll(scrollState),
             placeholder = { Text("Enter Image URL...") },
-            singleLine = true)
+            singleLine = true
+        )
 
-
-
-            //Buttons
-            Row(modifier = Modifier
+        //Buttons
+        Row(
+            modifier = Modifier
                 .padding(0.dp, 0.dp, 20.dp, 0.dp)
-                .align(Alignment.End))
-            {
-                //saves input to the list
-                Button(
-                    onClick =
-                    {
-                        val popUp = addToList(
-                            title = title,
-                            description = description,
-                            urlImage = urlImage,
-                            notesList = notesList
-                        )
+                .align(Alignment.End)
+        )
+        {
+            //saves input to the list
+            Button(
+                onClick =
+                {
+                    var popUp = addToList(title, description, urlImage, notesList)
+                    if(popUp){
+                        Toast.makeText(
+                            context,
+                            "Note has been added to the list",
+                            Toast.LENGTH_LONG
+                        ).show();
 
                         title = ""
                         description = ""
                         urlImage = ""
+                    }
+                   else{
+                        Toast.makeText(
+                            context,
+                            "Missing input",
+                            Toast.LENGTH_LONG
+                        ).show();
+                    }
 
-                    },
-                    modifier = Modifier.padding(0.dp),
-                ) { Text("save") }
-                //clears user input
-                Button(onClick = {
-                    title = ""
-                    description = ""
-                    urlImage = ""
-                }, modifier = Modifier.padding(10.dp, 0.dp)) { Text("clear") }
-            }
+                }, modifier = Modifier.padding(0.dp)
+            )
+            { Text("save") }
+            //clears user input
+            Button(onClick = {
+                title = ""
+                description = ""
+                urlImage = ""
+            }, modifier = Modifier.padding(10.dp, 0.dp)) { Text("clear") }
+        }
+
     }
 }
 
 ///adds the new notes to the list if the items aren't empty
-fun addToList(title: String, description: String, urlImage:String?,notesList: SnapshotStateList<Note>): Boolean {
+fun addToList(title: String, description: String, urlImage:String?,notesList: SnapshotStateList<Note>):Boolean {
 
-    val newNote = Note(title, description, urlImage)
-    if(newNote!=null){
-        notesList.add(newNote)
+    if(title.isNotEmpty() && description.isNotEmpty()){
+        val newNote = Note(title, description, urlImage)
+        notesList.add(newNote);
         return true;
     }
     return false;
