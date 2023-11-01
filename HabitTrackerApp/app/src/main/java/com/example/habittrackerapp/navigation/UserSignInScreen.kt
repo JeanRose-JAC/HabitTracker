@@ -54,8 +54,9 @@ fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel
             )
         }
         Button(onClick = {
-            var good=authViewModel.signIn(email,password)
-            println(good)
+            println(email)
+            println(password)
+            authViewModel.signIn(email,password)
             //go to user profile
         }) {
             Text(text = "Sign in")
