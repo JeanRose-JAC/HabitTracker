@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.Flow
 
 class UserRepositoryFirebase (val authRepository: AuthRepositoryFirebase) : UserRepository {
 
-    override suspend fun saveProfile(profileData: User) {
+    override suspend fun saveUser(profileData: User) {
         TODO("Not yet implemented")
     }
 
-    override fun getProfile(): Flow<User> {
+    override fun getUser(): Flow<User> {
         // Access a Cloud Firestore instance from your Activity
 
         TODO("Not yet implemented")
