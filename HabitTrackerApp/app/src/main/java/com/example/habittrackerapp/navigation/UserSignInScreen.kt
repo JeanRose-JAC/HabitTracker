@@ -1,5 +1,6 @@
 package com.example.habittrackerapp.navigation
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -25,35 +26,40 @@ fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel
     var password by rememberSaveable { mutableStateOf("") }
 
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ){
-        TextField(
-            value = email,
-            onValueChange = {email=it},
-            label={ Text("Please enter your email") },
-            isError=!email.matches(regex)
 
-        )
+    Column {
+        Card(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ){
+            TextField(
+                value = email,
+                onValueChange = {email=it},
+                label={ Text("Please enter your email") },
+                isError=!email.matches(regex)
+
+            )
+        }
+        Card(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ){
+            TextField(
+                value = password,
+                onValueChange = {password=it},
+                label={ Text("Please enter your Password") },
+                isError = password.length<8
+            )
+        }
+        Button(onClick = {
+            var good=authViewModel.signIn(email,password)
+            println(good)
+            //go to user profile
+        }) {
+            Text(text = "Sign in")
+        }
     }
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ){
-        TextField(
-            value = password,
-            onValueChange = {password=it},
-            label={ Text("Please enter your Password") },
-            isError = password.length<8
-        )
-    }
-    Button(onClick = {
-        authViewModel.signIn(email,password)
-        //go to user profile
-    }) {
-        Text(text = "Sign in")
-    }
+
 }
