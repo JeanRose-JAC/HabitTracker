@@ -11,7 +11,7 @@ import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.data
 
 @Composable
-fun SignSignUpScreen(){
+fun SignSignUpScreen() {
     val navController = LocalNavController.current
     val userInput= data.current
     //val submit= remember{ mutableStateOf(false) }

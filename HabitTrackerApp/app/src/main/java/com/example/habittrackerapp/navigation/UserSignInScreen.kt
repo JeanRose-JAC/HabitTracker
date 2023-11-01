@@ -23,7 +23,7 @@ import com.example.habittrackerapp.data
 @Composable
 fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
     viewModel(factory= AuthViewModelFactory())
-){
+) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     val userState = authViewModel.currentUser().collectAsState()
