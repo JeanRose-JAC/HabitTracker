@@ -33,6 +33,10 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.TextField
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
@@ -40,9 +44,8 @@ import androidx.compose.ui.unit.sp
 fun UserProfileScreen(){
     val userInput= data.current
     val navController = LocalNavController.current
-    val predicate: (String) -> Boolean = {it ==""}
 
-    if(userInput.toList().any(predicate)){
+    if(!ValidateUser(firstName = userInput.FirstName, lastName = userInput.LastName, email = userInput.Email, password = userInput.Password)){
         Column {
             Text(text = "Please sign Up")
             Button(onClick = {navController.navigate(Routes.SignUp.route)}) {
@@ -59,52 +62,66 @@ fun UserProfileScreen(){
 @Composable
 fun DisplayUserInformation(){
     val userInput= data.current
-    var name=""
+    var firstName by rememberSaveable { mutableStateOf(userInput.FirstName) }
+    var lastName by rememberSaveable { mutableStateOf(userInput.LastName) }
+    var email by rememberSaveable { mutableStateOf(userInput.Email) }
+    var password by rememberSaveable { mutableStateOf(userInput.Password) }
     LazyColumn {
-        itemsIndexed(userInput.toList()){index, item ->
-            if(index==Input.EMAIL.index){
-                name="Email"
-            }
-            else if(index==Input.FIRSTNAME.index){
-                name="Firstname"
-            }
-            else if(index==Input.LASTNAME.index){
-                name="LastName"
-            }
-            else if(index==Input.PASSWORD.index){
-                name="Password"
-            }
-            else if(index==Input.GENDER.index){
-                name="Gender"
-            }
+        item {
+            TextCard("Firstname",firstName,{firstName=it})
+            TextCard("LastName",lastName,{lastName=it})
+            TextCard("Email",email,{email=it})
+            TextCard("Password",password,{password=it})
 
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceTint,
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-                    .size(width = 240.dp, height = 100.dp)
-            ) {
-                Column {
-                    Text(
-                        text = name, fontSize = 20.sp,fontWeight = FontWeight.Bold
-                    )
-
-                    Row {
-                        TextField(value = item,
-                            onValueChange = {userInput.set(index,it)}
-                                )
-
-                        IconButton(onClick = { userInput.remove(item) }) {
-                            Icon(Icons.Filled.Clear, contentDescription = "remove")
-                        }
-                    }
+            if(ValidUserProfileChanges(firstName,lastName,email,password)){
+                    Button(
+                    onClick = TODO()
+                ) {
+                    Text("Save Changes")
                 }
+            }
+        }
+
+    }
+}
+
+@Composable
+fun TextCard(name:String,value:String,onChange:(String)->Unit){
+
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceTint,
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .size(width = 240.dp, height = 100.dp)
+    ) {
+        Column {
+            Text(
+                text = name, fontSize = 20.sp,fontWeight = FontWeight.Bold
+            )
+
+            Row {
+                TextField(value = value,
+                    onValueChange = onChange
+                )
             }
         }
     }
 
+}
+
+@Composable
+fun ValidUserProfileChanges(firstName: String,lastName: String,email: String,password: String):Boolean{
+    val userInput= data.current
+
+    return (firstName!=userInput.FirstName) || (lastName !=userInput.LastName) || (email!=userInput.Email) || (password!=userInput.Password)
+}
+
+@Composable
+fun SaveUserProfileChange(firstName: String,lastName: String,email: String,password: String):Unit{
 
 }
+
+

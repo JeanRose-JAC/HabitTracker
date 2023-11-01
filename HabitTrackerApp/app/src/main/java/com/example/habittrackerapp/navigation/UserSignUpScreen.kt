@@ -111,7 +111,7 @@ fun UserSignUp(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
                         showList.value=true
                     },
 
-                    enabled = Validate(firstName,lastName,email,password)
+                    enabled = ValidateUser(firstName,lastName,email,password)
 
                 ){
                     Text("Submit ")
@@ -128,7 +128,8 @@ fun UserSignUp(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
             }
             item{
                 if(showList.value){
-                    navController.navigate(Routes.Profile.route)
+                    //navController.navigate(Routes.Profile.route)
+                    Text("yes");
 
                 }
             }
@@ -316,7 +317,7 @@ fun Gender(gender:String,onChange: (String) -> Unit) {
  */
 
 @Composable
-fun Validate(firstName: String,lastName: String,email: String,password: String):Boolean {
+fun ValidateUser(firstName: String,lastName: String,email: String,password: String):Boolean {
 
 
     val userInput= data.current
