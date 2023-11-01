@@ -27,6 +27,7 @@ fun SignSignUpScreen(){
                 Text("Sign Up")
             }
             Text("or")
+
             Button(onClick = {navController.navigate(Routes.SignIn.route)}) {
                 Text("Sign In")
             }

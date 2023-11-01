@@ -8,6 +8,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.auth.AuthViewModel
 import com.example.habittrackerapp.auth.AuthViewModelFactory
+import com.example.habittrackerapp.data
 
 @Composable
 fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
@@ -24,6 +26,7 @@ fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel
 ){
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
+    val userState = authViewModel.currentUser().collectAsState()
 
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
 
@@ -54,9 +57,6 @@ fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel
             )
         }
         Button(onClick = {
-            println(email)
-            println(password)
-
             authViewModel.signIn(email,password)
             //go to user profile
         }) {
