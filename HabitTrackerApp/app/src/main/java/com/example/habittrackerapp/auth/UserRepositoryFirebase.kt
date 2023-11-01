@@ -1,5 +1,6 @@
 package com.example.habittrackerapp.auth
 
+import com.example.habittrackerapp.model.UserDataRepository
 import com.example.habittrackerapp.model.UserRepository
 import com.example.habittrackerapp.user.User
 import com.google.firebase.firestore.CollectionReference
@@ -8,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
-class UserRepositoryFirestore (val db: FirebaseFirestore) : UserRepository {
+class UserRepositoryFirestore (val db: FirebaseFirestore) : UserDataRepository {
     val dbProfile: CollectionReference = db.collection("Profile")
     val profileId = "main-profile"
 
