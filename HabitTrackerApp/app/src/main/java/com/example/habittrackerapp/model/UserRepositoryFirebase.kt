@@ -1,10 +1,10 @@
 package com.example.habittrackerapp.model
 
-import com.example.habittrackerapp.Auth.AuthRepositoryFirebase
+import com.example.habittrackerapp.auth.AuthRepositoryFirebase
 import com.example.habittrackerapp.user.User
 import kotlinx.coroutines.flow.Flow
 
-class ProfileRepositoryFirebase (val authRepository: AuthRepositoryFirebase) : UserRepository {
+class UserRepositoryFirebase (val authRepository: AuthRepositoryFirebase) : UserRepository {
 
     override suspend fun saveProfile(profileData: User) {
         TODO("Not yet implemented")

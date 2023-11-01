@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.Auth
+package com.example.habittrackerapp.auth
 
 import com.example.habittrackerapp.user.User
 import kotlinx.coroutines.flow.StateFlow

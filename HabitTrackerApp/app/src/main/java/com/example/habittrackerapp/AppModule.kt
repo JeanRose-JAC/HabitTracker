@@ -1,11 +1,10 @@
 package com.example.habittrackerapp
 
 import android.content.Context
-import com.example.habittrackerapp.Auth.AuthRepository
-import com.example.habittrackerapp.Auth.AuthRepositoryFirebase
-//import com.example.habittrackerapp.model.ProfileRepository
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.ktx.auth
+import com.example.habittrackerapp.auth.AuthRepository
+import com.example.habittrackerapp.auth.AuthRepositoryFirebase
 
 /** This module provides the specific object(s) we will inject */
 class AppModule(

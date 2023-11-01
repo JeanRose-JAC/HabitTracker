@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.Auth
+package com.example.habittrackerapp.auth
 
 import com.example.habittrackerapp.user.User
 import com.google.firebase.auth.FirebaseAuth

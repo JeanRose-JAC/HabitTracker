@@ -35,13 +35,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.habittrackerapp.Auth.AuthViewModel
-import com.example.habittrackerapp.Auth.AuthViewModelFactory
+import com.example.habittrackerapp.auth.AuthViewModel
+import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
-import com.example.habittrackerapp.user.User
 
 
 /**

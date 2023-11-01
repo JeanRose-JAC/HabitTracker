@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.Auth
+package com.example.habittrackerapp.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
