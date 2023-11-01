@@ -128,8 +128,7 @@ fun UserSignUp(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
             }
             item{
                 if(showList.value){
-                    //navController.navigate(Routes.Profile.route)
-                    Text("yes");
+                    navController.navigate(Routes.Profile.route)
 
                 }
             }
