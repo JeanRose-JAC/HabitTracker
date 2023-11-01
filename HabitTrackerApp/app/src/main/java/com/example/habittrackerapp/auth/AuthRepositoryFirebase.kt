@@ -29,8 +29,6 @@ class AuthRepositoryFirebase(private val auth: FirebaseAuth) : AuthRepository {
 
     override suspend fun signIn(email: String, password: String): Boolean {
         return try {
-           var lol= auth.fetchSignInMethodsForEmail(email).await()
-            println(" this ->  ${lol}")
             auth.signInWithEmailAndPassword(email, password).await()
             return true;
         } catch (e: Exception) {
