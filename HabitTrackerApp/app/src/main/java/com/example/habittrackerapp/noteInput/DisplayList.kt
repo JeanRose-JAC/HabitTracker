@@ -87,7 +87,7 @@ fun DisplayNotesList(notesList: SnapshotStateList<Note>)
                                         .padding(0.dp)){
                                     Text(text = "edit")
                                 }
-                                Button(onClick = {},
+                                Button(onClick = {clicked=true},
                                     modifier = Modifier
                                         .padding(10.dp,0.dp))
                                 {
