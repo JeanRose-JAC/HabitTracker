@@ -24,7 +24,7 @@ data class NavBarIcon(
 
 val items = listOf(
     NavBarIcon(route= Routes.About.route, icon= Icons.Filled.Home),
-    NavBarIcon(route= Routes.SignUp.route, icon= Icons.Filled.Create),
+    NavBarIcon(route= Routes.SignUpSignIn.route, icon= Icons.Filled.Create),
     NavBarIcon(route= Routes.Note.route, icon= Icons.Filled.AddCircle),
     NavBarIcon(route= Routes.HabitList.route, icon= Icons.Filled.List),
 )

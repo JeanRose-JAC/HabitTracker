@@ -12,6 +12,8 @@ import com.example.habittrackerapp.habit.screens.HabitListScreen
 import com.example.habittrackerapp.habit.screens.HabitQuestionnaireScreen
 import com.example.habittrackerapp.navigation.AboutScreen
 import com.example.habittrackerapp.navigation.NoteScreen
+import com.example.habittrackerapp.navigation.SignSignUpScreen
+import com.example.habittrackerapp.navigation.UserSignInScreen
 import com.example.habittrackerapp.navigation.UserSignUp
 
 
@@ -21,6 +23,8 @@ import com.example.habittrackerapp.navigation.UserSignUp
 
 sealed class Routes(val route:String)  {
     object SignUp : Routes("SignUpScreenRoute")
+    object SignUpSignIn : Routes("SignUpSignUpScreenRoute")
+    object SignIn : Routes("SignInScreenRoute")
     object About : Routes("AboutScreenRoute")
     object Note: Routes("NoteScreenRoute")
     object HabitQuestionnaire: Routes("HabitQuestionnaireRoute")
@@ -48,6 +52,8 @@ fun Router() {
         composable(Routes.SignUp.route) { UserSignUp() }
         composable(Routes.About.route) { AboutScreen()}
         composable(Routes.Note.route){ NoteScreen() }
+        composable(Routes.SignIn.route){ UserSignInScreen() }
+        composable(Routes.SignUpSignIn.route){ SignSignUpScreen() }
         composable(Routes.HabitQuestionnaire.route){ HabitQuestionnaireScreen() }
         composable(Routes.HabitItem.route){ HabitItemScreen(it.arguments?.getString("id") ?: "") }
         composable(Routes.HabitList.route){ HabitListScreen() }
