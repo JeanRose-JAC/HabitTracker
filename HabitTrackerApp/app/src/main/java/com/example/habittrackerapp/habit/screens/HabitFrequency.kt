@@ -28,7 +28,7 @@ import com.example.habittrackerapp.habit.Frequency
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HabitFrequency(frequency: String, onFrequencyChange: (String) -> Unit, modifier: Modifier = Modifier){
+fun HabitFrequency(frequency: String, onFrequencyChange: (String) -> Unit, modifier: Modifier = Modifier) {
     //This variable determines whether the menu will be expanded or not
     var expandMenu by rememberSaveable { mutableStateOf(false) }
     val choices = listOf(Frequency.Daily.toString(), Frequency.Weekly.toString(), Frequency.Monthly.toString())

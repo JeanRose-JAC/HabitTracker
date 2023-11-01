@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HabitDescription(desc: String, onDescChange: (String) -> Unit, modifier: Modifier = Modifier){
+fun HabitDescription(desc: String, onDescChange: (String) -> Unit, modifier: Modifier = Modifier) {
 
     Column {
         Text(

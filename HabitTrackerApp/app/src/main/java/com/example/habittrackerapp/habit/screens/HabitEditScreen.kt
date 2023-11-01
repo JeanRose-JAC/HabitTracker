@@ -22,7 +22,7 @@ import com.example.habittrackerapp.habit.Habit
 import java.util.UUID
 
 @Composable
-fun HabitEditScreen (idString: String, modifier: Modifier = Modifier){
+fun HabitEditScreen (idString: String, modifier: Modifier = Modifier) {
     val navController = LocalNavController.current
     val habitList = LocalHabitList.current
     val id = UUID.fromString(idString)

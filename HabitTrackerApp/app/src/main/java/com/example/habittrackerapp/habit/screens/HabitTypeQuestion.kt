@@ -36,7 +36,7 @@ import com.example.habittrackerapp.habit.HabitType
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HabitTypeQuestion(type: String, onTypeChange: (String) -> Unit, modifier: Modifier = Modifier){
+fun HabitTypeQuestion(type: String, onTypeChange: (String) -> Unit, modifier: Modifier = Modifier) {
     var expandMenu by rememberSaveable { mutableStateOf(false) }
     var img by rememberSaveable { mutableIntStateOf(0) }
     val choices = listOf(

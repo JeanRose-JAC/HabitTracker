@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HabitStartDate(startDate: String, onStartDateChange: (String) -> Unit, modifier : Modifier = Modifier){
+fun HabitStartDate(startDate: String, onStartDateChange: (String) -> Unit, modifier : Modifier = Modifier) {
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
 
