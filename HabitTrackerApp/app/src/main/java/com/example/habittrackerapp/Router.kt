@@ -15,6 +15,10 @@ import com.example.habittrackerapp.navigation.NoteScreen
 import com.example.habittrackerapp.navigation.SignSignUpScreen
 import com.example.habittrackerapp.navigation.UserSignInScreen
 import com.example.habittrackerapp.navigation.UserSignUp
+import com.example.habittrackerapp.noteInput.EditNote
+import com.example.habittrackerapp.noteInput.screens.NoteList
+import com.example.habittrackerapp.noteInput.screens.SingleNote
+import com.example.habittrackerapp.noteInput.screens.SingleNoteEdit
 
 
 /**
@@ -27,6 +31,13 @@ sealed class Routes(val route:String)  {
     object SignIn : Routes("SignInScreenRoute")
     object About : Routes("AboutScreenRoute")
     object Note: Routes("NoteScreenRoute")
+
+    object ViewSingle: Routes("SingleNoteScreenRoute/{id}"){
+        fun go(id: String) = "ContactScreenRoute/$id"
+    }
+    object EditNote: Routes("EditNoteScreenRoute/{id}")
+    object ViewList: Routes("NoteListScreenRoute")
+
     object HabitQuestionnaire: Routes("HabitQuestionnaireRoute")
     object HabitItem: Routes("HabitItemRoute/{id}"){
         fun go(id : String) = "HabitItemRoute/$id"
@@ -35,6 +46,7 @@ sealed class Routes(val route:String)  {
     object EditHabit: Routes("HabitEditRoute/{id}"){
         fun go(id : String) = "HabitEditRoute/$id"
     }
+
 }
 
 /**
@@ -52,6 +64,14 @@ fun Router() {
         composable(Routes.SignUp.route) { UserSignUp() }
         composable(Routes.About.route) { AboutScreen()}
         composable(Routes.Note.route){ NoteScreen() }
+
+        composable(Routes.ViewList.route){ NoteList()}
+        //how to extract the elements from the text fields.....
+        composable(Routes.ViewSingle.route){
+            SingleNote(it.arguments?.getString("id")?:"")
+        }
+        composable(Routes.EditNote.route){ SingleNoteEdit(it.arguments?.getString("id")?:"" ) }
+
         composable(Routes.SignIn.route){ UserSignInScreen() }
         composable(Routes.SignUpSignIn.route){ SignSignUpScreen() }
         composable(Routes.HabitQuestionnaire.route){ HabitQuestionnaireScreen() }
