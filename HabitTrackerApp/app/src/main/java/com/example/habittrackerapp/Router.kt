@@ -5,12 +5,14 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.habit.screens.HabitEditScreen
 import com.example.habittrackerapp.habit.screens.HabitItemScreen
 import com.example.habittrackerapp.habit.screens.HabitListScreen
 import com.example.habittrackerapp.habit.screens.HabitQuestionnaireScreen
 import com.example.habittrackerapp.navigation.AboutScreen
+import com.example.habittrackerapp.navigation.DeepScreen
 import com.example.habittrackerapp.navigation.NoteScreen
 import com.example.habittrackerapp.navigation.UserSignUp
 
@@ -31,6 +33,11 @@ sealed class Routes(val route:String)  {
     object EditHabit: Routes("HabitEditRoute/{id}"){
         fun go(id : String) = "HabitEditRoute/$id"
     }
+
+    object DeepScreen: Routes("DeepScreen/{id}"){
+        fun go(id : String) = "DeepScreen/$id"
+    }
+
 }
 
 /**
@@ -52,6 +59,13 @@ fun Router() {
         composable(Routes.HabitItem.route){ HabitItemScreen(it.arguments?.getString("id") ?: "") }
         composable(Routes.HabitList.route){ HabitListScreen() }
         composable(Routes.EditHabit.route){ HabitEditScreen(it.arguments?.getString("id") ?: "") }
+        composable("deeplink",
+            // Note that this navDeepLink pattern has no relation to the route itself
+            deepLinks = listOf(navDeepLink { uriPattern = "example://compose.deeplink" })
+        ) {
+            DeepScreen("1")
+        }
+
 
     }
 
