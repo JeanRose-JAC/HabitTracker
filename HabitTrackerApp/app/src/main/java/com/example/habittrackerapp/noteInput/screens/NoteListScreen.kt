@@ -6,7 +6,7 @@ import com.example.habittrackerapp.noteInput.DisplayNotesList
 
 
 @Composable
-fun NoteList(){
+fun NoteList() {
     val notesList= LocalNotesList.current
     DisplayNotesList(notesList = notesList)
 }
