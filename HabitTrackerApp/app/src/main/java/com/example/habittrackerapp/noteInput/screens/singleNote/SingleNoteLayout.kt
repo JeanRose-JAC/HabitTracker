@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 
 @Composable
-fun SingleNoteLayout(note: Note){
+fun SingleNoteLayout(note: Note) {
     Column {
         Card(
             modifier = Modifier

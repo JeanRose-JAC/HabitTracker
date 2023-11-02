@@ -49,7 +49,7 @@ fun SingleNoteElementDisplay(note: Note) {
 }
 
 @Composable
-fun LoadImage(url:String){
+fun LoadImage(url:String) {
     AsyncImage(
         model = url,
         error= painterResource(id = R.drawable.no_image_placeholder),
