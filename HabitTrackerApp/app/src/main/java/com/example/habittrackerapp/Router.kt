@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
+import com.example.habittrackerapp.DeepScreen
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.habit.screens.HabitEditScreen
 import com.example.habittrackerapp.habit.screens.HabitItemScreen
@@ -45,7 +47,7 @@ sealed class Routes(val route:String)  {
 fun Router() {
     val navController = LocalNavController.current
     NavHost(navController = navController as NavHostController,
-        startDestination = Routes.About.route,
+        startDestination = "deeplink2?id={id}",
         enterTransition = { EnterTransition.None },
         exitTransition = { fadeOut() }) {
 
@@ -58,6 +60,12 @@ fun Router() {
         composable(Routes.HabitItem.route){ HabitItemScreen(it.arguments?.getString("id") ?: "") }
         composable(Routes.HabitList.route){ HabitListScreen() }
         composable(Routes.EditHabit.route){ HabitEditScreen(it.arguments?.getString("id") ?: "") }
+        composable("deeplink2?id={id}",
+            // Note that this navDeepLink pattern has no relation to the route itself
+            deepLinks = listOf(navDeepLink { uriPattern = "example://compose.deeplink2/?id={id}" })
+        ) { backStackEntry ->
+            DeepScreen(backStackEntry.arguments?.getString("id"))
+        }
 
     }
 
