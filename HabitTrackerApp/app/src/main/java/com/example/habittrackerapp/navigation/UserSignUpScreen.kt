@@ -127,7 +127,7 @@ fun UserSignUp(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
             }
             item{
                 if(showList.value){
-                    Text(text = "yes")
+                    Text(text = "Congrats you are logged in")
 
                 }
             }
