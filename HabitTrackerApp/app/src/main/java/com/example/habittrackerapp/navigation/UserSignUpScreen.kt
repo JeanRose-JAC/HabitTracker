@@ -142,7 +142,7 @@ fun UserSignUp(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
 @Preview
 @Composable
 fun tryDark() {
-    HabitTrackerAppTheme(darkTheme = true) {
+    HabitTrackerAppTheme() {
         UserSignUp();
     }
 }
