@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.navigation
+package com.example.habittrackerapp.signInSignUp
 
 
 import androidx.compose.foundation.Image
@@ -40,6 +40,8 @@ import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data
+import com.example.habittrackerapp.model.UserViewModel
+import com.example.habittrackerapp.model.UserViewModelFactory
 import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
 
 
@@ -59,7 +61,9 @@ import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
 @Preview
 @Composable
 fun UserSignUp(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
-    viewModel(factory= AuthViewModelFactory())) {
+    viewModel(factory= AuthViewModelFactory()),
+               myViewModel: UserViewModel =
+                   viewModel(factory= UserViewModelFactory())) {
 
     var firstName by rememberSaveable { mutableStateOf("") }
     var lastName by rememberSaveable { mutableStateOf("") }
@@ -121,7 +125,7 @@ fun UserSignUp(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
                     userInput.LastName=lastName
                     userInput.Password=password
                     authViewModel.signUp(userInput.Email,userInput.FirstName,userInput.LastName,userInput.Gender,userInput.ProfilePicture,userInput.Password)
-
+                    myViewModel.
 
                 }
             }

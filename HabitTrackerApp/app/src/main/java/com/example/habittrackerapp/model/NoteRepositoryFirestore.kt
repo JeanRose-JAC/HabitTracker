@@ -1,6 +1,5 @@
 package com.example.habittrackerapp.model
 
-import com.example.habittrackerapp.user.User
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose

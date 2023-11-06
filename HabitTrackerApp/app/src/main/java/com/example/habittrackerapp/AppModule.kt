@@ -3,8 +3,8 @@ package com.example.habittrackerapp
 import android.content.Context
 import com.example.habittrackerapp.auth.AuthRepository
 import com.example.habittrackerapp.auth.AuthRepositoryFirebase
+import com.example.habittrackerapp.model.UserDataRepository
 import com.example.habittrackerapp.model.UserRepositoryFirestore
-import com.example.habittrackerapp.model.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -17,7 +17,7 @@ class AppModule(
 ) {
     /* Create appropriate repository (backed by a DataStore) on first use.
        Only one copy will be created during lifetime of the application. */
-    val profileRepository : UserRepository by lazy {
+    val profileRepository : UserDataRepository by lazy {
         UserRepositoryFirestore(firestore)
     }
 

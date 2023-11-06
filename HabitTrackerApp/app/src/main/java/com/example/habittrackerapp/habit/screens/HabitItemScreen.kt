@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.habittrackerapp.LocalHabitList
 import com.example.habittrackerapp.LocalNavController
-import com.example.habittrackerapp.habit.Habit
+import com.example.habittrackerapp.model.Habit
 import java.util.UUID
 
 @Composable

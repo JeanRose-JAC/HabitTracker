@@ -1,6 +1,5 @@
 package com.example.habittrackerapp.model
 
-import com.example.habittrackerapp.user.User
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
@@ -8,11 +7,11 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
 class UserRepositoryFirestore (val db: FirebaseFirestore) : UserDataRepository {
-    val dbProfile: CollectionReference = db.collection("Profile")
-    val profileId = "main-profile"
+    val dbUser: CollectionReference = db.collection("Profile")
+    val UserId = "main-profile"
 
     override suspend fun saveUser(profileData: User) {
-        dbProfile.document(profileId).set(profileData)
+        dbUser.document(UserId).set(profileData)
             .addOnSuccessListener {
                 println("Profile saved.")
             }
@@ -23,7 +22,7 @@ class UserRepositoryFirestore (val db: FirebaseFirestore) : UserDataRepository {
     }
 
     override suspend fun getUser(): Flow<User> = callbackFlow {
-        val docRef = dbProfile.document("main-profile")
+        val docRef = dbUser.document("main-profile")
         val subscription = docRef.addSnapshotListener{ snapshot, error ->
             if (error != null) {
                 // An error occurred
@@ -32,17 +31,17 @@ class UserRepositoryFirestore (val db: FirebaseFirestore) : UserDataRepository {
             }
             if (snapshot != null && snapshot.exists()) {
                 // The user document has data
-                val profile = snapshot.toObject(User::class.java)
-                if (profile != null) {
-                    println("Real-time update to profile")
-                    trySend(profile)
+                val user = snapshot.toObject(User::class.java)
+                if (user != null) {
+                    println("Real-time update to user")
+                    trySend(user)
                 } else {
-                    println("Profile is / has become null")
+                    println("User is / has become null")
                     trySend(User("")) // If there is no saved profile, then send a default object
                 }
             } else {
                 // The user document does not exist or has no data
-                println("Profile does not exist")
+                println("User does not exist")
                 trySend(User("")) // send default object
             }
         }
@@ -51,10 +50,10 @@ class UserRepositoryFirestore (val db: FirebaseFirestore) : UserDataRepository {
 
 
     override suspend fun clear() {
-        dbProfile.document(profileId)
+        dbUser.document(UserId)
             .delete()
-            .addOnSuccessListener { println("Profile successfully deleted!") }
-            .addOnFailureListener { error -> println("Error deleting profile: $error") }
+            .addOnSuccessListener { println("User successfully deleted!") }
+            .addOnFailureListener { error -> println("Error deleting user: $error") }
     }
 
 }

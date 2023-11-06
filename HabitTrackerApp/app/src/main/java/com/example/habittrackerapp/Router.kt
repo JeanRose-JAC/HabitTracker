@@ -12,10 +12,9 @@ import com.example.habittrackerapp.habit.screens.HabitListScreen
 import com.example.habittrackerapp.habit.screens.HabitQuestionnaireScreen
 import com.example.habittrackerapp.navigation.AboutScreen
 import com.example.habittrackerapp.navigation.NoteScreen
-import com.example.habittrackerapp.navigation.SignSignUpScreen
-import com.example.habittrackerapp.navigation.UserSignInScreen
-import com.example.habittrackerapp.navigation.UserSignUp
-import com.example.habittrackerapp.noteInput.EditNote
+import com.example.habittrackerapp.signInSignUp.SignSignUpScreen
+import com.example.habittrackerapp.signInSignUp.UserSignInScreen
+import com.example.habittrackerapp.signInSignUp.UserSignUp
 import com.example.habittrackerapp.noteInput.screens.NoteList
 import com.example.habittrackerapp.noteInput.screens.SingleNote
 import com.example.habittrackerapp.noteInput.screens.SingleNoteEdit

@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.user
+package com.example.habittrackerapp.model
 
 import android.os.Parcelable
 import kotlinx.coroutines.flow.StateFlow

@@ -1,12 +1,10 @@
-package com.example.habittrackerapp.navigation
+package com.example.habittrackerapp.signInSignUp
 
 import Routes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.data
 
