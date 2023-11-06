@@ -1,7 +1,5 @@
-package com.example.habittrackerapp.auth
+package com.example.habittrackerapp.model
 
-import android.provider.ContactsContract.CommonDataKinds.Email
-import com.example.habittrackerapp.model.UserRepository
 import com.example.habittrackerapp.user.User
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -9,7 +7,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-class UserProfileRepositoryFirestore (val db: FirebaseFirestore) : UserRepository {
+class NoteRepositoryFirestore (val db: FirebaseFirestore) : NoteRepository {
     val dbUserProfiles: CollectionReference = db.collection("UserProfiles")
     override suspend fun saveUser(oldName: String, profileData: User) {
         // We are storing only a single profile at a time, so use a unique document name to refer to it

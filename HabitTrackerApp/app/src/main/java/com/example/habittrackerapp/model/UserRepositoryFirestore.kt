@@ -1,7 +1,5 @@
-package com.example.habittrackerapp.auth
+package com.example.habittrackerapp.model
 
-import com.example.habittrackerapp.model.UserDataRepository
-import com.example.habittrackerapp.model.UserRepository
 import com.example.habittrackerapp.user.User
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore

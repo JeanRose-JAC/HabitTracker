@@ -1,11 +1,9 @@
 package com.example.habittrackerapp
 
 import android.content.Context
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.auth.ktx.auth
 import com.example.habittrackerapp.auth.AuthRepository
 import com.example.habittrackerapp.auth.AuthRepositoryFirebase
-import com.example.habittrackerapp.auth.UserRepositoryFirestore
+import com.example.habittrackerapp.model.UserRepositoryFirestore
 import com.example.habittrackerapp.model.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
