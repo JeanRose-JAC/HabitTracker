@@ -132,7 +132,7 @@ fun UserSignUp(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
             item{
                 if(showList.value){
                     Text(text = "Congrats you are logged in")
-                    //myViewModel.addUser(userInput)
+                    myViewModel.addUser(userInput)
 
                 }
             }

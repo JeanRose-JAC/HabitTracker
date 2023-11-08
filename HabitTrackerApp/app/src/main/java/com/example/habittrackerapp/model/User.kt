@@ -13,6 +13,8 @@ import kotlinx.parcelize.Parcelize
      var Gender: String=""
      var ProfilePicture: String =""
      var Password:String=""
+
+    constructor(): this("")
 }
 
 
