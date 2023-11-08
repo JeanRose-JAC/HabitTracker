@@ -35,7 +35,7 @@ class UserViewModel (private val profileRepository: UserDataRepository) : ViewMo
 //        }
 //    }
 
-    fun addUser(user:User){
+    fun addUser(user:User) {
         viewModelScope.launch {
             _uiState.value=user
             profileRepository.saveUser(_uiState.value)
