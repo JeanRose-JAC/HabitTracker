@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
-import com.example.habittrackerapp.noteInput.Note
+import com.example.habittrackerapp.model.Note
 import com.example.habittrackerapp.LocalNavController
 
 

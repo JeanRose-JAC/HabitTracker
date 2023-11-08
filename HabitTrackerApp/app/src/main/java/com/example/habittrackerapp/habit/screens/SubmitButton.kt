@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.habittrackerapp.LocalHabitList
 import com.example.habittrackerapp.LocalNavController
-import com.example.habittrackerapp.habit.Habit
+import com.example.habittrackerapp.model.Habit
 
 
 /**
@@ -18,7 +18,7 @@ import com.example.habittrackerapp.habit.Habit
  */
 @Composable
 fun SubmitButton (habit: Habit,
-                 modifier : Modifier = Modifier) {
+                  modifier : Modifier = Modifier) {
     val navController = LocalNavController.current
     val habitList = LocalHabitList.current
 

@@ -35,6 +35,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.example.habittrackerapp.model.Note
 
 /**
  * Displays all the elements of the StringBuilder list in a card container*/

@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.navigation
+package com.example.habittrackerapp.signInSignUp
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.auth.AuthViewModel
 import com.example.habittrackerapp.auth.AuthViewModelFactory
-import com.example.habittrackerapp.data
 
 @Composable
 fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel =

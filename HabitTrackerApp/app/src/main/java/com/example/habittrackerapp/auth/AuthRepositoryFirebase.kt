@@ -1,6 +1,6 @@
 package com.example.habittrackerapp.auth
 
-import com.example.habittrackerapp.user.User
+import com.example.habittrackerapp.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.MutableStateFlow
