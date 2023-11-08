@@ -8,4 +8,5 @@ interface UserDataRepository {
     suspend fun getUser(): Flow<User>
 
     suspend fun clear()
+    
 }

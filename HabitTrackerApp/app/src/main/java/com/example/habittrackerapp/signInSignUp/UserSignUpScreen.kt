@@ -125,13 +125,14 @@ fun UserSignUp(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
                     userInput.LastName=lastName
                     userInput.Password=password
                     authViewModel.signUp(userInput.Email,userInput.FirstName,userInput.LastName,userInput.Gender,userInput.ProfilePicture,userInput.Password)
-                    myViewModel.
+
 
                 }
             }
             item{
                 if(showList.value){
                     Text(text = "Congrats you are logged in")
+                    //myViewModel.addUser(userInput)
 
                 }
             }

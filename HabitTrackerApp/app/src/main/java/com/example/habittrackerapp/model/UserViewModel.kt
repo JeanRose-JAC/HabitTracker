@@ -7,6 +7,7 @@ import com.example.habittrackerapp.MyApp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.toSet
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -33,6 +34,15 @@ class UserViewModel (private val profileRepository: UserDataRepository) : ViewMo
 //            profileRepository.saveProfile(_uiState.value)
 //        }
 //    }
+
+    fun addUser(user:User){
+        viewModelScope.launch {
+            _uiState.value=user
+            profileRepository.saveUser(_uiState.value)
+        }
+    }
+
+
 
 
     fun clearProfile() {
