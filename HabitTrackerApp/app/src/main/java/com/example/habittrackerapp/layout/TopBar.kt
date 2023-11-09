@@ -7,7 +7,9 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import com.example.habittrackerapp.LocalNavController
 /**
@@ -19,6 +21,12 @@ import com.example.habittrackerapp.LocalNavController
 fun TopBarScreen(title:String) {
     val navController = LocalNavController.current
     CenterAlignedTopAppBar(
+        colors= TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.tertiary,
+            titleContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            navigationIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            actionIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer
+        ),
         title={Text(title)},
         navigationIcon = {
             IconButton(onClick = {navController.navigateUp()}){
@@ -27,7 +35,8 @@ fun TopBarScreen(title:String) {
                     contentDescription = "Go Back"
                 )
             }
-        },
+        }
+
     )
 
 }
