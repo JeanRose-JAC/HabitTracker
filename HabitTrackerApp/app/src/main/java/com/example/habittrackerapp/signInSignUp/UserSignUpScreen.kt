@@ -96,7 +96,7 @@ fun UserSignUp(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
                     )
 
                     Text(
-                        text = "User Sign Up",
+                        text = "Sign Up",
                         style = MaterialTheme.typography.displaySmall,
                     )
 
@@ -357,7 +357,7 @@ fun ProfilePicture(profilePic:String, onChange: (String) -> Unit, modifier: Modi
         alignment = Alignment.Center,
         modifier = Modifier.fillMaxWidth()
     )
-    
+
     Card(
         modifier = modifier
             .fillMaxWidth()
