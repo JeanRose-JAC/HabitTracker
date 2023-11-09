@@ -14,7 +14,7 @@ fun SignSignUpScreen() {
     val userInput= data.current
     //val submit= remember{ mutableStateOf(false) }
 
-    if(Validate(firstName = userInput.FirstName, lastName = userInput.LastName, email = userInput.Email, password = userInput.Password)){
+    if(ValidateUser(firstName = userInput.FirstName, lastName = userInput.LastName, email = userInput.Email, password = userInput.Password)){
         //go to profileScreen
         Text( "yes")
     }

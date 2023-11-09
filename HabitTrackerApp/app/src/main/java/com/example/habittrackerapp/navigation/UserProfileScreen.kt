@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
-import com.example.habittrackerapp.user.User
+import com.example.habittrackerapp.signInSignUp.ValidateUser
 
 @Composable
 fun UserProfileScreen(){
