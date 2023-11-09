@@ -45,7 +45,9 @@ class UserViewModel (private val profileRepository: UserDataRepository) : ViewMo
     }
     fun getUser(userId:String){
         viewModelScope.launch {
-
+            profileRepository.getUser(userId).collect{user ->
+                _uiState.value = user
+            }
         }
     }
 

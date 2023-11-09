@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.auth.AuthViewModel
 import com.example.habittrackerapp.auth.AuthViewModelFactory
+import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.UserViewModel
 import com.example.habittrackerapp.model.UserViewModelFactory
 
@@ -29,6 +30,8 @@ fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     val userState = authViewModel.currentUser().collectAsState()
+    val userData = MyViewModel.uiState.collectAsState()
+    val userInput= data.current
 
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
 
@@ -59,8 +62,9 @@ fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel
             )
         }
         Button(onClick = {
-            authViewModel.signIn(email,password)
-            MyViewModel.getUser(email);
+            val temp=authViewModel.signIn(email,password)
+            println(" lol this is it ->${temp}");
+            //MyViewModel.getUser(email);
         }) {
             Text(text = "Sign in")
         }

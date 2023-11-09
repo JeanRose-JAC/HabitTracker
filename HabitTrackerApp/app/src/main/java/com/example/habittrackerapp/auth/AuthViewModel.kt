@@ -23,10 +23,13 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
         }
     }
-    fun signIn(email: String, password: String) {
+    fun signIn(email: String, password: String):Boolean {
+        var temp=false;
         viewModelScope.launch(Dispatchers.IO) {
-            authRepository.signIn(email, password)
+            temp=authRepository.signIn(email, password)
+            println("yyeee: ${temp}")
         }
+        return temp;
     }
     fun signOut() {
         authRepository.signOut()
