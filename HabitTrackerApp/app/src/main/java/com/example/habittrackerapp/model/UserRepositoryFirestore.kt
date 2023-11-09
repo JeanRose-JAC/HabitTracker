@@ -1,5 +1,6 @@
 package com.example.habittrackerapp.model
 
+import com.example.habittrackerapp.data
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
