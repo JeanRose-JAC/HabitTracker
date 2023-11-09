@@ -182,9 +182,10 @@ fun <T: Any> rememberMutableStateListOf(vararg elements: T): SnapshotStateList<T
 
 /**
  * this gets the FirstName and validates it, to make sure it's not empty
- * and save it in the input list
+ * @param firstName it takes in the mutable firstName that is being change
+ * @param onChange what will happen when the user edit the text field aka append the firstname
+ *
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FirstName(firstName:String,onChange:(String)->Unit,modifier: Modifier = Modifier) {
     Card(
@@ -203,9 +204,9 @@ fun FirstName(firstName:String,onChange:(String)->Unit,modifier: Modifier = Modi
 
 /**
  * this gets the lastName and validates it, to make sure it's not empty
- * and save it in the input list
+ * @param lastName it is the mutable for the lastname and store the user lastname when it is change
+ * @param onChange what will happen when the user edit the text field aka append the lastname
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LastName(lastName:String,onChange:(String)->Unit,modifier: Modifier = Modifier) {
     Card(
@@ -225,9 +226,9 @@ fun LastName(lastName:String,onChange:(String)->Unit,modifier: Modifier = Modifi
 
 /**
  * this gets the Email and validates it, to make sure that it follows the regex syntax
- * and save it in the input list
+ * @param email the email that the user want to be stored for their account
+ * @param onChange the changed value of the email in the textfield which will append the email mutable
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Email(email:String, onChange:(String)->Unit,modifier: Modifier = Modifier) {
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
@@ -249,10 +250,10 @@ fun Email(email:String, onChange:(String)->Unit,modifier: Modifier = Modifier) {
 
 /**
  * this gets the Passsword and validates it, to make sure that the length
- * is bigger then 8 and that correspond to the password confimation section
- * and save it in the input list
+ * is bigger then 8
+ * @param password the mutable password that will be stored in the user class
+ * @param onChange what happen when the user changed the texfield, append the password mutable
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Password(password:String, onChange: (String) -> Unit, modifier: Modifier=Modifier) {
     Card(
@@ -272,8 +273,9 @@ fun Password(password:String, onChange: (String) -> Unit, modifier: Modifier=Mod
 
 
 /**
- * this gets the gender of the user and remembers it
- * and save it in the input list
+ * this gets the gender of the user and remembers it which are radioButtons
+ * @param gender the mutable string that will get the return value of the selected gender
+ * @param onChange what happen when the user change input, aka assign the gender to the selected gender
  */
 @Composable
 fun Gender(gender:String,onChange: (String) -> Unit) {
@@ -312,22 +314,15 @@ fun Gender(gender:String,onChange: (String) -> Unit) {
 
 
 /**
- * Validate all the different list and show error message at the bottom of the app
- * the current first name on the form, it makes sure it's not empty
- * the current last name on the form, it makes sure it's not empty
- * current email on the form, it makes sure that it has a form fo an email
- * current gender on the form, it makes sure that the user inputed a gender
- *  current password on the form, it makes sure that the password is at least 8 characters long
- *  current confirmation of password, makes sure that the password and the confirmation are the same.
+ * Validate all mandatory element for the user,
+ *  @param firstName, the current first name on the form, it makes sure it's not empty
+ *  @param lastName, the current last name on the form, it makes sure it's not empty
+ *  @param email, current email on the form, it makes sure that it has a form fo an email
+ *  @param password, current password on the form, it makes sure that the password is at least 8 characters long
  * @return {Boolean} true if it's all good and will enable the button else it will and return false
  */
-
 @Composable
 fun ValidateUser(firstName: String,lastName: String,email: String,password: String):Boolean {
-
-
-    val userInput= data.current
-
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
     return if(firstName.isEmpty() ){
         false
@@ -348,13 +343,21 @@ fun ValidateUser(firstName: String,lastName: String,email: String,password: Stri
 /**
  * This allows the user to input a image linq for their profile picture if the link doesn't work
  * it shows a not found image
+ * @param profilePic the mutableState that store the link of the image that will be put later on in the user class.
+ * @param onChange check for the input of an image and if the text change show the image.
  */
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfilePicture(profilePic:String, onChange: (String) -> Unit, modifier: Modifier=Modifier) {
     val userInput= data.current
 
+    AsyncImage(
+        model = profilePic,
+        contentDescription = "Translated description of what the image contains",
+        error = painterResource( R.drawable.notgood),
+        alignment = Alignment.Center,
+        modifier = Modifier.fillMaxWidth()
+    )
+    
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -370,12 +373,6 @@ fun ProfilePicture(profilePic:String, onChange: (String) -> Unit, modifier: Modi
         }
 
     }
-    AsyncImage(
-        model = profilePic,
-        contentDescription = "Translated description of what the image contains",
-        error = painterResource( R.drawable.notgood),
-        alignment = Alignment.Center,
-        modifier = Modifier.fillMaxWidth()
-    )
+
 
 }
