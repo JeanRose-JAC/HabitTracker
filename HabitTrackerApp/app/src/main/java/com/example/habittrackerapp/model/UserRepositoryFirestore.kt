@@ -7,6 +7,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
 class UserRepositoryFirestore (val db: FirebaseFirestore) : UserDataRepository {
+
     val dbUser: CollectionReference = db.collection("Profile")
     var UserId = "main-profile"
 
@@ -35,6 +36,34 @@ class UserRepositoryFirestore (val db: FirebaseFirestore) : UserDataRepository {
                 val user = snapshot.toObject(User::class.java)
                 if (user != null) {
                     println("Real-time update to user")
+                    trySend(user)
+                } else {
+                    println("User is / has become null")
+                    trySend(User("")) // If there is no saved profile, then send a default object
+                }
+            } else {
+                // The user document does not exist or has no data
+                println("User does not exist")
+                trySend(User("")) // send default object
+            }
+        }
+        awaitClose { subscription.remove() }
+    }
+
+    override suspend fun getUser(userId: String): Flow<User> = callbackFlow {
+        val docRef = dbUser.document(userId)
+        val subscription = docRef.addSnapshotListener{ snapshot, error ->
+            if (error != null) {
+                // An error occurred
+                println("Listen failed: $error")
+                return@addSnapshotListener
+            }
+            if (snapshot != null && snapshot.exists()) {
+                // The user document has data
+                val user = snapshot.toObject(User::class.java)
+                if (user != null) {
+                    println("Real-time update to user")
+                    UserId=user.Email;
                     trySend(user)
                 } else {
                     println("User is / has become null")

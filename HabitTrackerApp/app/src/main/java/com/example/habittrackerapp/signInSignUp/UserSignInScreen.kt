@@ -18,10 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.auth.AuthViewModel
 import com.example.habittrackerapp.auth.AuthViewModelFactory
+import com.example.habittrackerapp.model.UserViewModel
+import com.example.habittrackerapp.model.UserViewModelFactory
 
 @Composable
 fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
-    viewModel(factory= AuthViewModelFactory())
+    viewModel(factory= AuthViewModelFactory()),
+    MyViewModel: UserViewModel =viewModel(factory= UserViewModelFactory())
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -57,7 +60,7 @@ fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel
         }
         Button(onClick = {
             authViewModel.signIn(email,password)
-            //go to user profile
+            MyViewModel.getUser(email);
         }) {
             Text(text = "Sign in")
         }

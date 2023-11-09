@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.habittrackerapp.MyApp
+import com.example.habittrackerapp.data
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /** Simple view model that keeps track of a single value (count in this case) */
+
 class UserViewModel (private val profileRepository: UserDataRepository) : ViewModel() {
     // private UI state (MutableStateFlow)
     private val _uiState = MutableStateFlow(User(""))
@@ -39,6 +41,11 @@ class UserViewModel (private val profileRepository: UserDataRepository) : ViewMo
         viewModelScope.launch {
             _uiState.value=user
             profileRepository.saveUser(_uiState.value)
+        }
+    }
+    fun getUser(userId:String){
+        viewModelScope.launch {
+
         }
     }
 
