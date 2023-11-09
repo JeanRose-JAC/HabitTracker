@@ -12,17 +12,16 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.habittrackerapp.habit.Habit
+import com.example.habittrackerapp.model.Habit
 import com.example.habittrackerapp.layout.MainLayout
-import com.example.habittrackerapp.navigation.rememberMutableStateListOf
-import com.example.habittrackerapp.noteInput.Note
+import com.example.habittrackerapp.signInSignUp.rememberMutableStateListOf
+import com.example.habittrackerapp.model.Note
 import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
-import com.example.habittrackerapp.user.User
+import com.example.habittrackerapp.model.User
 import com.google.firebase.FirebaseApp
 
 val LocalNavController = compositionLocalOf<NavController> { error("No NavController found!") }

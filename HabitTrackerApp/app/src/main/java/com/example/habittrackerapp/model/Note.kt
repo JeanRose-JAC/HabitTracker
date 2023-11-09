@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.noteInput
+package com.example.habittrackerapp.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

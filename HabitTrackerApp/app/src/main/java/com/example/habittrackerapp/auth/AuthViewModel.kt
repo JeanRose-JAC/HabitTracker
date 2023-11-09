@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.habittrackerapp.MyApp
-import com.example.habittrackerapp.user.User
+import com.example.habittrackerapp.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -20,6 +20,7 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     fun signUp(email: String,firstname:String,lastname:String,gender:String,profilePicture:String,password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             authRepository.signUp(email,firstname,lastname,gender,profilePicture,password)
+
         }
     }
     fun signIn(email: String, password: String) {
