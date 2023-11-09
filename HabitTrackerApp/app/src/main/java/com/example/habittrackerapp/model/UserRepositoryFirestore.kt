@@ -8,9 +8,10 @@ import kotlinx.coroutines.flow.callbackFlow
 
 class UserRepositoryFirestore (val db: FirebaseFirestore) : UserDataRepository {
     val dbUser: CollectionReference = db.collection("Profile")
-    val UserId = "main-profile"
+    var UserId = "main-profile"
 
     override suspend fun saveUser(profileData: User) {
+        UserId=profileData.Email
         dbUser.document(UserId).set(profileData)
             .addOnSuccessListener {
                 println("Profile saved.")
