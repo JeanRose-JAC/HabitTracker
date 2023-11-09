@@ -22,7 +22,7 @@ fun TopBarScreen(title:String) {
     val navController = LocalNavController.current
     CenterAlignedTopAppBar(
         colors= TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.tertiary,
+            containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
             navigationIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
             actionIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer

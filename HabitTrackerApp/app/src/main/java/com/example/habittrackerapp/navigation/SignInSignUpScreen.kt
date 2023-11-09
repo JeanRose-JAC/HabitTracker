@@ -40,7 +40,7 @@ fun SignSignUpScreen() {
         Image(painter= painterResource(R.drawable.josefin_neh6_yktwui_unsplash),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
-            alpha = 0.5F)
+            alpha = 0.45F)
             Column() {
                 Card(){
                     Text(text = "WELCOME MESSAGE")
@@ -55,7 +55,7 @@ fun SignSignUpScreen() {
 
                 Row(modifier = Modifier.align(CenterHorizontally)){
                     Text("Already have an account? ", modifier=Modifier.padding(14.dp,14.dp,0.dp,14.dp))
-                    TextButton(onClick = {navController.navigate(Routes.SignIn.route)}) {
+                    TextButton(onClick = {navController.navigate(Routes.SignIn.route)}, ) {
                         Text("Login")
                     }
                 }

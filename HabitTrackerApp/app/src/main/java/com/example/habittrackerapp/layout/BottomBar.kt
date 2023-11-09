@@ -42,7 +42,7 @@ fun BottomBarScreen() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    NavigationBar {
+    NavigationBar(  containerColor = MaterialTheme.colorScheme.secondaryContainer) {
         items.forEachIndexed { index, item ->
             NavigationBarItem(
 
@@ -55,7 +55,7 @@ fun BottomBarScreen() {
 
             )
         }
-        //contentColorFor(backgroundColor = MaterialTheme.colorScheme.tertiary)
+
     }
 
 }
