@@ -14,7 +14,7 @@ import com.example.habittrackerapp.habit.screens.HabitListScreen
 import com.example.habittrackerapp.habit.screens.HabitQuestionnaireScreen
 import com.example.habittrackerapp.navigation.AboutScreen
 import com.example.habittrackerapp.navigation.NoteScreen
-import com.example.habittrackerapp.signInSignUp.SignSignUpScreen
+import com.example.habittrackerapp.navigation.SignSignUpScreen
 import com.example.habittrackerapp.signInSignUp.UserSignInScreen
 import com.example.habittrackerapp.signInSignUp.UserSignUp
 import com.example.habittrackerapp.noteInput.screens.NoteList
@@ -47,6 +47,7 @@ sealed class Routes(val route:String)  {
     object EditHabit: Routes("HabitEditRoute/{id}"){
         fun go(id : String) = "HabitEditRoute/$id"
     }
+    object DeepLink: Routes("deeplink")
 
 }
 
@@ -79,7 +80,7 @@ fun Router() {
         composable(Routes.HabitItem.route){ HabitItemScreen(it.arguments?.getString("id") ?: "") }
         composable(Routes.HabitList.route){ HabitListScreen() }
         composable(Routes.EditHabit.route){ HabitEditScreen(it.arguments?.getString("id") ?: "") }
-        composable("deeplink",
+        composable(Routes.DeepLink.route,
             // Note that this navDeepLink pattern has no relation to the route itself
             deepLinks = listOf(navDeepLink { uriPattern = "example://compose.deeplink" })
         ) {

@@ -1,5 +1,6 @@
 package com.example.habittrackerapp.noteInput
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,8 +11,11 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.habittrackerapp.LocalNavController
+import com.example.habittrackerapp.R
 import com.example.habittrackerapp.model.Note
 
 /**
@@ -19,13 +23,16 @@ import com.example.habittrackerapp.model.Note
 @Composable
 fun NoteLayout() {
     val navController = LocalNavController.current
+
     Column() {
+
         Button(onClick = { navController.navigate("NoteListScreenRoute") },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp,0.dp,16.dp,2.dp)){
             Text("view List")
         }
+
         Card(
             modifier = Modifier
                 .fillMaxWidth()

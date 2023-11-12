@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data
+import com.example.habittrackerapp.signInSignUp.Validate
 
 @Composable
 fun SignSignUpScreen() {
@@ -37,7 +38,7 @@ fun SignSignUpScreen() {
     }
     else{
 
-        Image(painter= painterResource(R.drawable.josefin_neh6_yktwui_unsplash),
+        Image(painter= painterResource(R.drawable.background),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             alpha = 0.45F)

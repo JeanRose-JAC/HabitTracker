@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.R
 
 /**
@@ -24,11 +28,18 @@ import com.example.habittrackerapp.R
  */
 @Composable
 fun AboutScreen(modifier : Modifier = Modifier) {
+    val navController = LocalNavController.current
     Column (
         modifier = Modifier
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
+        Button(onClick = {navController.navigate(Routes.DeepLink.route)},
+            colors= ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),modifier = Modifier
+                .fillMaxWidth()
+                .padding(5.dp),) {
+            Text("GET STARTED")
+        }
         Text(
             text = "Track your daily progress effortlessly with Habit Minder. " +
                     "Build positive habits and break old routines with ease. " +
