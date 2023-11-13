@@ -26,7 +26,7 @@ class HabitCreateAndListViewModel(private val habitsRepository: HabitRepository)
                 initialValue = HabitListUiState()
             )
 
-    fun insertHabit(){
+    fun insertHabit() {
         viewModelScope.launch {
             if(validateInput()){
                 habitsRepository.insertHabit(habitUiState.habitDetails.toHabit())

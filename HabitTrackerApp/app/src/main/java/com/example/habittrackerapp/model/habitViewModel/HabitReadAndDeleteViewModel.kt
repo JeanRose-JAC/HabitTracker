@@ -28,7 +28,7 @@ class HabitReadAndDeleteViewModel (savedStateHandle: SavedStateHandle,
                 initialValue = HabitDetailsUiState()
             )
 
-    fun increaseStreak(){
+    fun increaseStreak() {
         viewModelScope.launch {
             val currentItem = uiState.value.habitDetails.toHabit()
             habitsRepository.updateHabit(currentItem.copy(streak = currentItem.streak + 1))
