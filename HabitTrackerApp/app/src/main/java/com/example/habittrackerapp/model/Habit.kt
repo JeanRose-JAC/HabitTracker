@@ -1,6 +1,8 @@
 package com.example.habittrackerapp.model
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import java.util.UUID
 
@@ -9,12 +11,14 @@ import java.util.UUID
  * Each habit has description, start date, frequency, type and id.
  */
 @Parcelize
+@Entity(tableName = "habits")
 data class Habit (
-    var description : String = "",
-    var startDate : String = "",
-    var frequency: String = "",
-    var type: String = "",
-    var streak: Int = 0
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val description : String,
+    val startDate : String,
+    val frequency: String,
+    val type: String,
+    val streak: Int
 ) : Parcelable {
-    val id: UUID = UUID.randomUUID()
 }
