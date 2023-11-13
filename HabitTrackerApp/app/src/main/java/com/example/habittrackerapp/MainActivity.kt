@@ -28,6 +28,9 @@ val LocalNavController = compositionLocalOf<NavController> { error("No NavContro
 val data= compositionLocalOf<User>{ error("No User found!")}
 val LocalNotesList = compositionLocalOf<SnapshotStateList<Note>> { error("No notes found!") }
 
+//Habit Room Database is implemented based on the "Persist data with Room" codelab
+//Source: https://developer.android.com/codelabs/basic-android-kotlin-compose-persisting-data-room#0
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
