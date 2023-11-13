@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 object HabitDetailsDestination {
-    val route = "habit_details"
+    const val route = "habit_details"
     const val habitIdArg = "habitId"
     val routeWithArgs = "$route/{$habitIdArg}"
 }
@@ -21,7 +21,7 @@ class HabitReadAndDeleteViewModel (savedStateHandle: SavedStateHandle,
                                    private val habitsRepository: HabitRepository
 ) : ViewModel() {
 
-    private val itemId: Int = checkNotNull(savedStateHandle[HabitDetailsDestination.habitIdArg]) //figure this out
+    private val itemId: Int = checkNotNull(savedStateHandle[HabitDetailsDestination.habitIdArg])
 
     val uiState: StateFlow<HabitDetailsUiState> =
         habitsRepository.getHabitStream(itemId)
@@ -41,8 +41,10 @@ class HabitReadAndDeleteViewModel (savedStateHandle: SavedStateHandle,
         }
     }
 
-    suspend fun deleteHabit() {
-        habitsRepository.deleteHabit(uiState.value.habitDetails.toHabit())
+    fun deleteHabit() {
+        viewModelScope.launch {
+            habitsRepository.deleteHabit(uiState.value.habitDetails.toHabit())
+        }
     }
 
     companion object {

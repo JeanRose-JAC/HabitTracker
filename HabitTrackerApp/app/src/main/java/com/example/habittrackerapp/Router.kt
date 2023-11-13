@@ -13,6 +13,7 @@ import com.example.habittrackerapp.habit.screens.HabitItemScreen
 import com.example.habittrackerapp.habit.screens.HabitListScreen
 import com.example.habittrackerapp.habit.screens.HabitQuestionnaireScreen
 import com.example.habittrackerapp.model.habitViewModel.HabitDetailsDestination
+import com.example.habittrackerapp.model.habitViewModel.HabitEditDestination
 import com.example.habittrackerapp.navigation.AboutScreen
 import com.example.habittrackerapp.navigation.NoteScreen
 import com.example.habittrackerapp.signInSignUp.SignSignUpScreen
@@ -43,9 +44,7 @@ sealed class Routes(val route:String)  {
     object HabitQuestionnaire: Routes("HabitQuestionnaireRoute")
     object HabitItem: Routes("HabitItemRoute")
     object HabitList: Routes("HabitListRoute")
-    object EditHabit: Routes("HabitEditRoute/{id}"){
-        fun go(id : String) = "HabitEditRoute/$id"
-    }
+    object EditHabit: Routes("HabitEditRoute")
 
 }
 
@@ -80,13 +79,21 @@ fun Router() {
             arguments = listOf(navArgument(HabitDetailsDestination.habitIdArg){
                 type = NavType.IntType
             })){
-            HabitItemScreen()
+            HabitItemScreen(
+                navigateToEditItem = { navController.navigate("${HabitEditDestination.route}/$it") },
+                )
         }
         composable(Routes.HabitList.route){ HabitListScreen(
             navigateToHabitGet = { navController.navigate("${HabitDetailsDestination.route}/${it}")}
         )}
-        composable(Routes.EditHabit.route){ HabitEditScreen(it.arguments?.getString("id") ?: "") }
 
+        composable(
+            route = HabitEditDestination.routeWithArgs,
+            arguments = listOf(navArgument(HabitEditDestination.habitIdArg){
+                type = NavType.IntType
+            })){
+            HabitEditScreen()
+        }
     }
 
 }
