@@ -32,13 +32,7 @@ import java.util.UUID
 fun HabitEditScreen (
                      myViewModel: HabitUpdateViewModel = viewModel(factory = HabitViewModelProvider.Factory),
                      modifier: Modifier = Modifier) {
-    val habit = myViewModel.habitUiState
     val item = myViewModel.habitUiState.habitDetails
-
-    var desc by rememberSaveable { mutableStateOf(item.description) }
-    var startDate by rememberSaveable { mutableStateOf(item.startDate) }
-    var frequency by rememberSaveable { mutableStateOf(item.frequency) }
-    var type by rememberSaveable { mutableStateOf(item.type) }
 
     Column(
         modifier = Modifier
@@ -69,13 +63,12 @@ fun HabitEditScreen (
 @Composable
 fun EditForm(
     habitDetails: HabitDetails,
-    modifier: Modifier = Modifier,
     onValueChange: (HabitDetails) -> Unit = {},
-) {
+    modifier: Modifier = Modifier,
+    ) {
     HabitDescription(habitDetails.description, {onValueChange(habitDetails.copy(description = it))})
     HabitStartDate(habitDetails.startDate, {onValueChange(habitDetails.copy(startDate = it))})
     HabitFrequency(habitDetails.frequency, {onValueChange(habitDetails.copy(frequency = it))})
     HabitTypeQuestion(habitDetails.type, {onValueChange(habitDetails.copy(type = it))})
     SaveChanges()
-
 }
