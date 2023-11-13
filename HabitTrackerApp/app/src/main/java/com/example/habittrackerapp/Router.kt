@@ -12,8 +12,6 @@ import com.example.habittrackerapp.habit.screens.HabitEditScreen
 import com.example.habittrackerapp.habit.screens.HabitItemScreen
 import com.example.habittrackerapp.habit.screens.HabitListScreen
 import com.example.habittrackerapp.habit.screens.HabitQuestionnaireScreen
-import com.example.habittrackerapp.model.habitViewModel.HabitDetailsDestination
-import com.example.habittrackerapp.model.habitViewModel.HabitEditDestination
 import com.example.habittrackerapp.navigation.AboutScreen
 import com.example.habittrackerapp.navigation.NoteScreen
 import com.example.habittrackerapp.signInSignUp.SignSignUpScreen
@@ -42,9 +40,15 @@ sealed class Routes(val route:String)  {
     object ViewList: Routes("NoteListScreenRoute")
 
     object HabitQuestionnaire: Routes("HabitQuestionnaireRoute")
-    object HabitItem: Routes("HabitItemRoute")
+    object HabitItem: Routes("HabitItemRoute"){
+        const val habitIdArg = "habitId"
+        val routeWithArgs = "${route}/{$habitIdArg}"
+    }
     object HabitList: Routes("HabitListRoute")
-    object EditHabit: Routes("HabitEditRoute")
+    object EditHabit: Routes("HabitEditRoute"){
+        const val habitIdArg = "habitId"
+        val routeWithArgs = "${route}/{$habitIdArg}"
+    }
 
 }
 
@@ -75,21 +79,21 @@ fun Router() {
         composable(Routes.SignUpSignIn.route){ SignSignUpScreen() }
         composable(Routes.HabitQuestionnaire.route){ HabitQuestionnaireScreen() }
         composable(
-            route = HabitDetailsDestination.routeWithArgs,
-            arguments = listOf(navArgument(HabitDetailsDestination.habitIdArg){
+            route = Routes.HabitItem.routeWithArgs,
+            arguments = listOf(navArgument(Routes.HabitItem.habitIdArg){
                 type = NavType.IntType
             })){
             HabitItemScreen(
-                navigateToEditItem = { navController.navigate("${HabitEditDestination.route}/$it") },
+                navigateToEditItem = { navController.navigate("${Routes.EditHabit.route}/$it") },
                 )
         }
         composable(Routes.HabitList.route){ HabitListScreen(
-            navigateToHabitGet = { navController.navigate("${HabitDetailsDestination.route}/${it}")}
+            navigateToHabitGet = { navController.navigate("${Routes.HabitItem.route}/${it}")}
         )}
 
         composable(
-            route = HabitEditDestination.routeWithArgs,
-            arguments = listOf(navArgument(HabitEditDestination.habitIdArg){
+            route = Routes.EditHabit.routeWithArgs,
+            arguments = listOf(navArgument(Routes.EditHabit.habitIdArg){
                 type = NavType.IntType
             })){
             HabitEditScreen()

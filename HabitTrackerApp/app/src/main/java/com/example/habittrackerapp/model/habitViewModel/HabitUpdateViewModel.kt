@@ -15,16 +15,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-object HabitEditDestination {
-    const val route = "edit_details"
-    const val habitIdArg = "habitId"
-    val routeWithArgs = "$route/{$habitIdArg}"
-}
 class HabitUpdateViewModel (savedStateHandle: SavedStateHandle,
                             private val habitsRepository: HabitRepository
 ) : ViewModel() {
 
-    private val itemId: Int = checkNotNull(savedStateHandle[HabitEditDestination.habitIdArg])
+    private val itemId: Int = checkNotNull(savedStateHandle[Routes.EditHabit.habitIdArg])
 
     var habitUiState by mutableStateOf(HabitUiState())
         private set

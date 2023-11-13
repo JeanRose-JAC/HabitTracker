@@ -11,17 +11,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-object HabitDetailsDestination {
-    const val route = "habit_details"
-    const val habitIdArg = "habitId"
-    val routeWithArgs = "$route/{$habitIdArg}"
-}
-
 class HabitReadAndDeleteViewModel (savedStateHandle: SavedStateHandle,
                                    private val habitsRepository: HabitRepository
 ) : ViewModel() {
 
-    private val itemId: Int = checkNotNull(savedStateHandle[HabitDetailsDestination.habitIdArg])
+    private val itemId: Int = checkNotNull(savedStateHandle[Routes.HabitItem.habitIdArg])
 
     val uiState: StateFlow<HabitDetailsUiState> =
         habitsRepository.getHabitStream(itemId)

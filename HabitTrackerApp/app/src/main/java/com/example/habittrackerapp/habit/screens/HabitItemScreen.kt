@@ -25,22 +25,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.habittrackerapp.LocalHabitList
 import com.example.habittrackerapp.LocalNavController
-import com.example.habittrackerapp.R
-import com.example.habittrackerapp.model.Habit
-import com.example.habittrackerapp.model.habitViewModel.HabitCreateAndListViewModel
 import com.example.habittrackerapp.model.habitViewModel.HabitReadAndDeleteViewModel
 import com.example.habittrackerapp.model.habitViewModel.HabitViewModelProvider
 import com.example.habittrackerapp.model.habitViewModel.toHabit
-import java.util.UUID
 
 @Composable
 fun HabitItemScreen(
