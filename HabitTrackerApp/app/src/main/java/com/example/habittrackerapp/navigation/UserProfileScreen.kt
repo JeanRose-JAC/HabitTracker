@@ -20,6 +20,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,16 +31,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
+import com.example.habittrackerapp.model.UserViewModel
+import com.example.habittrackerapp.model.UserViewModelFactory
 import com.example.habittrackerapp.signInSignUp.ValidateUser
 
 @Composable
-fun UserProfileScreen(){
-    val userInput= data.current
+fun UserProfileScreen(
+    MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
+
+    val userData = MyViewModel.uiState.collectAsState()
     val navController = LocalNavController.current
 
-    if(!ValidateUser(firstName = userInput.FirstName, lastName = userInput.LastName, email = userInput.Email, password = userInput.Password)){
+    if(!ValidateUser(firstName = userData.value.FirstName, lastName = userData.value.LastName, email = userData.value.Email, password = userData.value.Password)){
         Column {
             Text(text = "Please sign Up")
             Button(onClick = {navController.navigate(Routes.SignUp.route)}) {
@@ -54,19 +60,19 @@ fun UserProfileScreen(){
 }
 
 @Composable
-fun DisplayUserInformation(){
-    val userInput= data.current
-    var firstName by rememberSaveable { mutableStateOf(userInput.FirstName) }
-    var lastName by rememberSaveable { mutableStateOf(userInput.LastName) }
-    var email by rememberSaveable { mutableStateOf(userInput.Email) }
-    var password by rememberSaveable { mutableStateOf(userInput.Password) }
+fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
+    val userData = MyViewModel.uiState.collectAsState()
+    var firstName by rememberSaveable { mutableStateOf(userData.value.FirstName) }
+    var lastName by rememberSaveable { mutableStateOf(userData.value.LastName) }
+    var email by rememberSaveable { mutableStateOf(userData.value.Email) }
+    var password by rememberSaveable { mutableStateOf(userData.value.Password) }
     var saveChanges by rememberSaveable {mutableStateOf(false)}
 
     LazyColumn {
         item {
             ShowProfilePicture()
-            if(userInput.Gender!="" || !userInput.Gender.isEmpty()){
-                Text(text = userInput.Gender)
+            if(userData.value.Gender!="" || !userData.value.Gender.isEmpty()){
+                Text(text = userData.value.Gender)
             }
             TextCard("Firstname",firstName) { firstName = it }
             TextCard("LastName",lastName) { lastName = it }
@@ -88,10 +94,10 @@ fun DisplayUserInformation(){
     }
 }
 @Composable
-fun ShowProfilePicture(){
-    val userInput= data.current
+fun ShowProfilePicture(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
+    val userData = MyViewModel.uiState.collectAsState()
     AsyncImage(
-        model = userInput.ProfilePicture,
+        model = userData.value.ProfilePicture,
         contentDescription = "Translated description of what the image contains",
         error = painterResource( R.drawable.notgood),
         alignment = Alignment.Center,
@@ -129,25 +135,25 @@ fun TextCard(name:String,value:String,onChange:(String)->Unit){
 }
 
 @Composable
-fun ValidUserProfileChanges(firstName: String,lastName: String,email: String,password: String):Boolean{
-    val userInput= data.current
+fun ValidUserProfileChanges(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())):Boolean{
+    val userData = MyViewModel.uiState.collectAsState()
 
-    return (firstName!=userInput.FirstName) || (lastName !=userInput.LastName) || (email!=userInput.Email) || (password!=userInput.Password)
+    return (firstName!=userData.value.FirstName) || (lastName !=userData.value.LastName) || (email!=userData.value.Email) || (password!=userData.value.Password)
 }
 
 @Composable
-fun SaveUserProfileChange(firstName: String,lastName: String,email: String,password: String){
-    val userInput= data.current
-    userInput.FirstName=firstName
-    userInput.LastName=lastName
-    userInput.Email=email
-    userInput.Password=password
+fun SaveUserProfileChange(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
+    val userData = MyViewModel.uiState.collectAsState()
+    userData.value.FirstName=firstName
+    userData.value.LastName=lastName
+    userData.value.Email=email
+    userData.value.Password=password
 
 }
 
 @Composable
-fun DeleteUser(){
-    val userInput= data.current
+fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
+    val userData = MyViewModel.uiState.collectAsState()
     var popupControl by rememberSaveable { mutableStateOf(false) }
 
 
@@ -162,12 +168,7 @@ fun DeleteUser(){
             
             Row {
                 Button(onClick = {
-                    userInput.Email=""
-                    userInput.FirstName=""
-                    userInput.Password=""
-                    userInput.LastName=""
-                    userInput.Gender=""
-                    userInput.ProfilePicture=""
+                    MyViewModel.clearProfile();
                 })
                 {
                     Text(text = "yes")
