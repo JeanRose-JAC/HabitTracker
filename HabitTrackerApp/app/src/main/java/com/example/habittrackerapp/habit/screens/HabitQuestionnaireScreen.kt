@@ -51,7 +51,6 @@ fun HabitQuestionnaireScreen(modifier: Modifier = Modifier) {
         HabitStartDate(startDate, {startDate = it})
         HabitFrequency(frequency, {frequency = it})
         HabitTypeQuestion(type, {type = it})
-        SubmitButton(Habit(description = desc, startDate = startDate, frequency = frequency, type = type))
-
+        SubmitButton(Habit(description = desc, startDate = startDate, frequency = frequency, type = type, streak = 0))
     }
 }

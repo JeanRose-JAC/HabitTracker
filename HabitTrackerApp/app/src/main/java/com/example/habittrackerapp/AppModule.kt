@@ -3,6 +3,9 @@ package com.example.habittrackerapp
 import android.content.Context
 import com.example.habittrackerapp.auth.AuthRepository
 import com.example.habittrackerapp.auth.AuthRepositoryFirebase
+import com.example.habittrackerapp.habit.database.HabitDatabase
+import com.example.habittrackerapp.habit.database.OfflineHabitsRepository
+import com.example.habittrackerapp.model.HabitRepository
 import com.example.habittrackerapp.model.UserDataRepository
 import com.example.habittrackerapp.model.UserRepositoryFirestore
 import com.google.firebase.auth.FirebaseAuth
@@ -25,4 +28,7 @@ class AppModule(
         AuthRepositoryFirebase(auth) // inject Firebase auth
     }
 
+    val habitsRepository: HabitRepository by lazy {
+        OfflineHabitsRepository(HabitDatabase.getDatabase(appContext).habitDao())
+    }
 }

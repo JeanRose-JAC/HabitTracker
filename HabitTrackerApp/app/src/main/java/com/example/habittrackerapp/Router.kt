@@ -3,8 +3,10 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.habit.screens.HabitEditScreen
 import com.example.habittrackerapp.habit.screens.HabitItemScreen
@@ -41,12 +43,14 @@ sealed class Routes(val route:String)  {
     object ViewList: Routes("NoteListScreenRoute")
 
     object HabitQuestionnaire: Routes("HabitQuestionnaireRoute")
-    object HabitItem: Routes("HabitItemRoute/{id}"){
-        fun go(id : String) = "HabitItemRoute/$id"
+    object HabitItem: Routes("HabitItemRoute"){
+        const val habitIdArg = "habitId"
+        val routeWithArgs = "${route}/{$habitIdArg}"
     }
     object HabitList: Routes("HabitListRoute")
-    object EditHabit: Routes("HabitEditRoute/{id}"){
-        fun go(id : String) = "HabitEditRoute/$id"
+    object EditHabit: Routes("HabitEditRoute"){
+        const val habitIdArg = "habitId"
+        val routeWithArgs = "${route}/{$habitIdArg}"
     }
 
 }
@@ -81,6 +85,26 @@ fun Router() {
         composable(Routes.HabitItem.route){ HabitItemScreen(it.arguments?.getString("id") ?: "") }
         composable(Routes.HabitList.route){ HabitListScreen() }
         composable(Routes.EditHabit.route){ HabitEditScreen(it.arguments?.getString("id") ?: "") }
+        composable(
+            route = Routes.HabitItem.routeWithArgs,
+            arguments = listOf(navArgument(Routes.HabitItem.habitIdArg){
+                type = NavType.IntType
+            })){
+            HabitItemScreen(
+                navigateToEditItem = { navController.navigate("${Routes.EditHabit.route}/$it") },
+                )
+        }
+        composable(Routes.HabitList.route){ HabitListScreen(
+            navigateToHabitGet = { navController.navigate("${Routes.HabitItem.route}/${it}")}
+        )}
+
+        composable(
+            route = Routes.EditHabit.routeWithArgs,
+            arguments = listOf(navArgument(Routes.EditHabit.habitIdArg){
+                type = NavType.IntType
+            })){
+            HabitEditScreen()
+        }
     }
 
 }

@@ -6,6 +6,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint-idea") version "11.6.0"
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
+    id("com.google.devtools.ksp")
 }
 
 ktlint {
@@ -96,4 +97,15 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx:24.6.0")
 
+    val room_version = "2.5.2"
+    implementation("androidx.room:room-runtime:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget="1.8"
+    }
 }
