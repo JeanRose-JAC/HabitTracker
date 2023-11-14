@@ -82,9 +82,9 @@ fun Router() {
         composable(Routes.SignIn.route){ UserSignInScreen() }
         composable(Routes.SignUpSignIn.route){ SignSignUpScreen() }
         composable(Routes.HabitQuestionnaire.route){ HabitQuestionnaireScreen() }
-        composable(Routes.HabitItem.route){ HabitItemScreen(it.arguments?.getString("id") ?: "") }
-        composable(Routes.HabitList.route){ HabitListScreen() }
-        composable(Routes.EditHabit.route){ HabitEditScreen(it.arguments?.getString("id") ?: "") }
+        //composable(Routes.HabitItem.route){ HabitItemScreen(it.arguments?.getString("id")?:"")}
+        //composable(Routes.HabitList.route){ HabitListScreen() }
+        //composable(Routes.EditHabit.route){ HabitEditScreen(it.arguments?.getString("id") ?: "") }
         composable(
             route = Routes.HabitItem.routeWithArgs,
             arguments = listOf(navArgument(Routes.HabitItem.habitIdArg){
