@@ -64,7 +64,7 @@ fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel
         Button(onClick = {
             val temp=authViewModel.signIn(email,password)
             println(" lol this is it ->${temp}");
-            //MyViewModel.getUser(email);
+            userState.value?.let { MyViewModel.getUser(it.Email) };
         }) {
             Text(text = "Sign in")
         }
