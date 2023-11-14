@@ -6,26 +6,28 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.model.Habit
+import com.example.habittrackerapp.model.habitViewModel.HabitCreateAndListViewModel
+import com.example.habittrackerapp.model.habitViewModel.HabitUpdateViewModel
+import com.example.habittrackerapp.model.habitViewModel.HabitViewModelProvider
+import com.example.habittrackerapp.model.habitViewModel.toHabitDetails
 
 
 @Composable
-fun SaveChanges (habit: Habit,
-                 changes: List<String>,
+fun SaveChanges (
+                 myViewModel: HabitUpdateViewModel = viewModel(factory = HabitViewModelProvider.Factory),
                  modifier : Modifier = Modifier
 ) {
     val navController = LocalNavController.current
 
     Button(onClick = {
-        habit.description = changes[0]
-        habit.startDate = changes[1]
-        habit.frequency = changes[2]
-        habit.type = changes[3]
-        navController.navigate(Routes.HabitItem.go(habit.id.toString()))
-
+        myViewModel.updateHabit()
+        navController.popBackStack()
     },
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(16.dp),
+        enabled = myViewModel.habitUiState.isEntryValid
     ) {
         Text("Done")
     }

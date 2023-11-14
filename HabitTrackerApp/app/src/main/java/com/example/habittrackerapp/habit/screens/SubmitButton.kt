@@ -6,9 +6,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.habittrackerapp.LocalHabitList
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.model.Habit
+import com.example.habittrackerapp.model.habitViewModel.HabitCreateAndListViewModel
+import com.example.habittrackerapp.model.habitViewModel.HabitViewModelProvider
+import com.example.habittrackerapp.model.habitViewModel.toHabitDetails
 
 
 /**
@@ -18,21 +21,17 @@ import com.example.habittrackerapp.model.Habit
  */
 @Composable
 fun SubmitButton (habit: Habit,
+                  myViewModel: HabitCreateAndListViewModel = viewModel(factory = HabitViewModelProvider.Factory),
                   modifier : Modifier = Modifier) {
     val navController = LocalNavController.current
-    val habitList = LocalHabitList.current
+    myViewModel.updateUiState(habit.toHabitDetails())
 
     Button(onClick = {
-        if(habit.description.isNotEmpty() &&
-            habit.startDate.isNotEmpty() &&
-            habit.frequency.isNotEmpty() &&
-            habit.type.isNotEmpty())
-        {
-            habitList.add(habit)
-            navController.navigate(Routes.HabitItem.go(habit.id.toString()))
-        }
+             myViewModel.insertHabit()
+             navController.navigateUp()
                      },
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(16.dp),
+        enabled = myViewModel.habitUiState.isEntryValid
     ) {
         Text("Done")
     }

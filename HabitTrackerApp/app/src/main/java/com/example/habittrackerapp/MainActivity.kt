@@ -27,7 +27,9 @@ import com.google.firebase.FirebaseApp
 val LocalNavController = compositionLocalOf<NavController> { error("No NavController found!") }
 val data= compositionLocalOf<User>{ error("No User found!")}
 val LocalNotesList = compositionLocalOf<SnapshotStateList<Note>> { error("No notes found!") }
-val LocalHabitList = compositionLocalOf<SnapshotStateList<Habit>> { error("No Habit list found!") }
+
+//Habit Room Database is implemented based on the "Persist data with Room" codelab
+//Source: https://developer.android.com/codelabs/basic-android-kotlin-compose-persisting-data-room#0
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,9 +47,8 @@ class MainActivity : ComponentActivity() {
 
 
                     val notesList = rememberMutableStateListOf<Note>()
-                    val habitList = rememberMutableStateListOf<Habit>();
 
-                    CompositionLocalProvider(LocalNavController provides navController, data provides userInput, LocalNotesList provides notesList, LocalHabitList provides habitList) {
+                    CompositionLocalProvider(LocalNavController provides navController, data provides userInput, LocalNotesList provides notesList) {
                         MainLayout("Habit Minder") {
                             Router()
                         }
