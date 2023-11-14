@@ -1,6 +1,7 @@
 package com.example.habittrackerapp.noteInput
 
 import Routes
+import androidx.compose.foundation.Image
 import coil.compose.AsyncImage
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
@@ -42,6 +43,10 @@ import com.example.habittrackerapp.model.Note
 @Composable
 fun DisplayNotesList(notesList: SnapshotStateList<Note>)
 {
+    Image(painter= painterResource(R.drawable.background),
+        contentDescription = null,
+        contentScale = ContentScale.FillBounds,
+        alpha = 0.45F)
     val navController= LocalNavController.current
     var openDialog by rememberSaveable { mutableStateOf(true)}
     var clicked by rememberSaveable { mutableStateOf(false) };
