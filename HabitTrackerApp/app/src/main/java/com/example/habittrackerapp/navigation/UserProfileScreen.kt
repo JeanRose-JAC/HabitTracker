@@ -169,21 +169,7 @@ fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFact
     }
     
     if(popupControl){
-//        Popup(onDismissRequest = { popupControl = false }) {
-//            Text(text = "Are you sure you want to delete you account?")
-//
-//            Column {
-//                Button(onClick = {
-//                    MyViewModel.clearProfile(userData.Email);
-//                })
-//                {
-//                    Text(text = "yes")
-//                }
-//                Button(onClick = { popupControl = false}) {
-//                    Text(text = "No")
-//                }
-//            }
-//        }
+
 
         DeleteConfirmationDialog(
             onDeleteConfirm = {
