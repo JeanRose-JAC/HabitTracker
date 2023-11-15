@@ -1,5 +1,6 @@
 package com.example.habittrackerapp.navigation
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -34,9 +36,12 @@ import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
+import com.example.habittrackerapp.auth.AuthViewModel
+import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.model.UserViewModel
 import com.example.habittrackerapp.model.UserViewModelFactory
 import com.example.habittrackerapp.signInSignUp.ValidateUser
+import kotlinx.coroutines.launch
 
 @Composable
 fun UserProfileScreen(
@@ -168,7 +173,7 @@ fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFact
             
             Row {
                 Button(onClick = {
-                    MyViewModel.clearProfile();
+                    MyViewModel.clearProfile(userData.value.Email);
                 })
                 {
                     Text(text = "yes")

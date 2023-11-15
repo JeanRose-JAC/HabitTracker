@@ -1,5 +1,6 @@
 package com.example.habittrackerapp.model
 
+import com.example.habittrackerapp.auth.AuthRepository
 import com.example.habittrackerapp.data
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -7,25 +8,27 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
-class UserRepositoryFirestore (val db: FirebaseFirestore) : UserDataRepository {
+class UserRepositoryFirestore (val auth: AuthRepository, val db: FirebaseFirestore) : UserDataRepository {
 
     val dbUser: CollectionReference = db.collection("Profile")
-    var UserId = "main-profile"
 
-    override suspend fun saveUser(profileData: User) {
-        UserId=profileData.Email
-        dbUser.document(UserId).set(profileData)
-            .addOnSuccessListener {
-                println("Profile saved.")
-            }
-            .addOnFailureListener { e ->
-                println("Error saving profile: $e")
-            }
-
+    override suspend fun saveUser(oldName: String, profileData: User) {
+        if (auth.hasCurrentUserDirect()) {
+            // We are storing only a single profile at a time, so use a unique document name to refer to it
+            dbUser.document(oldName).set(profileData)
+                .addOnSuccessListener {
+                    println("Profile saved.")
+                }
+                .addOnFailureListener { e ->
+                    println("Error saving profile: $e")
+                }
+        } else {
+            println("Save Profile failed: User is not authenticated")
+        }
     }
 
-    override suspend fun getUser(): Flow<User> = callbackFlow {
-        val docRef = dbUser.document("main-profile")
+    override suspend fun getUser(name: String): Flow<User> = callbackFlow {
+        val docRef = dbUser.document(name)
         val subscription = docRef.addSnapshotListener{ snapshot, error ->
             if (error != null) {
                 // An error occurred
@@ -34,57 +37,61 @@ class UserRepositoryFirestore (val db: FirebaseFirestore) : UserDataRepository {
             }
             if (snapshot != null && snapshot.exists()) {
                 // The user document has data
-                val user = snapshot.toObject(User::class.java)
-                if (user != null) {
-                    println("Real-time update to user")
-                    trySend(user)
+                val profile = snapshot.toObject(User::class.java)
+                if (profile != null) {
+                    println("Real-time update to profile")
+                    trySend(profile)
                 } else {
-                    println("User is / has become null")
-                    trySend(User("")) // If there is no saved profile, then send a default object
+                    println("Profile is / has become null")
+                    trySend(User()) // If there is no saved profile, then send a default object
                 }
             } else {
                 // The user document does not exist or has no data
-                println("User does not exist")
-                trySend(User("")) // send default object
+                println("Profile does not exist")
+                trySend(User()) // send default object
             }
         }
         awaitClose { subscription.remove() }
     }
 
-    override suspend fun getUser(userId: String): Flow<User> = callbackFlow {
-        val docRef = dbUser.document(userId)
-        val subscription = docRef.addSnapshotListener{ snapshot, error ->
+
+    override suspend fun delete(name:String) {
+        if (auth.hasCurrentUserDirect()) {
+            dbUser.document(name)
+                .delete()
+                .addOnSuccessListener { println("Profile $name successfully deleted!") }
+                .addOnFailureListener { error -> println("Error deleting profile $name: $error") }
+        } else {
+            println("Delete failed: User is not authenticated")
+        }
+    }
+
+    override suspend fun getUsers(): Flow<List<User>> = callbackFlow {
+
+        // Listen for changes on entire collection
+        val subscription = dbUser.addSnapshotListener{ snapshot, error ->
             if (error != null) {
                 // An error occurred
                 println("Listen failed: $error")
                 return@addSnapshotListener
             }
-            if (snapshot != null && snapshot.exists()) {
-                // The user document has data
-                val user = snapshot.toObject(User::class.java)
-                if (user != null) {
-                    println("Real-time update to user")
-                    UserId=user.Email;
-                    trySend(user)
+            if (snapshot != null) {
+                // The collection has documents, so convert them all to ProfileData objects
+                val profiles = snapshot.toObjects(User::class.java)
+                if (profiles != null) {
+                    println("Real-time update to profile")
+                    trySend(profiles)
                 } else {
-                    println("User is / has become null")
-                    trySend(User("")) // If there is no saved profile, then send a default object
+                    println("Profiles has become null")
+                    trySend(listOf<User>()) // If there is no saved profile, then send a default object
                 }
             } else {
                 // The user document does not exist or has no data
-                println("User does not exist")
-                trySend(User("")) // send default object
+                println("Profiles collection does not exist")
+                trySend(listOf<User>()) // send default object
             }
         }
         awaitClose { subscription.remove() }
-    }
-
-
-    override suspend fun clear() {
-        dbUser.document(UserId)
-            .delete()
-            .addOnSuccessListener { println("User successfully deleted!") }
-            .addOnFailureListener { error -> println("Error deleting user: $error") }
     }
 
 }

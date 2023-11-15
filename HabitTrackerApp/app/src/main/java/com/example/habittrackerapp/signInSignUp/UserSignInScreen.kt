@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -22,6 +23,7 @@ import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.UserViewModel
 import com.example.habittrackerapp.model.UserViewModelFactory
+import kotlinx.coroutines.launch
 
 @Composable
 fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
@@ -65,9 +67,7 @@ fun UserSignInScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel
         }
         Button(onClick = {
             authViewModel.signIn(email,password)
-            userState.value?.let { MyViewModel.getUser(it.Email) }
             navController.navigate(Routes.Profile.route)
-
         }) {
             Text(text = "Sign in")
         }

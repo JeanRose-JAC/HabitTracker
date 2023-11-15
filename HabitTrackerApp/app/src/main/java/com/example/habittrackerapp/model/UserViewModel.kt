@@ -20,12 +20,16 @@ class UserViewModel (private val profileRepository: UserDataRepository) : ViewMo
     // public getter for the state (StateFlow)
     val uiState: StateFlow<User> = _uiState.asStateFlow()
 
+    private val _allProfiles = MutableStateFlow(listOf<User>())
+    // public getter for the state (StateFlow)
+    val allProfiles: StateFlow<List<User>> = _allProfiles.asStateFlow()
+
     /* Method called when ViewModel is first created */
     init {
         // Start collecting the data from the data store when the ViewModel is created.
         viewModelScope.launch {
-            profileRepository.getUser().collect { user ->
-                _uiState.value = user
+            profileRepository.getUsers().collect { allProfiles ->
+                _allProfiles.value = allProfiles
             }
         }
     }
@@ -39,14 +43,14 @@ class UserViewModel (private val profileRepository: UserDataRepository) : ViewMo
 
     fun addUser(user:User) {
         viewModelScope.launch {
-            _uiState.value=user
-            profileRepository.saveUser(_uiState.value)
+            _uiState.update { user}
+            profileRepository.saveUser(_uiState.value.Email, _uiState.value)
         }
     }
     fun getUser(userId:String){
         viewModelScope.launch {
             profileRepository.getUser(userId).collect{user ->
-                _uiState.value = user
+                _uiState.update { user}
             }
         }
     }
@@ -54,9 +58,9 @@ class UserViewModel (private val profileRepository: UserDataRepository) : ViewMo
 
 
 
-    fun clearProfile() {
+    fun clearProfile(email: String) {
         viewModelScope.launch {
-            profileRepository.clear()
+            profileRepository.delete(email)
         }
     }
 
