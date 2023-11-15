@@ -63,7 +63,8 @@ import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
 @Composable
 fun UserSignUp(modifier: Modifier = Modifier,
                myViewModel: UserViewModel =
-                   viewModel(factory= UserViewModelFactory())) {
+                   viewModel(factory= UserViewModelFactory()),
+               authViewModel: AuthViewModel= viewModel(factory = AuthViewModelFactory())) {
 
     var firstName by rememberSaveable { mutableStateOf("") }
     var lastName by rememberSaveable { mutableStateOf("") }
@@ -129,6 +130,7 @@ fun UserSignUp(modifier: Modifier = Modifier,
             }
             item{
                 if(showList.value){
+                    authViewModel.signUp(userInput.Email,userInput.Password);
                     myViewModel.addUser(userInput)
 
                     navController.navigate(Routes.Profile.route)

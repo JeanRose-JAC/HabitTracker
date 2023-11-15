@@ -23,9 +23,9 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         authRepository.currentUser() != null
     }
 
-    fun signUp(email: String,firstname:String,lastname:String,gender:String,profilePicture:String,password: String) {
+    fun signUp(email: String,password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            authRepository.signUp(email,firstname,lastname,gender,profilePicture,password)
+            authRepository.signUp(email,password)
 
         }
     }

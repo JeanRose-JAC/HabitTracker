@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
+import com.example.habittrackerapp.auth.AuthViewModel
+import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.UserViewModel
 import com.example.habittrackerapp.model.UserViewModelFactory
@@ -25,7 +27,8 @@ import com.example.habittrackerapp.model.UserViewModelFactory
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun UserSignInScreen(modifier: Modifier = Modifier,
-    MyViewModel: UserViewModel =viewModel(factory= UserViewModelFactory())
+    MyViewModel: UserViewModel =viewModel(factory= UserViewModelFactory()),
+    authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory())
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -63,6 +66,7 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
             )
         }
         Button(onClick = {
+            authViewModel.signIn(email,password)
             MyViewModel.getUser(email)
 
         }) {
