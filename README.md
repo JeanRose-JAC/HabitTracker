@@ -9,20 +9,40 @@ Our application is a habit tracker app. Users must create an account to use it. 
 - Start Android Studio and open the project.
 - Run the application
 
-
+## Update 14/11/2023
+- Habit data is stored physically on the device. Users can add, view, update, and delete the data. They can also now increase their streak.
+- Users can add, view, update, and delete notes. However, the data does not persist, meaning that when the app is closed, the data disappears. Note data is not yet connected to the account.
+- Users can create an account. User profile and sign-in are still in progress.
 
 ## Screenshots of application
 ### About Page
 ![image](./AppScreenshots/about.png)
 
 ### Sign Up Page
-![image](./AppScreenshots/signup.png)
+
+<div style="display: flex; justify-content: space-between;">
+    <img src="./AppScreenshots/signup_light.png" alt="Image 1" style="length: 50%;">
+    <img src="./AppScreenshots/signin.png" alt="Image 2" style="length: 55%;">
+    <img src="./AppScreenshots/signinsignup.png" alt="Image 2" style="length: 55%;">
+</div>
 
 ### Notes Page
-![image](./AppScreenshots/note.png)
+<div style="display: flex; justify-content: space-between;">
+    <img src="./AppScreenshots/note_light.png" alt="Image 1" style="length: 50%;">
+    <img src="./AppScreenshots/onenotes.png" alt="Image 2" style="length: 55%;">
+    <img src="./AppScreenshots/listnotes.png" alt="Image 2" style="length: 55%;">
+</div>
+
+### Habits Page
+<div style="display: flex; justify-content: space-between;">
+    <img src="./AppScreenshots/onehabit.png" alt="Image 1" style="length: 50%;">
+    <img src="./AppScreenshots/addhabit.png" alt="Image 2" style="length: 55%;">
+    <img src="./AppScreenshots/listhabits.png" alt="Image 2" style="length: 55%;">
+</div>
+
 
 ## Team members
-- Cindy Coulibaly (cindycoulibaly10@gmail.com)
-- Jean Rose Manigbas (manigbas.jn@gmail.com)
-- Anjeli Mae Taruc (anjelitaruc02@gmail.com)
+- [Cindy Coulibaly](https://github.com/Cindy-Coulibaly)
+- [Jean Rose Manigbas](https://github.com/JeanRose-JAC)
+- [Anjeli Mae Taruc](https://github.com/Anjeli-Jac)
 
