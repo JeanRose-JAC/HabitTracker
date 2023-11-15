@@ -8,6 +8,8 @@ import com.example.habittrackerapp.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 
 
 class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
@@ -17,16 +19,20 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         return authRepository.currentUser()
     }
 
-    fun signUp(email: String,firstname:String,lastname:String,gender:String,profilePicture:String,password: String) {
+    fun hasCurrentUserDirect() {
+        authRepository.currentUser() != null
+    }
+
+    fun signUp(email: String,password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            authRepository.signUp(email,firstname,lastname,gender,profilePicture,password)
+            authRepository.signUp(email,password)
 
         }
     }
     fun signIn(email: String, password: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            authRepository.signIn(email, password)
-        }
+       viewModelScope.launch(Dispatchers.IO) {
+            authRepository.signIn(email, password);
+       }
     }
     fun signOut() {
         authRepository.signOut()
