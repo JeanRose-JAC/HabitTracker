@@ -42,6 +42,14 @@
                     android:host="compose.deeplink" />
 
             </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="example"
+                    android:host="compose.deeplink2" />
+            </intent-filter>
         </activity>
     </application>
 
