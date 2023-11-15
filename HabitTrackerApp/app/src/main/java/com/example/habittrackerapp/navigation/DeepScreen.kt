@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -15,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat.startActivity
 import com.example.habittrackerapp.layout.MainLayout
@@ -31,7 +33,7 @@ fun DeepScreen(id: String?) {
         TextField(
             value = input,
             onValueChange = {input=it},
-            label={ Text("Please enter a value you want to send back") },
+            label={ Text("Please enter to change your name") },
             isError=input.isEmpty()
         )
 
