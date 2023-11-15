@@ -42,7 +42,7 @@ import com.example.habittrackerapp.signInSignUp.ValidateUser
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun UserProfileScreen(
-    MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
+    MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
 
     val activeUser = MyViewModel.activeUser.collectAsState()
     val userInput = data.current
@@ -63,7 +63,7 @@ fun UserProfileScreen(
 }
 
 @Composable
-fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
+fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
     val userInput = data.current
     var firstName by rememberSaveable { mutableStateOf(userInput.FirstName) }
     var lastName by rememberSaveable { mutableStateOf(userInput.LastName) }
@@ -97,7 +97,7 @@ fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserV
     }
 }
 @Composable
-fun ShowProfilePicture(){
+fun ShowProfilePicture() {
     val userInput = data.current
     AsyncImage(
         model = userInput.ProfilePicture,
@@ -109,7 +109,7 @@ fun ShowProfilePicture(){
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextCard(name:String,value:String,onChange:(String)->Unit){
+fun TextCard(name:String,value:String,onChange:(String)->Unit) {
 
     Card(
         colors = CardDefaults.cardColors(
@@ -138,14 +138,14 @@ fun TextCard(name:String,value:String,onChange:(String)->Unit){
 }
 
 @Composable
-fun ValidUserProfileChanges(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())):Boolean{
+fun ValidUserProfileChanges(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())):Boolean {
     val userInput = data.current
 
     return (firstName!=userInput.FirstName) || (lastName !=userInput.LastName) || (email!=userInput.Email) || (password!=userInput.Password)
 }
 
 @Composable
-fun SaveUserProfileChange(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
+fun SaveUserProfileChange(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
     val userInput = data.current
     userInput.FirstName=firstName
     userInput.LastName=lastName
@@ -156,7 +156,7 @@ fun SaveUserProfileChange(firstName: String,lastName: String,email: String,passw
 }
 
 @Composable
-fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
+fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
     val userData = data.current
     var popupControl by rememberSaveable { mutableStateOf(false) }
     val navController = LocalNavController.current

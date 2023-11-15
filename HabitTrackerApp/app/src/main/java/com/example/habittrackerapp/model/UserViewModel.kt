@@ -46,7 +46,7 @@ class UserViewModel (private val profileRepository: UserDataRepository) : ViewMo
             profileRepository.saveUser(_activeUser.value.Email, _activeUser.value)
         }
     }
-    fun getUser(userId:String){
+    fun getUser(userId:String) {
         viewModelScope.launch {
             profileRepository.getUser(userId).collect{user ->
                 println(user.FirstName)
