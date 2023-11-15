@@ -40,6 +40,7 @@ import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data
+import com.example.habittrackerapp.model.User
 import com.example.habittrackerapp.model.UserViewModel
 import com.example.habittrackerapp.model.UserViewModelFactory
 import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
@@ -60,8 +61,7 @@ import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun UserSignUp(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
-    viewModel(factory= AuthViewModelFactory()),
+fun UserSignUp(modifier: Modifier = Modifier,
                myViewModel: UserViewModel =
                    viewModel(factory= UserViewModelFactory())) {
 
@@ -125,14 +125,12 @@ fun UserSignUp(modifier: Modifier = Modifier, authViewModel: AuthViewModel =
                     userInput.Gender=gender
                     userInput.LastName=lastName
                     userInput.Password=password
-                    authViewModel.signUp(userInput.Email,userInput.FirstName,userInput.LastName,userInput.Gender,userInput.ProfilePicture,userInput.Password)
-
-
                 }
             }
             item{
                 if(showList.value){
                     myViewModel.addUser(userInput)
+
                     navController.navigate(Routes.Profile.route)
                     Text(text = "Congrats you are logged in")
 

@@ -15,17 +15,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.habittrackerapp.data
 import com.example.habittrackerapp.LocalNavController
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -36,21 +32,21 @@ import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
-import com.example.habittrackerapp.auth.AuthViewModel
-import com.example.habittrackerapp.auth.AuthViewModelFactory
+import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.UserViewModel
 import com.example.habittrackerapp.model.UserViewModelFactory
 import com.example.habittrackerapp.signInSignUp.ValidateUser
-import kotlinx.coroutines.launch
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun UserProfileScreen(
     MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
 
-    val userData = MyViewModel.uiState.collectAsState()
+    val activeUser = MyViewModel.activeUser.collectAsState()
+    val userInput = data.current
     val navController = LocalNavController.current
 
-    if(!ValidateUser(firstName = userData.value.FirstName, lastName = userData.value.LastName, email = userData.value.Email, password = userData.value.Password)){
+    if(!ValidateUser(firstName = userInput.FirstName, lastName = userInput.LastName, email = userInput.Email, password = userInput.Password)){
         Column {
             Text(text = "Please sign Up")
             Button(onClick = {navController.navigate(Routes.SignUp.route)}) {
@@ -66,18 +62,18 @@ fun UserProfileScreen(
 
 @Composable
 fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
-    val userData = MyViewModel.uiState.collectAsState()
-    var firstName by rememberSaveable { mutableStateOf(userData.value.FirstName) }
-    var lastName by rememberSaveable { mutableStateOf(userData.value.LastName) }
-    var email by rememberSaveable { mutableStateOf(userData.value.Email) }
-    var password by rememberSaveable { mutableStateOf(userData.value.Password) }
+    val userInput = data.current
+    var firstName by rememberSaveable { mutableStateOf(userInput.FirstName) }
+    var lastName by rememberSaveable { mutableStateOf(userInput.LastName) }
+    var email by rememberSaveable { mutableStateOf(userInput.Email) }
+    var password by rememberSaveable { mutableStateOf(userInput.Password) }
     var saveChanges by rememberSaveable {mutableStateOf(false)}
 
     LazyColumn {
         item {
             ShowProfilePicture()
-            if(userData.value.Gender!="" || !userData.value.Gender.isEmpty()){
-                Text(text = userData.value.Gender)
+            if(userInput.Gender!="" || !userInput.Gender.isEmpty()){
+                Text(text = userInput.Gender)
             }
             TextCard("Firstname",firstName) { firstName = it }
             TextCard("LastName",lastName) { lastName = it }
@@ -100,9 +96,9 @@ fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserV
 }
 @Composable
 fun ShowProfilePicture(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
-    val userData = MyViewModel.uiState.collectAsState()
+    val userInput = data.current
     AsyncImage(
-        model = userData.value.ProfilePicture,
+        model = userInput.ProfilePicture,
         contentDescription = "Translated description of what the image contains",
         error = painterResource( R.drawable.notgood),
         alignment = Alignment.Center,
@@ -141,24 +137,24 @@ fun TextCard(name:String,value:String,onChange:(String)->Unit){
 
 @Composable
 fun ValidUserProfileChanges(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())):Boolean{
-    val userData = MyViewModel.uiState.collectAsState()
+    val userInput = data.current
 
-    return (firstName!=userData.value.FirstName) || (lastName !=userData.value.LastName) || (email!=userData.value.Email) || (password!=userData.value.Password)
+    return (firstName!=userInput.FirstName) || (lastName !=userInput.LastName) || (email!=userInput.Email) || (password!=userInput.Password)
 }
 
 @Composable
 fun SaveUserProfileChange(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
-    val userData = MyViewModel.uiState.collectAsState()
-    userData.value.FirstName=firstName
-    userData.value.LastName=lastName
-    userData.value.Email=email
-    userData.value.Password=password
+    val userInput = data.current
+    userInput.FirstName=firstName
+    userInput.LastName=lastName
+    userInput.Email=email
+    userInput.Password=password
 
 }
 
 @Composable
 fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())){
-    val userData = MyViewModel.uiState.collectAsState()
+    val userData = MyViewModel.activeUser.collectAsState()
     var popupControl by rememberSaveable { mutableStateOf(false) }
 
 

@@ -4,11 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.habittrackerapp.MyApp
-import com.example.habittrackerapp.data
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.toSet
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -16,20 +14,21 @@ import kotlinx.coroutines.launch
 
 class UserViewModel (private val profileRepository: UserDataRepository) : ViewModel() {
     // private UI state (MutableStateFlow)
-    private val _uiState = MutableStateFlow(User(""))
+    private val _activeUser = MutableStateFlow(User(""))
     // public getter for the state (StateFlow)
-    val uiState: StateFlow<User> = _uiState.asStateFlow()
+    val activeUser: StateFlow<User> = _activeUser.asStateFlow()
 
-    private val _allProfiles = MutableStateFlow(listOf<User>())
+    private val _allUsers = MutableStateFlow(listOf<User>())
     // public getter for the state (StateFlow)
-    val allProfiles: StateFlow<List<User>> = _allProfiles.asStateFlow()
+    val allUsers: StateFlow<List<User>> = _allUsers.asStateFlow()
+
 
     /* Method called when ViewModel is first created */
     init {
         // Start collecting the data from the data store when the ViewModel is created.
         viewModelScope.launch {
             profileRepository.getUsers().collect { allProfiles ->
-                _allProfiles.value = allProfiles
+                _allUsers.value = allProfiles
             }
         }
     }
@@ -43,14 +42,16 @@ class UserViewModel (private val profileRepository: UserDataRepository) : ViewMo
 
     fun addUser(user:User) {
         viewModelScope.launch {
-            _uiState.update { user}
-            profileRepository.saveUser(_uiState.value.Email, _uiState.value)
+            _activeUser.update { user}
+            profileRepository.saveUser(_activeUser.value.Email, _activeUser.value)
         }
     }
     fun getUser(userId:String){
         viewModelScope.launch {
             profileRepository.getUser(userId).collect{user ->
-                _uiState.update { user}
+                println(user.FirstName)
+                _activeUser.update { user}
+
             }
         }
     }
