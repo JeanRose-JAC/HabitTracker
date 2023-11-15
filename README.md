@@ -9,10 +9,10 @@ Our application is a habit tracker app. Users must create an account to use it. 
 - Start Android Studio and open the project.
 - Run the application
 
-## Update 14/11/2023
+## Update 15/11/2023
 - Habit data is stored physically on the device. Users can add, view, update, and delete the data. They can also now increase their streak.
 - Users can add, view, update, and delete notes. However, the data does not persist, meaning that when the app is closed, the data disappears. Note data is not yet connected to the account.
-- Users can create an account. User profile and sign-in are still in progress.
+- Users can sign up, sign in and view their information. They can also edit their data and delete their account.
 
 ## Screenshots of application
 ### About Page
