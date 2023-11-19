@@ -43,7 +43,7 @@ fun HabitStartDate(startDate: String, onStartDateChange: (String) -> Unit, modif
     )
 
     //Disallow past dates
-    datePicker.datePicker.minDate = calendar.timeInMillis
+    //datePicker.datePicker.minDate = calendar.timeInMillis
 
     Column{
         Text(

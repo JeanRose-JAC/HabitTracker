@@ -12,6 +12,7 @@ import com.example.habittrackerapp.habit.screens.HabitEditScreen
 import com.example.habittrackerapp.habit.screens.HabitItemScreen
 import com.example.habittrackerapp.habit.screens.HabitListScreen
 import com.example.habittrackerapp.habit.screens.HabitQuestionnaireScreen
+import com.example.habittrackerapp.habit.screens.HabitsForTodayListScreen
 import com.example.habittrackerapp.navigation.AboutScreen
 import com.example.habittrackerapp.navigation.NoteScreen
 import com.example.habittrackerapp.navigation.UserProfileScreen
@@ -48,6 +49,8 @@ sealed class Routes(val route:String)  {
         val routeWithArgs = "${route}/{$habitIdArg}"
     }
     object HabitList: Routes("HabitListRoute")
+    object HabitForTodayList: Routes("HabitForTodayListRoute")
+
     object EditHabit: Routes("HabitEditRoute"){
         const val habitIdArg = "habitId"
         val routeWithArgs = "${route}/{$habitIdArg}"
@@ -97,6 +100,11 @@ fun Router() {
         composable(Routes.HabitList.route){ HabitListScreen(
             navigateToHabitGet = { navController.navigate("${Routes.HabitItem.route}/${it}")}
         )}
+
+        composable(Routes.HabitForTodayList.route){ HabitsForTodayListScreen(
+            navigateToHabitGet = { navController.navigate("${Routes.HabitItem.route}/${it}")}
+        )
+        }
 
         composable(
             route = Routes.EditHabit.routeWithArgs,
