@@ -34,6 +34,7 @@ import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
+import com.example.habittrackerapp.Settings.DeleteUser
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.UserViewModel
 import com.example.habittrackerapp.model.UserViewModelFactory
@@ -155,54 +156,6 @@ fun SaveUserProfileChange(firstName: String,lastName: String,email: String,passw
 
 }
 
-@Composable
-fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
-    val userData = data.current
-    var popupControl by rememberSaveable { mutableStateOf(false) }
-    val navController = LocalNavController.current
 
-
-
-
-    Button(onClick = {popupControl=true}) {
-        Text("Delete Account")
-    }
-    
-    if(popupControl){
-
-
-        DeleteConfirmationDialog(
-            onDeleteConfirm = {
-
-                popupControl = false
-                MyViewModel.clearProfile(userData.Email)
-                userData.Email="";
-                navController.navigate(Routes.SignUpSignIn.route)
-
-            },
-            onDeleteCancel = { popupControl = false },
-        )
-    }
-}
-
-@Composable
-private fun DeleteConfirmationDialog(
-    onDeleteConfirm: () -> Unit, onDeleteCancel: () -> Unit, modifier: Modifier = Modifier
-) {
-    AlertDialog(onDismissRequest = { /* Do nothing */ },
-        title = { Text("Delete User") },
-        text = { Text("Are you sure you want to delete this user?") },
-        modifier = modifier,
-        dismissButton = {
-            TextButton(onClick = onDeleteCancel) {
-                Text("No")
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = onDeleteConfirm) {
-                Text("Yes")
-            }
-        })
-}
 
 
