@@ -49,13 +49,17 @@ fun HabitListScreen(
             Text("Add Habit")
         }
 
+        TextButton(onClick = { navController.navigate(Routes.HabitForTodayList.route) }) {
+            Text("View List Of Habits For Today")
+        }
+
         ListBody(habitList = homeUiState.habitList, onHabitClick = navigateToHabitGet)
 
     }
 }
 
 @Composable
-private fun ListBody(
+fun ListBody(
     habitList: List<Habit>, onHabitClick: (Int) -> Unit, modifier: Modifier = Modifier
 ) {
     Column(
