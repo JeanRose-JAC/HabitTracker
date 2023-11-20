@@ -16,16 +16,15 @@ import com.example.habittrackerapp.data
 @Composable
 fun SettingScreen(){
     val navController = LocalNavController.current
+    val userInput = data.current;
     var popupControl by rememberSaveable { mutableStateOf(false) }
 
     Column {
         Button(onClick = { navController.navigate(Routes.Profile.route) }) {
             Text(text = "Profile")
         }
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "signOut")
-            println("i can commit to git")
-        }
+
+        SignOutUser();
 
         DeleteUser()
 
