@@ -24,6 +24,7 @@ fun SettingScreen(){
         }
         Button(onClick = { /*TODO*/ }) {
             Text(text = "signOut")
+            println("i can commit to git")
         }
 
         DeleteUser()
