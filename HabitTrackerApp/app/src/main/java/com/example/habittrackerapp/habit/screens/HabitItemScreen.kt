@@ -6,6 +6,7 @@ import android.icu.util.Calendar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -128,38 +129,46 @@ fun HabitItemScreen(
             )
         }
 
-        Button(
-            onClick = {myViewModel.increaseStreak()},
-            modifier = Modifier.padding(16.dp)
-        ){
-            Text("Add 1 streak")
-        }
-
-        Button(
-            onClick = {navigateToEditItem(habit.value.habitDetails.id)},
-            modifier = Modifier.padding(16.dp)
-        ){
-            Text("Edit Habit")
-        }
-
-        Button(
-            onClick = {deleteConfirmationRequired = true},
-            modifier = Modifier.padding(16.dp)
-        ){
-            Text("Delete Habit")
-        }
-
-        Button(
-            onClick = {navController.navigate(Routes.HabitList.route)},
-            modifier = Modifier.padding(16.dp)
-        ){
-            Text("View all habits")
-        }
-
-        Button(onClick = { navController.navigate(Routes.HabitForTodayList.route) },
-            modifier = Modifier.padding(16.dp)
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text("View List Of Habits For Today")
+            Button(
+                onClick = {myViewModel.increaseStreak()},
+                modifier = Modifier.padding(16.dp)
+            ){
+                Text("Add streak")
+            }
+
+            Button(
+                onClick = {navigateToEditItem(habit.value.habitDetails.id)},
+                modifier = Modifier.padding(16.dp)
+            ){
+                Text("Edit")
+            }
+
+            Button(
+                onClick = {deleteConfirmationRequired = true},
+                modifier = Modifier.padding(16.dp)
+            ){
+                Text("Delete")
+            }
+        }
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ){
+            Button(
+                onClick = {navController.navigate(Routes.HabitList.route)},
+                modifier = Modifier.padding(16.dp)
+            ){
+                Text("All habits")
+            }
+
+            Button(onClick = { navController.navigate(Routes.HabitForTodayList.route) },
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text("Habits For Today")
+            }
         }
 
         if (deleteConfirmationRequired) {
