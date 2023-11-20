@@ -15,8 +15,7 @@ fun SignSignUpScreen() {
     //val submit= remember{ mutableStateOf(false) }
 
     if(ValidateUser(firstName = userInput.FirstName, lastName = userInput.LastName, email = userInput.Email, password = userInput.Password)){
-        //go to profileScreen
-        Text( "yes")
+        navController.navigate(Routes.Setting.route);
     }
     else{
         Column {
