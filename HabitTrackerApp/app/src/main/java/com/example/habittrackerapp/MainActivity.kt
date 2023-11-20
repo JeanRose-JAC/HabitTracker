@@ -27,6 +27,7 @@ import com.google.firebase.FirebaseApp
 val LocalNavController = compositionLocalOf<NavController> { error("No NavController found!") }
 val data= compositionLocalOf<User>{ error("No User found!")}
 val LocalNotesList = compositionLocalOf<SnapshotStateList<Note>> { error("No notes found!") }
+var darkTheme = compositionLocalOf<Boolean> { error("No darkTheme")}
 
 //Habit Room Database is implemented based on the "Persist data with Room" codelab
 //Source: https://developer.android.com/codelabs/basic-android-kotlin-compose-persisting-data-room#0
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
         setContent {
+            
             HabitTrackerAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
