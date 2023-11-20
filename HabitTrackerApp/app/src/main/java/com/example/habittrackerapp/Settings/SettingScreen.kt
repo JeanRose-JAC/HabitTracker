@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.example.habittrackerapp.LocalNavController
+import com.example.habittrackerapp.darkTheme
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.signInSignUp.UserSignUp
 import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
@@ -18,7 +19,7 @@ import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
 @Composable
 fun SettingScreen(){
     val navController = LocalNavController.current
-    var darkTheme by rememberSaveable { mutableStateOf(false) }
+    var darkTheme = darkTheme.current
 
     Column {
         Button(onClick = { navController.navigate(Routes.Profile.route) }) {
@@ -36,11 +37,6 @@ fun SettingScreen(){
         Button(onClick = { navController.navigate(Routes.Policy.route) }) {
             Text(text = "Policy")
         }
-
-        if(darkTheme){
-            HabitTrackerAppTheme(darkTheme = true) {
-                navController.navigate(Routes.About.route)
-            }
-        }
+        
     }
 }
