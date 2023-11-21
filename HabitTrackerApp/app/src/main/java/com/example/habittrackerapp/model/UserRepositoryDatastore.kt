@@ -27,8 +27,8 @@ class UserRepositoryDatastore(private val context: Context) : SavedUserRepositor
 
     override fun getProfile(): Flow<SavedUser> = context.dataStore.data.map {
         SavedUser(
-            email = it[EMAIL] ?: "",
-            password = it[PASSWORD] ?: ""
+            email = it[EMAIL] ?: "empty",
+            password = it[PASSWORD] ?: "empty"
         )
     }
 

@@ -25,20 +25,22 @@ fun NoteScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory = Save
 ) {
     val myUiState by savedUserViewModel.uiState.collectAsState()
     val navController = LocalNavController.current
-    val savedEmail by rememberSaveable { mutableStateOf(myUiState.email)}
-    val savedPW by rememberSaveable { mutableStateOf(myUiState.password)}
 
     Column {
-        if( !savedEmail.isEmpty() && !savedPW.isEmpty()){
-            Text(text = "Notes",
-                modifier = Modifier
-                    .padding(20.dp, 10.dp)
-                    .align(Alignment.CenterHorizontally),
-                style= MaterialTheme.typography.displaySmall
-            )
-            ViewNote()
-        }else{
-            navController.navigate(Routes.SignUpSignIn.route)
+        if( !myUiState.email.isEmpty()){
+            if(myUiState.email != "empty"){
+                Text(text = "Notes",
+                    modifier = Modifier
+                        .padding(20.dp, 10.dp)
+                        .align(Alignment.CenterHorizontally),
+                    style= MaterialTheme.typography.displaySmall
+                )
+                ViewNote()
+            }
+            else{
+                navController.navigate(Routes.SignUpSignIn.route)
+            }
         }
+
     }
 }
