@@ -35,6 +35,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data
+import com.example.habittrackerapp.model.SavedUserViewModel
+import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
 import com.example.habittrackerapp.model.UserViewModel
 import com.example.habittrackerapp.model.UserViewModelFactory
 import com.example.habittrackerapp.signInSignUp.ValidateUser
@@ -156,7 +158,9 @@ fun SaveUserProfileChange(firstName: String,lastName: String,email: String,passw
 }
 
 @Composable
-fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
+fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory()),
+               savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
+) {
     val userData = data.current
     var popupControl by rememberSaveable { mutableStateOf(false) }
     val navController = LocalNavController.current
@@ -173,7 +177,7 @@ fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFact
 
         DeleteConfirmationDialog(
             onDeleteConfirm = {
-
+                savedUserViewModel.saveEmailAndPassword("empty", "empty")
                 popupControl = false
                 MyViewModel.clearProfile(userData.Email)
                 userData.Email="";

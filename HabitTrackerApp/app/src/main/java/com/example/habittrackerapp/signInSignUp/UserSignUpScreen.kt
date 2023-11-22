@@ -43,6 +43,8 @@ import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data
+import com.example.habittrackerapp.model.SavedUserViewModel
+import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
 import com.example.habittrackerapp.model.User
 import com.example.habittrackerapp.model.UserViewModel
 import com.example.habittrackerapp.model.UserViewModelFactory
@@ -67,7 +69,9 @@ import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
 fun UserSignUp(modifier: Modifier = Modifier,
                myViewModel: UserViewModel =
                    viewModel(factory= UserViewModelFactory()),
-               authViewModel: AuthViewModel= viewModel(factory = AuthViewModelFactory())) {
+               authViewModel: AuthViewModel= viewModel(factory = AuthViewModelFactory()),
+               savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
+) {
 
     var firstName by rememberSaveable { mutableStateOf("") }
     var lastName by rememberSaveable { mutableStateOf("") }
@@ -133,6 +137,7 @@ fun UserSignUp(modifier: Modifier = Modifier,
             }
             item{
                 if(showList.value){
+                    savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
                     authViewModel.signUp(userInput.Email,userInput.Password);
                     myViewModel.addUser(userInput)
 
