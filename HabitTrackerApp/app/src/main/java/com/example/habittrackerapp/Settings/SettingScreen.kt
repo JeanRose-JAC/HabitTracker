@@ -1,6 +1,7 @@
 package com.example.habittrackerapp.Settings
 
 import Routes
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -10,7 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.example.habittrackerapp.LocalNavController
-import com.example.habittrackerapp.darkTheme
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.signInSignUp.UserSignUp
 import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
@@ -19,7 +19,6 @@ import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
 @Composable
 fun SettingScreen(){
     val navController = LocalNavController.current
-    var darkTheme = darkTheme.current
 
     Column {
         Button(onClick = { navController.navigate(Routes.Profile.route) }) {
@@ -30,7 +29,7 @@ fun SettingScreen(){
 
         DeleteUser()
 
-        Button(onClick = { darkTheme = true }) {
+        Button(onClick = { TODO()}) {
             Text(text = "Change Theme")
         }
 
