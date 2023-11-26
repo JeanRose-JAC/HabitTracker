@@ -13,11 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.data
+import com.example.habittrackerapp.model.SavedUserViewModel
+import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
 import com.example.habittrackerapp.model.UserViewModel
 import com.example.habittrackerapp.model.UserViewModelFactory
 
 @Composable
-fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
+fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory()),
+               savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
+               ) {
     val userData = data.current
     var popupControl by rememberSaveable { mutableStateOf(false) }
     val navController = LocalNavController.current
@@ -37,6 +41,7 @@ fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFact
 
                 popupControl = false
                 MyViewModel.clearProfile(userData.Email)
+                savedUserViewModel.saveEmailAndPassword("empty", "empty")
                 userData.Email="";
                 navController.navigate(Routes.SignUpSignIn.route)
 

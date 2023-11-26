@@ -141,7 +141,7 @@ fun UserSignUp(modifier: Modifier = Modifier,
                     authViewModel.signUp(userInput.Email,userInput.Password);
                     myViewModel.addUser(userInput)
 
-                    navController.navigate(Routes.Profile.route)
+                    navController.navigate(Routes.Setting.route)
                     Text(text = "Congrats you are logged in")
 
 

@@ -10,12 +10,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
+import com.example.habittrackerapp.auth.AuthViewModel
+import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.data
+import com.example.habittrackerapp.model.SavedUserViewModel
+import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
 
 
 @Composable
-fun SignOutUser() {
+fun SignOutUser(authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
+                savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
+) {
     val navController = LocalNavController.current
     val userData = data.current;
     var popupControl by rememberSaveable { mutableStateOf(false) }
@@ -32,7 +39,9 @@ fun SignOutUser() {
 
                 popupControl = false
                 userData.Email="";
-                navController.navigate(Routes.SignUpSignIn.route)
+                savedUserViewModel.saveEmailAndPassword("empty", "empty")
+                authViewModel.signOut();
+                navController.navigate(Routes.About.route)
 
             },
             onSignOutCancel = { popupControl = false },
