@@ -61,9 +61,10 @@ fun DisplayNotesList(notesViewModel: NotesViewModel = viewModel(factory= NotesVi
         item{
             if(notesList.isEmpty()){
                 Text("You have no notes saved.")
-                Button(onClick = {navController.navigate(Routes.Note.route)}){
-                    Text(text = "Add note")
-                }
+            }
+
+            Button(onClick = {navController.navigate(Routes.Note.route)}){
+                Text(text = "Add note")
             }
         }
             itemsIndexed(notesList) { index, note ->

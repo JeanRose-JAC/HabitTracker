@@ -66,10 +66,15 @@ fun ListBody(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        HabitList(
-            habitList = habitList,
-            onHabitClick = { onHabitClick(it.id) },
-        )
+        if(habitList.isEmpty()){
+            Text("You have no saved habits")
+        }
+        else{
+            HabitList(
+                habitList = habitList,
+                onHabitClick = { onHabitClick(it.id) },
+            )
+        }
     }
 }
 
