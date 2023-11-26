@@ -41,11 +41,11 @@ class NotesViewModel (private val noteRepository: NoteRepository) : ViewModel() 
         }
     }
 
-    fun getNotes(owner: String){
+    fun getNotes(owner: String) {
         _allUserNotes.value = _allNotes.value.filter { it.owner == owner }
     }
 
-    fun getNote(id: String){
+    fun getNote(id: String) {
         viewModelScope.launch{
             noteRepository.getNote(id).collect{ note ->
                 _currentNote.update { note }
@@ -53,7 +53,7 @@ class NotesViewModel (private val noteRepository: NoteRepository) : ViewModel() 
         }
     }
 
-    fun deleteNote(id: String){
+    fun deleteNote(id: String) {
         viewModelScope.launch {
             noteRepository.deleteNote(id)
         }
