@@ -21,10 +21,6 @@ fun SettingScreen() {
 
         DeleteUser()
 
-        Button(onClick = { TODO()}) {
-            Text(text = "Change Theme")
-        }
-
         Button(onClick = { navController.navigate(Routes.Policy.route) }) {
             Text(text = "Policy")
         }
