@@ -33,6 +33,8 @@ import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.settings.DeleteUser
 import com.example.habittrackerapp.data
+import com.example.habittrackerapp.model.SavedUserViewModel
+import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
 import com.example.habittrackerapp.model.UserViewModel
 import com.example.habittrackerapp.model.UserViewModelFactory
 import com.example.habittrackerapp.signInSignUp.ValidateUser
