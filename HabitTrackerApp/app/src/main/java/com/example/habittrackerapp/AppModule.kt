@@ -6,7 +6,9 @@ import com.example.habittrackerapp.auth.AuthRepositoryFirebase
 import com.example.habittrackerapp.habit.database.HabitDatabase
 import com.example.habittrackerapp.habit.database.OfflineHabitsRepository
 import com.example.habittrackerapp.model.HabitRepository
+import com.example.habittrackerapp.model.SavedUserRepository
 import com.example.habittrackerapp.model.UserDataRepository
+import com.example.habittrackerapp.model.UserRepositoryDatastore
 import com.example.habittrackerapp.model.UserRepositoryFirestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -30,5 +32,9 @@ class AppModule(
 
     val habitsRepository: HabitRepository by lazy {
         OfflineHabitsRepository(HabitDatabase.getDatabase(appContext).habitDao())
+    }
+
+    val savedUserRepository :SavedUserRepository by lazy {
+        UserRepositoryDatastore(appContext)
     }
 }
