@@ -1,7 +1,5 @@
-package com.example.habittrackerapp.Settings
+package com.example.habittrackerapp.settings
 
-import android.graphics.Paint.Align
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -14,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PolicyScreen(modifier: Modifier = Modifier){
+fun PolicyScreen(modifier: Modifier = Modifier) {
 
     val scrollState = rememberScrollState();
 

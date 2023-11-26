@@ -8,8 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.habittrackerapp.LocalNavController
-import com.example.habittrackerapp.Settings.PolicyScreen
-import com.example.habittrackerapp.Settings.SettingScreen
+import com.example.habittrackerapp.settings.PolicyScreen
+import com.example.habittrackerapp.settings.SettingScreen
 import com.example.habittrackerapp.habit.screens.HabitEditScreen
 import com.example.habittrackerapp.habit.screens.HabitItemScreen
 import com.example.habittrackerapp.habit.screens.HabitListScreen

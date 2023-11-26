@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.Settings
+package com.example.habittrackerapp.settings
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button

@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.Settings
+package com.example.habittrackerapp.settings
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -15,7 +15,7 @@ import com.example.habittrackerapp.data
 
 
 @Composable
-fun SignOutUser(){
+fun SignOutUser() {
     val navController = LocalNavController.current
     val userData = data.current;
     var popupControl by rememberSaveable { mutableStateOf(false) }
