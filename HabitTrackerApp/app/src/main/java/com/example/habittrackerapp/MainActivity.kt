@@ -36,6 +36,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
         setContent {
+            
             HabitTrackerAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(

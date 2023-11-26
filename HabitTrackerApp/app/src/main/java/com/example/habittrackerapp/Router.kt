@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.habittrackerapp.LocalNavController
+import com.example.habittrackerapp.settings.PolicyScreen
+import com.example.habittrackerapp.settings.SettingScreen
 import com.example.habittrackerapp.habit.screens.HabitEditScreen
 import com.example.habittrackerapp.habit.screens.HabitItemScreen
 import com.example.habittrackerapp.habit.screens.HabitListScreen
@@ -35,6 +37,8 @@ sealed class Routes(val route:String)  {
     object About : Routes("AboutScreenRoute")
     object Note: Routes("NoteScreenRoute")
     object Profile:Routes("ProfileScreenRoute")
+    object Setting:Routes("SettingScreenRoute")
+    object  Policy: Routes("PolicyScreenRoute")
 
 
     object ViewSingle: Routes("SingleNoteScreenRoute/{id}"){
@@ -74,6 +78,8 @@ fun Router() {
         composable(Routes.About.route) { AboutScreen()}
         composable(Routes.Note.route){ NoteScreen() }
         composable(Routes.Profile.route){ UserProfileScreen()}
+        composable(Routes.Setting.route){ SettingScreen()}
+        composable(Routes.Policy.route){ PolicyScreen()}
 
         composable(Routes.ViewList.route){ NoteList()}
         //how to extract the elements from the text fields.....
@@ -85,9 +91,6 @@ fun Router() {
         composable(Routes.SignIn.route){ UserSignInScreen() }
         composable(Routes.SignUpSignIn.route){ SignSignUpScreen() }
         composable(Routes.HabitQuestionnaire.route){ HabitQuestionnaireScreen() }
-        //composable(Routes.HabitItem.route){ HabitItemScreen(it.arguments?.getString("id")?:"")}
-        //composable(Routes.HabitList.route){ HabitListScreen() }
-        //composable(Routes.EditHabit.route){ HabitEditScreen(it.arguments?.getString("id") ?: "") }
         composable(
             route = Routes.HabitItem.routeWithArgs,
             arguments = listOf(navArgument(Routes.HabitItem.habitIdArg){

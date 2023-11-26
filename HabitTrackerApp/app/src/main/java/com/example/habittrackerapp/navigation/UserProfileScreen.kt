@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -18,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.habittrackerapp.LocalNavController
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.collectAsState
@@ -30,10 +28,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
+import com.example.habittrackerapp.settings.DeleteUser
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.SavedUserViewModel
 import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
@@ -157,56 +155,6 @@ fun SaveUserProfileChange(firstName: String,lastName: String,email: String,passw
 
 }
 
-@Composable
-fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory()),
-               savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
-) {
-    val userData = data.current
-    var popupControl by rememberSaveable { mutableStateOf(false) }
-    val navController = LocalNavController.current
 
-
-
-
-    Button(onClick = {popupControl=true}) {
-        Text("Delete Account")
-    }
-    
-    if(popupControl){
-
-
-        DeleteConfirmationDialog(
-            onDeleteConfirm = {
-                savedUserViewModel.saveEmailAndPassword("empty", "empty")
-                popupControl = false
-                MyViewModel.clearProfile(userData.Email)
-                userData.Email="";
-                navController.navigate(Routes.SignUpSignIn.route)
-
-            },
-            onDeleteCancel = { popupControl = false },
-        )
-    }
-}
-
-@Composable
-private fun DeleteConfirmationDialog(
-    onDeleteConfirm: () -> Unit, onDeleteCancel: () -> Unit, modifier: Modifier = Modifier
-) {
-    AlertDialog(onDismissRequest = { /* Do nothing */ },
-        title = { Text("Delete User") },
-        text = { Text("Are you sure you want to delete this user?") },
-        modifier = modifier,
-        dismissButton = {
-            TextButton(onClick = onDeleteCancel) {
-                Text("No")
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = onDeleteConfirm) {
-                Text("Yes")
-            }
-        })
-}
 
 
