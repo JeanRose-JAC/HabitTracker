@@ -23,7 +23,7 @@ class NotesViewModel (private val noteRepository: NoteRepository) : ViewModel() 
 
     private val _allUserNotes = MutableStateFlow(listOf<Note>())
     // public getter for the state (StateFlow)
-    val allUserNotes: StateFlow<List<Note>> = _allNotes.asStateFlow()
+    val allUserNotes: StateFlow<List<Note>> = _allUserNotes.asStateFlow()
 
     init {
         // Start collecting the data from the data store when the ViewModel is created.

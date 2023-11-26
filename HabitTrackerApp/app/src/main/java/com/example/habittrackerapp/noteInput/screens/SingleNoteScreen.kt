@@ -2,35 +2,35 @@ package com.example.habittrackerapp.noteInput.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.noteInput.screens.singleNote.SingleNoteLayout
 import com.example.habittrackerapp.LocalNotesList
+import com.example.habittrackerapp.model.NotesViewModel
+import com.example.habittrackerapp.model.NotesViewModelFactory
 import com.example.habittrackerapp.noteInput.EditLayout
 
 
 @Composable
-fun SingleNote(id: String) {
+fun SingleNote(id: String, notesViewModel: NotesViewModel = viewModel(factory= NotesViewModelFactory())) {
+    val notesList by notesViewModel.allNotes.collectAsState()
+
     Column{
-        val noteList= LocalNotesList.current
-        if(id.isBlank() || id.toIntOrNull()==null){
-            SingleNoteLayout(noteList[noteList.lastIndex])
-        }
-        else{
-            SingleNoteLayout(noteList[id.toInt()])
+        if(notesList.isNotEmpty()){
+            SingleNoteLayout(notesList.first { it.id == id })
         }
 
     }
 }
 @Composable
-fun SingleNoteEdit(id: String) {
-    Column{
-        val noteList= LocalNotesList.current
-        if(id.isBlank() || id.toIntOrNull()==null){
-            EditLayout(noteList[noteList.lastIndex])
-        }
-        else{
-            EditLayout(noteList[id.toInt()])
-        }
+fun SingleNoteEdit(id: String, notesViewModel: NotesViewModel = viewModel(factory= NotesViewModelFactory())) {
+    val notesList by notesViewModel.allNotes.collectAsState()
 
+    Column{
+        if(notesList.isNotEmpty()) {
+            EditLayout(notesList.first { it.id == id })
+        }
     }
 }
 

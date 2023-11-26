@@ -27,15 +27,20 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextButton
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.Note
+import com.example.habittrackerapp.model.NotesViewModel
+import com.example.habittrackerapp.model.NotesViewModelFactory
 
 /**
  * It contains text-fields for user input and saves it to a list
  * */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditNote(note: Note) {
+fun EditNote(note: Note, notesViewModel: NotesViewModel = viewModel(factory= NotesViewModelFactory())) {
 
+    val userInput= data.current
     var title by rememberSaveable { mutableStateOf(note.title) }
     val maxLength = 20
     var urlImage by rememberSaveable { mutableStateOf(note.urlImage!!) }
@@ -122,6 +127,7 @@ fun EditNote(note: Note) {
                                     note.title = title;
                                     note.description = description;
                                     note.urlImage = urlImage;
+                                    notesViewModel.addNote(Note(note.title, note.description, note.urlImage, userInput.Email, note.id))
                                     navController.navigate(Routes.ViewList.route)
                                 }
                             ) {Text("confirm")}

@@ -7,6 +7,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.auth.AuthViewModel
@@ -25,21 +28,16 @@ fun SignSignUpScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory 
     val navController = LocalNavController.current
     val userInput= data.current
     val activeUser = MyViewModel.activeUser.collectAsState()
-    //val submit= remember{ mutableStateOf(false) }
-
-//    if(ValidateUser(firstName = userInput.FirstName, lastName = userInput.LastName, email = userInput.Email, password = userInput.Password)){
-//        navController.navigate(Routes.Setting.route);
-//    }
-//    else{
-//
-//
-//    }
+    var onceSigned by rememberSaveable { mutableStateOf(true) }
 
     Column {
         if( !myUiState.email.isEmpty()) {
             if (myUiState.email != "empty") {
-                authViewModel.signIn(myUiState.email,myUiState.password)
-                MyViewModel.getUser(myUiState.email)
+                if(onceSigned){
+                    authViewModel.signIn(myUiState.email,myUiState.password)
+                    MyViewModel.getUser(myUiState.email)
+                    onceSigned = false
+                }
 
                 if(activeUser.value.FirstName.isNotEmpty()){
                     println("in signIn-> ${activeUser.value.FirstName}")
