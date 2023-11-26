@@ -90,7 +90,7 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
         userInput.ProfilePicture = activeUser.value.LastName
         userInput.Password = activeUser.value.Password
         savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
-        navController.navigate(Routes.Profile.route)
+        navController.navigate(Routes.Setting.route)
     }
 
 }

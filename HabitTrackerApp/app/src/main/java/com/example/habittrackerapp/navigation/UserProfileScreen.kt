@@ -155,14 +155,15 @@ fun ValidUserProfileChanges(firstName: String,lastName: String,email: String,pas
 }
 
 @Composable
-fun SaveUserProfileChange(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
+fun SaveUserProfileChange(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory()),                savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
+) {
     val userInput = data.current
     userInput.FirstName=firstName
     userInput.LastName=lastName
     userInput.Email=email
     userInput.Password=password
     MyViewModel.addUser(userInput);
-
+    savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
 }
 
 

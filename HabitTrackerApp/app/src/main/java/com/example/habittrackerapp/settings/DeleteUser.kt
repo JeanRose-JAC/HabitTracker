@@ -12,6 +12,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
+import com.example.habittrackerapp.auth.AuthViewModel
+import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.SavedUserViewModel
 import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
@@ -20,6 +22,7 @@ import com.example.habittrackerapp.model.UserViewModelFactory
 
 @Composable
 fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory()),
+               authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
                savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
                ) {
     val userData = data.current
@@ -40,6 +43,7 @@ fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFact
             onDeleteConfirm = {
 
                 popupControl = false
+                authViewModel.delete()
                 MyViewModel.clearProfile(userData.Email)
                 savedUserViewModel.saveEmailAndPassword("empty", "empty")
                 userData.Email="";
