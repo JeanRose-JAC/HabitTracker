@@ -1,6 +1,8 @@
 package com.example.habittrackerapp.signInSignUp
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,12 +17,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
+import com.example.habittrackerapp.R
 import com.example.habittrackerapp.auth.AuthViewModel
 import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.data
@@ -45,11 +51,16 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
 
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
 
-    Column {
+    Image(   painter = painterResource(R.drawable.logo2),
+        contentDescription = null,
+        modifier = Modifier.padding(start = 60.dp,top=20.dp)
+    )
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(top=300.dp)) {
+
         Card(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(30.dp,8.dp)
         ){
             TextField(
                 value = email,
@@ -62,7 +73,7 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
         Card(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(30.dp,8.dp)
         ){
             TextField(
                 value = password,

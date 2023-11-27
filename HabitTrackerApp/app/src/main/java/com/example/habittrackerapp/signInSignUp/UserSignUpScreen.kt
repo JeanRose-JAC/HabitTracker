@@ -94,15 +94,6 @@ fun UserSignUp(modifier: Modifier = Modifier,
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically,
                 ){
-
-                    Image(
-                        modifier = Modifier
-                            .size(100.dp)
-                            .padding(8.dp),
-                        painter= painterResource(R.drawable.logo),
-                        contentDescription = null
-                    )
-
                     Text(
                         text = "Sign Up",
                         style = MaterialTheme.typography.displaySmall,
@@ -122,7 +113,9 @@ fun UserSignUp(modifier: Modifier = Modifier,
                     onClick = {
                         showList.value=true
                     },
-
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(60.dp,8.dp),
                     enabled = ValidateUser(firstName,lastName,email,password)
 
                 ){
@@ -199,7 +192,7 @@ fun FirstName(firstName:String,onChange:(String)->Unit,modifier: Modifier = Modi
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(20.dp,8.dp)
     ) {
         TextField(
             value = firstName,
@@ -220,7 +213,7 @@ fun LastName(lastName:String,onChange:(String)->Unit,modifier: Modifier = Modifi
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(20.dp,8.dp)
     ){
         TextField(
             value = lastName,
@@ -243,7 +236,7 @@ fun Email(email:String, onChange:(String)->Unit,modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(20.dp,8.dp)
     ){
         TextField(
             value = email,
@@ -267,7 +260,7 @@ fun Password(password:String, onChange: (String) -> Unit, modifier: Modifier=Mod
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(20.dp,8.dp)
     ){
         TextField(
             value = password,
@@ -295,7 +288,7 @@ fun Gender(gender:String,onChange: (String) -> Unit) {
 
     val genders=listOf("no","female","male","non-binary")
 
-    Column(Modifier.padding(8.dp)){
+    Column(Modifier.padding(20.dp,8.dp)){
         Text(text = "Please choose a gender")
 
         genders.forEach { item->
@@ -371,7 +364,7 @@ fun ProfilePicture(profilePic:String, onChange: (String) -> Unit, modifier: Modi
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(20.dp,8.dp)
     ){
         Column {
             TextField(
