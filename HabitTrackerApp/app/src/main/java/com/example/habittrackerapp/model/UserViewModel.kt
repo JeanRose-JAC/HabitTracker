@@ -46,11 +46,17 @@ class UserViewModel (private val profileRepository: UserDataRepository) : ViewMo
             profileRepository.saveUser(_activeUser.value.Email, _activeUser.value)
         }
     }
-    fun getUser(userId:String) {
+    fun getUser(userId:String, pw: String) {
         viewModelScope.launch {
             profileRepository.getUser(userId).collect{user ->
                 println(user.FirstName)
-                _activeUser.update { user}
+
+                if(user.Password != pw){
+                    _activeUser.update { User()}
+                }
+                else{
+                    _activeUser.update { user}
+                }
 
             }
         }

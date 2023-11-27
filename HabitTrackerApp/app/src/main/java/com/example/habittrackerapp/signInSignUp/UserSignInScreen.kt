@@ -77,12 +77,11 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
         }
         Button(onClick = {
             authViewModel.signIn(email,password)
-            MyViewModel.getUser(email)
+            MyViewModel.getUser(email,password)
 
             if(activeUser.value.Password != password){
                 println("yes");
                 wrongCredential=true;
-
             }
 
         }) {
@@ -91,11 +90,10 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
         }
         if(wrongCredential){
             Text(text = "Wrong username or password\nPlease try again", color = MaterialTheme.colorScheme.error)
-
-            wrongCredential = false
         }
     }
     if(activeUser.value.FirstName.isNotEmpty()  && activeUser.value.Password == password){
+        wrongCredential = false
         println("in signIn-> ${activeUser.value.FirstName}")
         userInput.FirstName=activeUser.value.FirstName
         userInput.Email = activeUser.value.Email
