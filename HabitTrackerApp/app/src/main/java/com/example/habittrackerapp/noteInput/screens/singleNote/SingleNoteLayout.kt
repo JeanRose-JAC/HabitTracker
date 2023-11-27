@@ -22,7 +22,7 @@ fun SingleNoteLayout(note: Note) {
                 .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
-            SingleNoteElementDisplay(note)
+            //SingleNoteElementDisplay(note)
 
         }
     }

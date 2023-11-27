@@ -11,6 +11,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -28,11 +29,13 @@ import com.example.habittrackerapp.model.NotesViewModelFactory
 
 
 @Composable
-fun SingleNoteElementDisplay(note: Note,
+fun SingleNoteElementDisplay(id: String,
                              notesViewModel: NotesViewModel = viewModel(factory= NotesViewModelFactory())
 ) {
     val navController = LocalNavController.current
     var openDialog by rememberSaveable { mutableStateOf(false) }
+    val note by notesViewModel.currentNote.collectAsState()
+    notesViewModel.getNote(id)
 
     Column(modifier = Modifier
         .padding(20.dp)
@@ -41,54 +44,64 @@ fun SingleNoteElementDisplay(note: Note,
         Button(onClick = { navController.navigate(Routes.ViewList.route) }) {
             Text("View List");
         }
-        LoadImage(url = note.urlImage!!)
 
-        //title text field
-        Text(
-            text = note.title,
-            modifier = Modifier
-                .padding(20.dp, 0.dp)
-                .fillMaxWidth()
-        )
-        //body/content description text field
-        Text(
-            text = note.description,
-            modifier = Modifier
-                .height(250.dp)
-                .padding(20.dp, 0.dp),
-        )
-        //add remove button and edit at the top??
+        if(note.id == id){
+            LoadImage(url = note.urlImage!!)
 
-        Button(onClick = {
-            openDialog = true
-        },
-            modifier = Modifier
-                .padding(10.dp,0.dp))
-        {
-            Text(text = "remove")
-        }
-
-        if(openDialog){
-            println(note.title)
-            AlertDialog(
-                onDismissRequest = {  openDialog=false },
-                confirmButton = {
-                    TextButton(
-                        onClick = {
-                            openDialog=false
-                            notesViewModel.deleteNote(note.id)
-                            navController.navigate(Routes.ViewList.route)
-                        }
-                    ) {Text("confirm")}
-                },
-                title={
-                    Text("Delete")
-                },
-                text = {
-                    Text(text = "Are you sure?" + note.title)
-                }
+            //title text field
+            Text(
+                text = note.title,
+                modifier = Modifier
+                    .padding(20.dp, 0.dp)
+                    .fillMaxWidth()
             )
+            //body/content description text field
+            Text(
+                text = note.description,
+                modifier = Modifier
+                    .height(250.dp)
+                    .padding(20.dp, 0.dp),
+            )
+            //add remove button and edit at the top??
+
+            Button(onClick = {
+                openDialog = true
+            },
+                modifier = Modifier
+                    .padding(10.dp,0.dp))
+            {
+                Text(text = "remove")
+            }
+
+            if(openDialog){
+                println(note.title)
+                AlertDialog(
+                    onDismissRequest = {  openDialog=false },
+                    title={
+                        Text("Delete")
+                    },
+                    text = {
+                        Text(text = "Are you sure?" + note.title)
+                    },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                openDialog=false
+                                notesViewModel.deleteNote(note.id)
+                                navController.navigate(Routes.ViewList.route)
+                            }
+                        ) {Text("Yes")}
+                    },
+                    dismissButton = {
+                        TextButton(onClick = {openDialog = false}) {
+                            Text("No")
+                        }
+                    },
+                )
+            }
         }
+
+
     }
 }
 
