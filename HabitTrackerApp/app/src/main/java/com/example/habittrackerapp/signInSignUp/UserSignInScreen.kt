@@ -79,10 +79,10 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
             authViewModel.signIn(email,password)
             MyViewModel.getUser(email,password)
 
-            if(activeUser.value.Password != password){
-                println("yes");
-                wrongCredential=true;
-            }
+//            if(activeUser.value.Password != password){
+//                println("yes");
+//                wrongCredential=true;
+//            }
 
         }) {
             Text(text = "Sign in")
@@ -103,6 +103,9 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
         userInput.Password = activeUser.value.Password
         savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
         navController.navigate(Routes.Setting.route)
+    }
+    else if(activeUser.value.Email == "empty"){
+        wrongCredential = true
     }
 
 }

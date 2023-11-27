@@ -52,7 +52,7 @@ class UserViewModel (private val profileRepository: UserDataRepository) : ViewMo
                 println(user.FirstName)
 
                 if(user.Password != pw){
-                    _activeUser.update { User()}
+                    _activeUser.update { User("empty")}
                 }
                 else{
                     _activeUser.update { user}
