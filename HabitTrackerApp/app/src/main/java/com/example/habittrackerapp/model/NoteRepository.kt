@@ -3,10 +3,8 @@ package com.example.habittrackerapp.model
 import kotlinx.coroutines.flow.Flow
 
 interface NoteRepository {
-    suspend fun saveUser(oldName: String, profileData: User)
-
-    suspend fun getUser(email:String): Flow<User>
-
-    suspend fun getUsers(): Flow<List<User>>
-    suspend fun delete(email:String)
+    suspend fun saveNote(id: String, note: Note)
+    suspend fun getNotes(): Flow<List<Note>>
+    suspend fun getNote(id: String): Flow<Note>
+    suspend fun deleteNote(id: String)
 }

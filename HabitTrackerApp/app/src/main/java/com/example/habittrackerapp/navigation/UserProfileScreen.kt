@@ -22,16 +22,20 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
-import com.example.habittrackerapp.settings.DeleteUser
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.SavedUserViewModel
 import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
@@ -71,16 +75,18 @@ fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserV
     var password by rememberSaveable { mutableStateOf(userInput.Password) }
     var saveChanges by rememberSaveable {mutableStateOf(false)}
 
+    val focusManager = LocalFocusManager.current
+
     LazyColumn {
         item {
             ShowProfilePicture()
             if(userInput.Gender!="" || !userInput.Gender.isEmpty()){
                 Text(text = userInput.Gender)
             }
-            TextCard("Firstname",firstName) { firstName = it }
-            TextCard("LastName",lastName) { lastName = it }
-            TextCard("Email",email) { email = it }
-            TextCard("Password",password) { password = it }
+            TextCard("Firstname",firstName, focusManager) { firstName = it }
+            TextCard("LastName",lastName, focusManager) { lastName = it }
+            TextCard("Email",email, focusManager) { email = it }
+            TextCard("Password",password, focusManager) { password = it }
 
             if(ValidUserProfileChanges(firstName,lastName,email,password)){
                 Button(onClick = {saveChanges=true}) {
@@ -88,10 +94,12 @@ fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserV
                 }
                 if(saveChanges){
                     SaveUserProfileChange(firstName,lastName,email,password)
+                    focusManager.clearFocus()
+                    saveChanges = false
                 }
             }
 
-            DeleteUser()
+            //DeleteUser()
         }
 
     }
@@ -109,7 +117,8 @@ fun ShowProfilePicture() {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextCard(name:String,value:String,onChange:(String)->Unit) {
+fun TextCard(name:String,value:String, focusManager: FocusManager, onChange:(String)->Unit) {
+    val focusRequester = remember { FocusRequester() }
 
     Card(
         colors = CardDefaults.cardColors(
@@ -128,7 +137,8 @@ fun TextCard(name:String,value:String,onChange:(String)->Unit) {
             Row {
                 TextField(value = value,
                     onValueChange = onChange,
-                    colors = TextFieldDefaults.colors(MaterialTheme.colorScheme.surfaceTint)
+                    colors = TextFieldDefaults.colors(MaterialTheme.colorScheme.surfaceTint),
+                    modifier = Modifier.focusRequester(focusRequester)
                 )
 //                Icon(painter = Icons.Filled.Create, contentDescription = "Edit")
             }
@@ -145,14 +155,15 @@ fun ValidUserProfileChanges(firstName: String,lastName: String,email: String,pas
 }
 
 @Composable
-fun SaveUserProfileChange(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
+fun SaveUserProfileChange(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory()),                savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
+) {
     val userInput = data.current
     userInput.FirstName=firstName
     userInput.LastName=lastName
     userInput.Email=email
     userInput.Password=password
     MyViewModel.addUser(userInput);
-
+    savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
 }
 
 

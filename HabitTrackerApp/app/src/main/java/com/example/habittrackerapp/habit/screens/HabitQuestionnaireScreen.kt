@@ -47,7 +47,9 @@ fun HabitQuestionnaireScreen(modifier: Modifier = Modifier) {
             fontSize = 12.sp,
         )
 
-        HabitDescription(desc, {desc = it})
+        HabitDescription(desc, {if(it.length <= 75){
+            desc = it
+        }})
         HabitStartDate(startDate, {startDate = it})
         HabitFrequency(frequency, {frequency = it})
         HabitTypeQuestion(type, {type = it})

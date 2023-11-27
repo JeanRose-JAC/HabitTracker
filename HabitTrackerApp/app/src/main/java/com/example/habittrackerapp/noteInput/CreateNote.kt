@@ -26,7 +26,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.Note
+import com.example.habittrackerapp.model.NotesViewModel
+import com.example.habittrackerapp.model.NotesViewModelFactory
+import com.example.habittrackerapp.model.UserViewModel
+import com.example.habittrackerapp.model.UserViewModelFactory
 
 
 /**
@@ -34,8 +40,9 @@ import com.example.habittrackerapp.model.Note
  * */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateNote() {
+fun CreateNote(notesViewModel: NotesViewModel = viewModel(factory= NotesViewModelFactory())) {
 
+    val userInput= data.current
     var title by rememberSaveable { mutableStateOf("") }
     val maxLength = 20
     var urlImage by rememberSaveable { mutableStateOf("") }
@@ -106,8 +113,12 @@ fun CreateNote() {
             Button(
                 onClick =
                 {
-                    var popUp = addToList(title, description, urlImage, notesList)
+                    var popUp = addToList(title, description, urlImage, userInput.Email,notesList)
                     if(popUp){
+                        val newNote = Note(title, description, urlImage, userInput.Email)
+                        notesList.add(newNote);
+                        notesViewModel.addNote(newNote)
+
                         Toast.makeText(
                             context,
                             "Note has been added to the list",
@@ -141,11 +152,11 @@ fun CreateNote() {
 }
 
 ///adds the new notes to the list if the items aren't empty
-fun addToList(title: String, description: String, urlImage:String?,notesList: SnapshotStateList<Note>):Boolean {
+fun addToList(title: String, description: String, urlImage:String?, email:String, notesList: SnapshotStateList<Note>):Boolean {
 
     if(title.isNotEmpty() && description.isNotEmpty()){
-        val newNote = Note(title, description, urlImage)
-        notesList.add(newNote);
+        val newNote = Note(title, description, urlImage, email)
+        notesList.add(newNote)
         return true;
     }
     return false;

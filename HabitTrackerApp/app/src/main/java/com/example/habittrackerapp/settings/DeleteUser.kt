@@ -5,6 +5,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -12,21 +13,36 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
+import com.example.habittrackerapp.auth.AuthViewModel
+import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.data
+import com.example.habittrackerapp.model.NotesViewModel
+import com.example.habittrackerapp.model.NotesViewModelFactory
+import com.example.habittrackerapp.model.SavedUserViewModel
+import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
 import com.example.habittrackerapp.model.UserViewModel
 import com.example.habittrackerapp.model.UserViewModelFactory
 
 @Composable
-fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
+fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory()),
+               authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
+               savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory()),
+               notesViewModel: NotesViewModel = viewModel(factory= NotesViewModelFactory())
+               ) {
     val userData = data.current
     var popupControl by rememberSaveable { mutableStateOf(false) }
     val navController = LocalNavController.current
-
+    val allNotes by notesViewModel.allNotes.collectAsState()
+    val notesList by notesViewModel.allUserNotes.collectAsState()
 
 
 
     Button(onClick = {popupControl=true}) {
         Text("Delete Account")
+
+        if(allNotes.isNotEmpty()){
+            notesViewModel.getNotes(userData.Email)
+        }
     }
 
     if(popupControl){
@@ -35,8 +51,14 @@ fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFact
         DeleteConfirmationDialog(
             onDeleteConfirm = {
 
+                notesList.forEach(){
+                    notesViewModel.deleteNote(it.id)
+                }
+
                 popupControl = false
+                authViewModel.delete()
                 MyViewModel.clearProfile(userData.Email)
+                savedUserViewModel.saveEmailAndPassword("empty", "empty")
                 userData.Email="";
                 navController.navigate(Routes.SignUpSignIn.route)
 

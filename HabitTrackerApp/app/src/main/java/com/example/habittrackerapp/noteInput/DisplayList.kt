@@ -31,26 +31,47 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.Note
+import com.example.habittrackerapp.model.NotesViewModel
+import com.example.habittrackerapp.model.NotesViewModelFactory
 
 /**
  * Displays all the elements of the StringBuilder list in a card container*/
 @Composable
-fun DisplayNotesList(notesList: SnapshotStateList<Note>)
+fun DisplayNotesList(notesViewModel: NotesViewModel = viewModel(factory= NotesViewModelFactory()))
 {
+    val userInput= data.current
+    val allNotes by notesViewModel.allNotes.collectAsState()
+    val notesList by notesViewModel.allUserNotes.collectAsState()
     val navController= LocalNavController.current
     var openDialog by rememberSaveable { mutableStateOf(true)}
     var clicked by rememberSaveable { mutableStateOf(false) };
     LazyColumn{
-        itemsIndexed(notesList) { index, note ->
-            Card(  modifier = Modifier
-                .padding(16.dp),
-                shape = RoundedCornerShape(7.dp))
-            {
+        if(allNotes.isNotEmpty()){
+            notesViewModel.getNotes(userInput.Email)
+        }
+
+        item{
+            if(notesList.isEmpty()){
+                Text("You have no notes saved.")
+            }
+
+            Button(onClick = {navController.navigate(Routes.Note.route)}){
+                Text(text = "Add note")
+            }
+        }
+            itemsIndexed(notesList) { index, note ->
+                Card(  modifier = Modifier
+                    .padding(16.dp),
+                    shape = RoundedCornerShape(7.dp))
+                {
 
                     Row(modifier = Modifier.padding(10.dp)) {
 
@@ -67,7 +88,7 @@ fun DisplayNotesList(notesList: SnapshotStateList<Note>)
                         )
                         Column(modifier = Modifier
                             .clickable {
-                                navController.navigate("SingleNoteScreenRoute/${index}")
+                                navController.navigate("SingleNoteScreenRoute/${note.id}")
                             }
                             .fillMaxWidth()
                             .padding(10.dp))
@@ -83,7 +104,7 @@ fun DisplayNotesList(notesList: SnapshotStateList<Note>)
                                 .align(Alignment.End))
                             {
 
-                                Button(onClick = { navController.navigate("EditNoteScreenRoute/${index}")},
+                                Button(onClick = { navController.navigate("EditNoteScreenRoute/${note.id}")},
                                     modifier = Modifier
                                         .padding(0.dp)){
                                     Text(text = "edit")
@@ -102,7 +123,7 @@ fun DisplayNotesList(notesList: SnapshotStateList<Note>)
                                                 TextButton(
                                                     onClick = {
                                                         openDialog=false
-                                                        notesList.remove(note)
+                                                        notesViewModel.deleteNote(note.id)
                                                         if(notesList.isEmpty()){
                                                             navController.navigate(Routes.Note.route)
                                                         }
@@ -125,10 +146,11 @@ fun DisplayNotesList(notesList: SnapshotStateList<Note>)
                         }
                     }
 
+                }
+
+                Divider(modifier = Modifier.fillMaxWidth())//Separates each item
             }
 
-            Divider(modifier = Modifier.fillMaxWidth())//Separates each item
-        }
     }
 
 }

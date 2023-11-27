@@ -55,7 +55,11 @@ fun EditForm(
     onValueChange: (HabitDetails) -> Unit = {},
     modifier: Modifier = Modifier,
     ) {
-    HabitDescription(habitDetails.description, {onValueChange(habitDetails.copy(description = it))})
+    HabitDescription(habitDetails.description, {
+        if(it.length <= 75){
+            onValueChange(habitDetails.copy(description = it))
+        }}
+    )
     HabitStartDate(habitDetails.startDate, {onValueChange(habitDetails.copy(startDate = it))})
     HabitFrequency(habitDetails.frequency, {onValueChange(habitDetails.copy(frequency = it))})
     HabitTypeQuestion(habitDetails.type, {onValueChange(habitDetails.copy(type = it))})
