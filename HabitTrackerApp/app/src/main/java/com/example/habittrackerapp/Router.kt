@@ -23,7 +23,7 @@ import com.example.habittrackerapp.signInSignUp.SignSignUpScreen
 import com.example.habittrackerapp.signInSignUp.UserSignInScreen
 import com.example.habittrackerapp.signInSignUp.UserSignUp
 import com.example.habittrackerapp.noteInput.screens.NoteList
-import com.example.habittrackerapp.noteInput.screens.singleNote.SingleNoteElementDisplay
+import com.example.habittrackerapp.noteInput.screens.SingleNoteElementDisplay
 
 
 /**

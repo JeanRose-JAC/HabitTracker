@@ -25,9 +25,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -57,8 +59,8 @@ fun EditNote(id:String, notesViewModel: NotesViewModel = viewModel(factory= Note
     val scrollState = rememberScrollState()
     var openDialog1 by rememberSaveable { mutableStateOf(false)}
     var openDialog2 by rememberSaveable { mutableStateOf(false)}
-    var saveClicked by rememberSaveable { mutableStateOf(false) };
-    var removeClicked by rememberSaveable { mutableStateOf(false) };
+    var clicked by rememberSaveable { mutableStateOf(false) };
+
 
     title=note.title;
     description=note.description;
@@ -70,7 +72,7 @@ fun EditNote(id:String, notesViewModel: NotesViewModel = viewModel(factory= Note
             modifier = Modifier
                 .fillMaxWidth()
                 .height(500.dp)
-                .padding(16.dp),
+                .padding(16.dp,16.dp,16.dp,2.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
             Column(modifier = Modifier.padding(2.dp))
@@ -135,7 +137,7 @@ fun EditNote(id:String, notesViewModel: NotesViewModel = viewModel(factory= Note
                     Button(
                         onClick =
                         {
-                            saveClicked = true;
+                            clicked = true;
                             openDialog1 = true;
                         }, modifier = Modifier.padding(0.dp)
                     )
@@ -145,57 +147,57 @@ fun EditNote(id:String, notesViewModel: NotesViewModel = viewModel(factory= Note
                         navController.navigate(Routes.ViewList.route)
                     }, modifier = Modifier.padding(10.dp, 0.dp)) { Text("cancel") }
 
-                    if (saveClicked) {
-                        if (openDialog1) {
-                            AlertDialog(
-                                onDismissRequest = { openDialog1 = false },
-                                confirmButton = {
-                                    TextButton(
-                                        onClick = {
-                                            openDialog1 = false
-                                            note.title = title;
-                                            note.description = description;
-                                            note.urlImage = urlImage;
-                                            notesViewModel.addNote(
-                                                Note(
-                                                    note.title,
-                                                    note.description,
-                                                    note.urlImage,
-                                                    userInput.Email,
-                                                    note.id
-                                                )
-                                            )
-                                            navController.navigate(Routes.ViewList.route)
-                                        }
-                                    ) { Text("confirm") }
-                                },
-                                title = {
-                                    Text("Edit")
-                                },
-                                text = {
-                                    Text(text = "Save the modified note of the title\n${title}")
-                                }
-                            )
-                        }
-
-                    }
                 }
             }
 
         }
         Button(
             onClick = {
-                removeClicked = true;
+                clicked = true;
                 openDialog2 = true
             },
             modifier = Modifier
-                .padding(30.dp,top=5.dp)
+                .fillMaxWidth()
+                .padding(16.dp,0.dp),
+            colors =  ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)
+
         )
         {
             Text(text = "remove")
         }
-        if (removeClicked) {
-            if (openDialog2) {
+        if (clicked) {
+            if (openDialog1) {
+                AlertDialog(
+                    onDismissRequest = { openDialog1 = false },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                openDialog1 = false
+                                note.title = title;
+                                note.description = description;
+                                note.urlImage = urlImage;
+                                notesViewModel.addNote(
+                                    Note(
+                                        note.title,
+                                        note.description,
+                                        note.urlImage,
+                                        userInput.Email,
+                                        note.id
+                                    )
+                                )
+                                navController.navigate(Routes.ViewList.route)
+                            }
+                        ) { Text("confirm") }
+                    },
+                    title = {
+                        Text("Edit")
+                    },
+                    text = {
+                        Text(text = "Save the modified note of the title\n${title}")
+                    }
+                )
+            }
+            else if (openDialog2) {
                 AlertDialog(
                     onDismissRequest = { openDialog2 = false },
                     title = {
