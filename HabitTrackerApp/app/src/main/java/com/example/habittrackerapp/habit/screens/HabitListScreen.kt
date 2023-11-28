@@ -60,14 +60,19 @@ fun HabitListScreen(
 
 @Composable
 fun ListBody(
-    habitList: List<Habit>, onHabitClick: (Int) -> Unit, modifier: Modifier = Modifier
+    habitList: List<Habit>, onHabitClick: (Int) -> Unit, today: Boolean = false ,modifier: Modifier = Modifier
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
         if(habitList.isEmpty()){
-            Text("You have no saved habits")
+            if(today){
+                Text("You have no habits to be done today.")
+            }
+            else{
+                Text("You have no saved habits.")
+            }
         }
         else{
             HabitList(

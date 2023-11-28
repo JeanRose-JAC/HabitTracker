@@ -48,7 +48,7 @@ fun HabitsForTodayListScreen(navigateToHabitGet: (Int) -> Unit,
             Text("View List Of All Habits")
         }
 
-        ListBody(habitList = getHabitsForToday(homeUiState.habitList), onHabitClick = navigateToHabitGet)
+        ListBody(habitList = getHabitsForToday(homeUiState.habitList), onHabitClick = navigateToHabitGet, true)
 
     }
 }
