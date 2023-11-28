@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -36,7 +38,13 @@ fun SingleNoteElementDisplay(id: String,
     var openDialog by rememberSaveable { mutableStateOf(false) }
     val note by notesViewModel.currentNote.collectAsState()
     notesViewModel.getNote(id)
-
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(600.dp)
+            .padding(16.dp),
+        shape = RoundedCornerShape(16.dp),
+    ){
     Column(modifier = Modifier
         .padding(20.dp)
         .verticalScroll(rememberScrollState()))
@@ -45,7 +53,7 @@ fun SingleNoteElementDisplay(id: String,
             Text("View List");
         }
 
-        if(note.id == id){
+        if (note.id == id) {
             LoadImage(url = note.urlImage!!)
 
             //title text field
@@ -64,20 +72,22 @@ fun SingleNoteElementDisplay(id: String,
             )
             //add remove button and edit at the top??
 
-            Button(onClick = {
-                openDialog = true
-            },
+            Button(
+                onClick = {
+                    openDialog = true
+                },
                 modifier = Modifier
-                    .padding(10.dp,0.dp))
+                    .padding(10.dp, 0.dp)
+            )
             {
                 Text(text = "remove")
             }
 
-            if(openDialog){
+            if (openDialog) {
                 println(note.title)
                 AlertDialog(
-                    onDismissRequest = {  openDialog=false },
-                    title={
+                    onDismissRequest = { openDialog = false },
+                    title = {
                         Text("Delete")
                     },
                     text = {
@@ -86,21 +96,21 @@ fun SingleNoteElementDisplay(id: String,
                     confirmButton = {
                         TextButton(
                             onClick = {
-                                openDialog=false
+                                openDialog = false
                                 notesViewModel.deleteNote(note.id)
                                 navController.navigate(Routes.ViewList.route)
                             }
-                        ) {Text("Yes")}
+                        ) { Text("Yes") }
                     },
                     dismissButton = {
-                        TextButton(onClick = {openDialog = false}) {
+                        TextButton(onClick = { openDialog = false }) {
                             Text("No")
                         }
                     },
                 )
             }
         }
-
+    }
 
     }
 }

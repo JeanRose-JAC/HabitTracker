@@ -38,21 +38,5 @@ fun NoteLayout() {
     }
 }
 
-@Composable
-fun EditLayout(note: Note) {
-    val navController = LocalNavController.current
-    Column() {
-        }
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(500.dp)
-                .padding(16.dp),
-            shape = RoundedCornerShape(16.dp),
-        ) {
-            EditNote(note)
-        }
-
-}
 
 
