@@ -24,6 +24,7 @@ import com.example.habittrackerapp.signInSignUp.UserSignUp
 import com.example.habittrackerapp.noteInput.screens.NoteList
 import com.example.habittrackerapp.noteInput.screens.SingleNote
 import com.example.habittrackerapp.noteInput.screens.SingleNoteEdit
+import com.example.habittrackerapp.noteInput.screens.singleNote.SingleNoteElementDisplay
 
 
 /**
@@ -84,7 +85,7 @@ fun Router() {
         composable(Routes.ViewList.route){ NoteList()}
         //how to extract the elements from the text fields.....
         composable(Routes.ViewSingle.route){
-            SingleNote(it.arguments?.getString("id")?:"")
+            SingleNoteElementDisplay(it.arguments?.getString("id")?:"")
         }
         composable(Routes.EditNote.route){ SingleNoteEdit(it.arguments?.getString("id")?:"" ) }
 
