@@ -51,7 +51,6 @@ fun DisplayNotesList(notesViewModel: NotesViewModel = viewModel(factory= NotesVi
     val allNotes by notesViewModel.allNotes.collectAsState()
     val notesList by notesViewModel.allUserNotes.collectAsState()
     val navController= LocalNavController.current
-    var openDialog by rememberSaveable { mutableStateOf(true)}
     var clicked by rememberSaveable { mutableStateOf(false) };
     LazyColumn{
         if(allNotes.isNotEmpty()){
@@ -109,37 +108,7 @@ fun DisplayNotesList(notesViewModel: NotesViewModel = viewModel(factory= NotesVi
                                         .padding(0.dp)){
                                     Text(text = "edit")
                                 }
-                                Button(onClick = {clicked=true},
-                                    modifier = Modifier
-                                        .padding(10.dp,0.dp))
-                                {
-                                    Text(text = "remove")
-                                }
-                                if(clicked){
-                                    if(openDialog){
-                                        AlertDialog(
-                                            onDismissRequest = {  openDialog=false },
-                                            confirmButton = {
-                                                TextButton(
-                                                    onClick = {
-                                                        openDialog=false
-                                                        notesViewModel.deleteNote(note.id)
-                                                        if(notesList.isEmpty()){
-                                                            navController.navigate(Routes.Note.route)
-                                                        }
 
-                                                    }
-                                                ) {Text("confirm")}
-                                            },
-                                            title={
-                                                Text("Delete")
-                                            },
-                                            text = {
-                                                Text(text = "Are you sure?")
-                                            }
-                                        )
-                                    }
-                                }
 
                             }
 
