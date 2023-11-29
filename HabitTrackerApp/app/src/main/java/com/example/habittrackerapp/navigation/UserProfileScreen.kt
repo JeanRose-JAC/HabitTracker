@@ -1,12 +1,14 @@
 package com.example.habittrackerapp.navigation
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -26,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -77,7 +80,7 @@ fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserV
 
     val focusManager = LocalFocusManager.current
 
-    LazyColumn {
+    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
         item {
             ShowProfilePicture()
             if(userInput.Gender!="" || !userInput.Gender.isEmpty()){
@@ -107,13 +110,17 @@ fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserV
 @Composable
 fun ShowProfilePicture() {
     val userInput = data.current
-    AsyncImage(
-        model = userInput.ProfilePicture,
-        contentDescription = "Translated description of what the image contains",
-        error = painterResource( R.drawable.notgood),
-        alignment = Alignment.Center,
-        modifier = Modifier.fillMaxWidth()
-    )
+    Box(modifier=Modifier.padding(20.dp), contentAlignment = Alignment.CenterEnd){
+        AsyncImage(
+            model = userInput.ProfilePicture,
+            contentDescription = "Translated description of what the image contains",
+            error = painterResource( R.drawable.notgood),
+            alignment = Alignment.Center,
+            modifier = Modifier.size(200.dp).clip(CircleShape),
+        )
+    }
+
+
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
