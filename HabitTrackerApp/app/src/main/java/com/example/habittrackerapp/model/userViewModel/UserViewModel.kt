@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.model
+package com.example.habittrackerapp.model.userViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -40,7 +40,7 @@ class UserViewModel (private val profileRepository: UserDataRepository) : ViewMo
 //        }
 //    }
 
-    fun addUser(user:User) {
+    fun addUser(user: User) {
         viewModelScope.launch {
             _activeUser.update { user}
             profileRepository.saveUser(_activeUser.value.Email, _activeUser.value)
@@ -52,7 +52,7 @@ class UserViewModel (private val profileRepository: UserDataRepository) : ViewMo
                 println(user.FirstName)
 
                 if(user.Password != pw){
-                    _activeUser.update { User("empty")}
+                    _activeUser.update { User("empty") }
                 }
                 else{
                     _activeUser.update { user}

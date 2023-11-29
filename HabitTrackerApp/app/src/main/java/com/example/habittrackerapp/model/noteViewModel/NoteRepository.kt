@@ -1,5 +1,6 @@
-package com.example.habittrackerapp.model
+package com.example.habittrackerapp.model.noteViewModel
 
+import com.example.habittrackerapp.model.noteViewModel.Note
 import kotlinx.coroutines.flow.Flow
 
 interface NoteRepository {

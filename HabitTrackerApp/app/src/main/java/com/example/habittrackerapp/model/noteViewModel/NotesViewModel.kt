@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.model
+package com.example.habittrackerapp.model.noteViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -7,7 +7,6 @@ import com.example.habittrackerapp.MyApp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -34,7 +33,7 @@ class NotesViewModel (private val noteRepository: NoteRepository) : ViewModel() 
         }
     }
 
-    fun addNote(note:Note) {
+    fun addNote(note: Note) {
         viewModelScope.launch {
             _currentNote.update { note}
             noteRepository.saveNote(_currentNote.value.id, _currentNote.value)

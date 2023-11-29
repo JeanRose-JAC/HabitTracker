@@ -6,9 +6,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.noteInput.screens.singleNote.SingleNoteLayout
-import com.example.habittrackerapp.LocalNotesList
-import com.example.habittrackerapp.model.NotesViewModel
-import com.example.habittrackerapp.model.NotesViewModelFactory
+import com.example.habittrackerapp.model.noteViewModel.NotesViewModel
+import com.example.habittrackerapp.model.noteViewModel.NotesViewModelFactory
 import com.example.habittrackerapp.noteInput.EditLayout
 
 

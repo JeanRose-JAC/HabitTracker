@@ -1,7 +1,7 @@
 package com.example.habittrackerapp.habit.database
 
-import com.example.habittrackerapp.model.Habit
-import com.example.habittrackerapp.model.HabitRepository
+import com.example.habittrackerapp.model.habitViewModel.Habit
+import com.example.habittrackerapp.model.habitViewModel.HabitRepository
 import kotlinx.coroutines.flow.Flow
 
 class OfflineHabitsRepository (private val habitDao: HabitDao) : HabitRepository {

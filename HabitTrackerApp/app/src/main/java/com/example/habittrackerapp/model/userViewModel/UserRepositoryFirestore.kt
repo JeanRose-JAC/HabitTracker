@@ -1,30 +1,25 @@
-package com.example.habittrackerapp.model
+package com.example.habittrackerapp.model.userViewModel
 
 import com.example.habittrackerapp.auth.AuthRepository
-import com.example.habittrackerapp.data
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
-class UserRepositoryFirestore (val auth: AuthRepository, val db: FirebaseFirestore) : UserDataRepository {
+class UserRepositoryFirestore (val auth: AuthRepository, val db: FirebaseFirestore) :
+    UserDataRepository {
 
     val dbUser: CollectionReference = db.collection("Profile")
 
     override suspend fun saveUser(oldName: String, profileData: User) {
-        if (auth.hasCurrentUserDirect()) {
-            // We are storing only a single profile at a time, so use a unique document name to refer to it
-            dbUser.document(oldName).set(profileData)
-                .addOnSuccessListener {
-                    println("Profile saved.")
-                }
-                .addOnFailureListener { e ->
-                    println("Error saving profile: $e")
-                }
-        } else {
-            println("Save Profile failed: User is not authenticated")
-        }
+        dbUser.document(oldName).set(profileData)
+            .addOnSuccessListener {
+                println("Profile saved.")
+            }
+            .addOnFailureListener { e ->
+                println("Error saving profile: $e")
+            }
     }
 
     override suspend fun getUser(name: String): Flow<User> = callbackFlow {

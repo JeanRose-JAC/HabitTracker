@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.model
+package com.example.habittrackerapp.model.userViewModel
 
 import kotlinx.coroutines.flow.Flow
 

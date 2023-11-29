@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.model
+package com.example.habittrackerapp.model.noteViewModel
 
 import com.example.habittrackerapp.auth.AuthRepository
 import com.google.firebase.firestore.CollectionReference
@@ -7,7 +7,8 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-class NoteRepositoryFirestore (val auth: AuthRepository, val db: FirebaseFirestore) : NoteRepository {
+class NoteRepositoryFirestore (val auth: AuthRepository, val db: FirebaseFirestore) :
+    NoteRepository {
     val dbNote: CollectionReference = db.collection("Notes")
     override suspend fun saveNote(id: String, note: Note) {
         if (auth.hasCurrentUserDirect()) {
