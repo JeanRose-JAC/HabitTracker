@@ -191,7 +191,7 @@ fun EditNote(id:String, notesViewModel: NotesViewModel = viewModel(factory= Note
                                             note.id
                                         )
                                     )
-                                    navController.navigate(Routes.ViewList.route)
+                                    navController.navigate("SingleNoteScreenRoute/${note.id}")
                                 }
                             ) { Text("confirm") }
                         },
