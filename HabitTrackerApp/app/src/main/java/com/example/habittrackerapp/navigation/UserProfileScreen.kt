@@ -37,10 +37,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data
-import com.example.habittrackerapp.model.UserViewModel.SavedUserViewModel
-import com.example.habittrackerapp.model.UserViewModel.SavedUserViewModelSavedFactory
-import com.example.habittrackerapp.model.UserViewModel.UserViewModel
-import com.example.habittrackerapp.model.UserViewModel.UserViewModelFactory
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
+import com.example.habittrackerapp.model.userViewModel.UserViewModel
+import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 import com.example.habittrackerapp.signInSignUp.ValidateUser
 
 @SuppressLint("StateFlowValueCalledInComposition")

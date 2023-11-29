@@ -15,8 +15,8 @@ import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.auth.AuthViewModel
 import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.data
-import com.example.habittrackerapp.model.UserViewModel.SavedUserViewModel
-import com.example.habittrackerapp.model.UserViewModel.SavedUserViewModelSavedFactory
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
 
 
 @Composable

@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.model.UserViewModel
+package com.example.habittrackerapp.model.userViewModel
 
 import com.example.habittrackerapp.auth.AuthRepository
 import com.google.firebase.firestore.CollectionReference

@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.model.UserViewModel
+package com.example.habittrackerapp.model.userViewModel
 
 import android.content.Context
 import androidx.datastore.core.DataStore
