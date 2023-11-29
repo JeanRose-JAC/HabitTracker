@@ -110,6 +110,44 @@ fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserV
     }
 }
 @Composable
+fun DisplayUserInformation2(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
+    val userInput = data.current
+    var firstName by rememberSaveable { mutableStateOf(userInput.FirstName) }
+    var lastName by rememberSaveable { mutableStateOf(userInput.LastName) }
+    var email by rememberSaveable { mutableStateOf(userInput.Email) }
+    var password by rememberSaveable { mutableStateOf(userInput.Password) }
+    var saveChanges by rememberSaveable {mutableStateOf(false)}
+
+    val focusManager = LocalFocusManager.current
+
+    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
+        item {
+            ShowProfilePicture()
+            if(userInput.Gender!="" || !userInput.Gender.isEmpty()){
+                Text(text = userInput.Gender)
+            }
+            Text(userInput.FirstName)
+            Text(userInput.LastName)
+            Text(userInput.Email);
+
+
+            if(ValidUserProfileChanges(firstName,lastName,email,password)){
+                Button(onClick = {saveChanges=true}) {
+                    Text("Save Changes")
+                }
+                if(saveChanges){
+                    SaveUserProfileChange(firstName,lastName,email,password)
+                    focusManager.clearFocus()
+                    saveChanges = false
+                }
+            }
+
+            //DeleteUser()
+        }
+
+    }
+}
+@Composable
 fun ShowProfilePicture() {
     val userInput = data.current
 
@@ -119,7 +157,8 @@ fun ShowProfilePicture() {
             contentDescription = "Translated description of what the image contains",
             error = painterResource(R.drawable.noprofilepic),
             alignment = Alignment.Center,
-            modifier = Modifier.size(190.dp)
+            modifier = Modifier
+                .size(190.dp)
                 .clip(CircleShape)
                 .padding(0.dp)
                 .border(

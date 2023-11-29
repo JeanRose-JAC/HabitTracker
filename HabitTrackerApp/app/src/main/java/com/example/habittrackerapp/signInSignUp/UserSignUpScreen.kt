@@ -291,7 +291,7 @@ fun Gender(gender:String,onChange: (String) -> Unit) {
     val isSelectedItem: (String) -> Boolean = { gender == it }
     val onChangeState: (String) -> Unit = onChange
 
-    val genders=listOf("female","male","non-binary")
+    val genders=listOf("Female","Male","Non-binary")
 
     Column(Modifier.padding(20.dp,8.dp)){
         Text(text = "Please choose a gender")
