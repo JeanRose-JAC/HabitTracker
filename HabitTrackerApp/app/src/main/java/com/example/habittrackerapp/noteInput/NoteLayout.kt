@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.habittrackerapp.LocalNavController
-import com.example.habittrackerapp.model.Note
+import com.example.habittrackerapp.model.noteViewModel.Note
 
 /**
  * Formats the note elements to look prettier*/

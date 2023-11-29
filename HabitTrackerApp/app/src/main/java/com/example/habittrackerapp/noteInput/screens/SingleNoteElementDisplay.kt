@@ -31,8 +31,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.LocalNavController
-import com.example.habittrackerapp.model.NotesViewModel
-import com.example.habittrackerapp.model.NotesViewModelFactory
+import com.example.habittrackerapp.model.noteViewModel.NotesViewModel
+import com.example.habittrackerapp.model.noteViewModel.NotesViewModelFactory
 
 
 @Composable

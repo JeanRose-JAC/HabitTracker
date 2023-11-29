@@ -31,17 +31,17 @@ import com.example.habittrackerapp.R
 import com.example.habittrackerapp.auth.AuthViewModel
 import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.data
-import com.example.habittrackerapp.model.SavedUserViewModel
-import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
-import com.example.habittrackerapp.model.UserViewModel
-import com.example.habittrackerapp.model.UserViewModelFactory
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
+import com.example.habittrackerapp.model.userViewModel.UserViewModel
+import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun UserSignInScreen(modifier: Modifier = Modifier,
-    MyViewModel: UserViewModel =viewModel(factory= UserViewModelFactory()),
-    authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
-    savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
+                     MyViewModel: UserViewModel =viewModel(factory= UserViewModelFactory()),
+                     authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
+                     savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -110,7 +110,7 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
         userInput.Email = activeUser.value.Email
         userInput.Gender = activeUser.value.Gender
         userInput.LastName = activeUser.value.LastName
-        userInput.ProfilePicture = activeUser.value.LastName
+        userInput.ProfilePicture = activeUser.value.ProfilePicture
         userInput.Password = activeUser.value.Password
         savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
         navController.navigate(Routes.Setting.route)

@@ -4,12 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.habittrackerapp.MyApp
-import com.example.habittrackerapp.model.User
+import com.example.habittrackerapp.model.userViewModel.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 
 
 class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {

@@ -34,10 +34,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.data
-import com.example.habittrackerapp.model.Note
-import com.example.habittrackerapp.model.NotesViewModel
-import com.example.habittrackerapp.model.NotesViewModelFactory
-import com.google.android.play.integrity.internal.t
+import com.example.habittrackerapp.model.noteViewModel.Note
+import com.example.habittrackerapp.model.noteViewModel.NotesViewModel
+import com.example.habittrackerapp.model.noteViewModel.NotesViewModelFactory
 
 /**
  * It contains text-fields for user input and saves it to a list

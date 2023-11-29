@@ -24,11 +24,10 @@ import com.example.habittrackerapp.R
 import com.example.habittrackerapp.auth.AuthViewModel
 import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.data
-import com.example.habittrackerapp.model.SavedUser
-import com.example.habittrackerapp.model.SavedUserViewModel
-import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
-import com.example.habittrackerapp.model.UserViewModel
-import com.example.habittrackerapp.model.UserViewModelFactory
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
+import com.example.habittrackerapp.model.userViewModel.UserViewModel
+import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 import com.example.habittrackerapp.noteInput.ViewNote
 
 

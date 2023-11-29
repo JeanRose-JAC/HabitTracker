@@ -16,12 +16,12 @@ import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.auth.AuthViewModel
 import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.data
-import com.example.habittrackerapp.model.NotesViewModel
-import com.example.habittrackerapp.model.NotesViewModelFactory
-import com.example.habittrackerapp.model.SavedUserViewModel
-import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
-import com.example.habittrackerapp.model.UserViewModel
-import com.example.habittrackerapp.model.UserViewModelFactory
+import com.example.habittrackerapp.model.noteViewModel.NotesViewModel
+import com.example.habittrackerapp.model.noteViewModel.NotesViewModelFactory
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
+import com.example.habittrackerapp.model.userViewModel.UserViewModel
+import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 
 @Composable
 fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory()),

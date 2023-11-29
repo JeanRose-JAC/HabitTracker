@@ -1,6 +1,6 @@
 package com.example.habittrackerapp.auth
 
-import com.example.habittrackerapp.model.User
+import com.example.habittrackerapp.model.userViewModel.User
 import kotlinx.coroutines.flow.StateFlow
 
 interface AuthRepository {

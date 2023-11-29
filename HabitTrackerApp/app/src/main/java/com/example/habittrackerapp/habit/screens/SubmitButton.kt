@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
-import com.example.habittrackerapp.model.Habit
+import com.example.habittrackerapp.model.habitViewModel.Habit
 import com.example.habittrackerapp.model.habitViewModel.HabitCreateAndListViewModel
 import com.example.habittrackerapp.model.habitViewModel.HabitViewModelProvider
 import com.example.habittrackerapp.model.habitViewModel.toHabitDetails

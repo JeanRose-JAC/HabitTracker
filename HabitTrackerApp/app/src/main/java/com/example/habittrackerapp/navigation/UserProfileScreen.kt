@@ -37,10 +37,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data
-import com.example.habittrackerapp.model.SavedUserViewModel
-import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
-import com.example.habittrackerapp.model.UserViewModel
-import com.example.habittrackerapp.model.UserViewModelFactory
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
+import com.example.habittrackerapp.model.userViewModel.UserViewModel
+import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 import com.example.habittrackerapp.signInSignUp.ValidateUser
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -155,7 +155,7 @@ fun ValidUserProfileChanges(firstName: String,lastName: String,email: String,pas
 }
 
 @Composable
-fun SaveUserProfileChange(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory()),                savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
+fun SaveUserProfileChange(firstName: String, lastName: String, email: String, password: String, MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory()), savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
 ) {
     val userInput = data.current
     userInput.FirstName=firstName

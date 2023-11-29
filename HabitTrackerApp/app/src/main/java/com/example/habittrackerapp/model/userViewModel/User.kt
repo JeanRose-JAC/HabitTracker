@@ -1,7 +1,6 @@
-package com.example.habittrackerapp.model
+package com.example.habittrackerapp.model.userViewModel
 
 import android.os.Parcelable
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
