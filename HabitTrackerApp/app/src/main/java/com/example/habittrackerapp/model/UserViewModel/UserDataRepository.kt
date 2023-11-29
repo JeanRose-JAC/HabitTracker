@@ -1,5 +1,6 @@
-package com.example.habittrackerapp.model
+package com.example.habittrackerapp.model.UserViewModel
 
+import com.example.habittrackerapp.model.UserViewModel.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserDataRepository {

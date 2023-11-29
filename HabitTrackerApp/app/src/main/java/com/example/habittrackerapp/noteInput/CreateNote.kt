@@ -31,8 +31,6 @@ import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.Note
 import com.example.habittrackerapp.model.NotesViewModel
 import com.example.habittrackerapp.model.NotesViewModelFactory
-import com.example.habittrackerapp.model.UserViewModel
-import com.example.habittrackerapp.model.UserViewModelFactory
 
 
 /**

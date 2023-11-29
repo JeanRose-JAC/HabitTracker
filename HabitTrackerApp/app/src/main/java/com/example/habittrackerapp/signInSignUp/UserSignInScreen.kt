@@ -25,17 +25,17 @@ import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.auth.AuthViewModel
 import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.data
-import com.example.habittrackerapp.model.SavedUserViewModel
-import com.example.habittrackerapp.model.SavedUserViewModelSavedFactory
-import com.example.habittrackerapp.model.UserViewModel
-import com.example.habittrackerapp.model.UserViewModelFactory
+import com.example.habittrackerapp.model.UserViewModel.SavedUserViewModel
+import com.example.habittrackerapp.model.UserViewModel.SavedUserViewModelSavedFactory
+import com.example.habittrackerapp.model.UserViewModel.UserViewModel
+import com.example.habittrackerapp.model.UserViewModel.UserViewModelFactory
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun UserSignInScreen(modifier: Modifier = Modifier,
-    MyViewModel: UserViewModel =viewModel(factory= UserViewModelFactory()),
-    authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
-    savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
+                     MyViewModel: UserViewModel =viewModel(factory= UserViewModelFactory()),
+                     authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
+                     savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
