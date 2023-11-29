@@ -13,18 +13,13 @@ class UserRepositoryFirestore (val auth: AuthRepository, val db: FirebaseFiresto
     val dbUser: CollectionReference = db.collection("Profile")
 
     override suspend fun saveUser(oldName: String, profileData: User) {
-        if (auth.hasCurrentUserDirect()) {
-            // We are storing only a single profile at a time, so use a unique document name to refer to it
-            dbUser.document(oldName).set(profileData)
-                .addOnSuccessListener {
-                    println("Profile saved.")
-                }
-                .addOnFailureListener { e ->
-                    println("Error saving profile: $e")
-                }
-        } else {
-            println("Save Profile failed: User is not authenticated")
-        }
+        dbUser.document(oldName).set(profileData)
+            .addOnSuccessListener {
+                println("Profile saved.")
+            }
+            .addOnFailureListener { e ->
+                println("Error saving profile: $e")
+            }
     }
 
     override suspend fun getUser(name: String): Flow<User> = callbackFlow {
