@@ -77,14 +77,14 @@ fun ListBody(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
+
     ) {
         if(habitList.isEmpty()){
             if(today){
-                Text("You have no habits to be done today.")
+                Text("You have no habits to be done today.",modifier=Modifier.fillMaxWidth().padding(start=20.dp,top=20.dp))
             }
             else{
-                Text("You have no saved habits.")
+                Text("You have no saved habits.",modifier=Modifier.fillMaxWidth().padding(start=65.dp))
             }
         }
         else{

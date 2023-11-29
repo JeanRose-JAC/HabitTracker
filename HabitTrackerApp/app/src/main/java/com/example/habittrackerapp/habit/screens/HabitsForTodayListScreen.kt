@@ -32,7 +32,7 @@ fun HabitsForTodayListScreen(navigateToHabitGet: (Int) -> Unit,
     val homeUiState by myViewModel.habitListUiState.collectAsState()
     var list = mutableListOf<Habit>()
 
-    Column {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = "List of Habits For Today",
             fontSize = 24.sp,
@@ -46,11 +46,12 @@ fun HabitsForTodayListScreen(navigateToHabitGet: (Int) -> Unit,
         Row(  modifier = Modifier
             .align(Alignment.CenterHorizontally)){
             Button(onClick = { navController.navigate(Routes.HabitList.route)},modifier = Modifier
-                .padding(start=20.dp)) {
-                Text("View List Of All Habits")
+                .padding(end=10.dp)) {
+                Text("View List Of All Habits",modifier = Modifier
+                    .padding(20.dp,0.dp))
             }
             Button(onClick = { navController.navigate(Routes.HabitQuestionnaire.route)}, modifier = Modifier
-                .padding(start=10.dp)) {
+                .padding()) {
                 Text("Add Habit")
             }
         }
