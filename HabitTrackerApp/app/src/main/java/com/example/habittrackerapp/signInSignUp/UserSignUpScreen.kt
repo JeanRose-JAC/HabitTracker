@@ -2,7 +2,10 @@ package com.example.habittrackerapp.signInSignUp
 
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -30,6 +34,8 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
@@ -86,7 +92,7 @@ fun UserSignUp(modifier: Modifier = Modifier,
 
     Scaffold(
     ) { it->
-        LazyColumn(contentPadding = it){
+        LazyColumn(contentPadding = it, horizontalAlignment = Alignment.CenterHorizontally){
             item{
                 Row (
                     modifier = Modifier.fillMaxWidth(),
@@ -114,7 +120,7 @@ fun UserSignUp(modifier: Modifier = Modifier,
                     },
                     modifier = modifier
                         .fillMaxWidth()
-                        .padding(60.dp,8.dp),
+                        .padding(60.dp, 8.dp),
                     enabled = ValidateUser(firstName,lastName,email,password)
 
                 ){
@@ -191,7 +197,7 @@ fun FirstName(firstName:String,onChange:(String)->Unit,modifier: Modifier = Modi
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp,8.dp)
+            .padding(20.dp, 8.dp)
     ) {
         TextField(
             value = firstName,
@@ -212,7 +218,7 @@ fun LastName(lastName:String,onChange:(String)->Unit,modifier: Modifier = Modifi
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp,8.dp)
+            .padding(20.dp, 8.dp)
     ){
         TextField(
             value = lastName,
@@ -235,7 +241,7 @@ fun Email(email:String, onChange:(String)->Unit,modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp,8.dp)
+            .padding(20.dp, 8.dp)
     ){
         TextField(
             value = email,
@@ -259,7 +265,7 @@ fun Password(password:String, onChange: (String) -> Unit, modifier: Modifier=Mod
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp,8.dp)
+            .padding(20.dp, 8.dp)
     ){
         TextField(
             value = password,
@@ -285,7 +291,7 @@ fun Gender(gender:String,onChange: (String) -> Unit) {
     val isSelectedItem: (String) -> Boolean = { gender == it }
     val onChangeState: (String) -> Unit = onChange
 
-    val genders=listOf("no","female","male","non-binary")
+    val genders=listOf("female","male","non-binary")
 
     Column(Modifier.padding(20.dp,8.dp)){
         Text(text = "Please choose a gender")
@@ -351,19 +357,30 @@ fun ValidateUser(firstName: String,lastName: String,email: String,password: Stri
 @Composable
 fun ProfilePicture(profilePic:String, onChange: (String) -> Unit, modifier: Modifier=Modifier) {
     val userInput= data.current
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(  modifier = Modifier.padding(20.dp).align(Alignment.CenterHorizontally)) {
+            AsyncImage(
+                model = profilePic,
+                contentDescription = "Translated description of what the image contains",
+                error = painterResource(R.drawable.noprofilepic),
+                alignment = Alignment.Center,
+                modifier = Modifier
+                    .size(150.dp)
+                    .clip(CircleShape)
+                    .border(
+                        width = 1.dp,
+                        color = Color.LightGray,
+                        shape = CircleShape
+                    ),
+            )
+        }
+    }
 
-    AsyncImage(
-        model = profilePic,
-        contentDescription = "Translated description of what the image contains",
-        error = painterResource( R.drawable.notgood),
-        alignment = Alignment.Center,
-        modifier = Modifier.fillMaxWidth()
-    )
 
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp,8.dp)
+            .padding(20.dp, 8.dp)
     ){
         Column {
             TextField(

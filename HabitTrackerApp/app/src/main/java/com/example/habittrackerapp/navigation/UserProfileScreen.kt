@@ -1,6 +1,7 @@
 package com.example.habittrackerapp.navigation
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -110,17 +112,23 @@ fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserV
 @Composable
 fun ShowProfilePicture() {
     val userInput = data.current
-    Box(modifier=Modifier.padding(20.dp), contentAlignment = Alignment.CenterEnd){
+
+    Box(  modifier = Modifier.padding(20.dp)) {
         AsyncImage(
             model = userInput.ProfilePicture,
             contentDescription = "Translated description of what the image contains",
-            error = painterResource( R.drawable.notgood),
+            error = painterResource(R.drawable.noprofilepic),
             alignment = Alignment.Center,
-            modifier = Modifier.size(200.dp).clip(CircleShape),
+            modifier = Modifier.size(190.dp)
+                .clip(CircleShape)
+                .padding(0.dp)
+                .border(
+                    width = 1.dp,
+                    color = Color.LightGray,
+                    shape = CircleShape
+                ),
         )
     }
-
-
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
