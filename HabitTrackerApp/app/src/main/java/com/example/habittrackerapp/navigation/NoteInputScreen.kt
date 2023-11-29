@@ -2,6 +2,7 @@ package com.example.habittrackerapp.navigation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
@@ -17,7 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.R
@@ -67,10 +70,12 @@ fun NoteScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory = Save
 
                 if(userInput.Email.isNotEmpty()) {
                     Text(text = "Notes",
+                        fontSize = 24.sp,
                         modifier = Modifier
-                            .padding(20.dp, 10.dp)
-                            .align(Alignment.CenterHorizontally),
-                        style= MaterialTheme.typography.displaySmall)
+                            .padding(10.dp)
+                            .fillMaxWidth(),
+                        style = MaterialTheme.typography.headlineMedium,
+                        textAlign =  TextAlign.Center)
 
                     ViewNote()
                 }
