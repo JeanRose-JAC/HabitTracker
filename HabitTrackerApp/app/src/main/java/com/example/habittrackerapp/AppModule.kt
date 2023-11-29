@@ -5,7 +5,7 @@ import com.example.habittrackerapp.auth.AuthRepository
 import com.example.habittrackerapp.auth.AuthRepositoryFirebase
 import com.example.habittrackerapp.habit.database.HabitDatabase
 import com.example.habittrackerapp.habit.database.OfflineHabitsRepository
-import com.example.habittrackerapp.model.HabitRepository
+import com.example.habittrackerapp.model.habitViewModel.HabitRepository
 import com.example.habittrackerapp.model.noteViewModel.NoteRepository
 import com.example.habittrackerapp.model.noteViewModel.NoteRepositoryFirestore
 import com.example.habittrackerapp.model.userViewModel.SavedUserRepository

@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.model
+package com.example.habittrackerapp.model.habitViewModel
 
 import android.os.Parcelable
 import androidx.room.Entity
