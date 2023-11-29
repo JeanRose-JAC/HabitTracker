@@ -20,7 +20,7 @@ import com.example.habittrackerapp.model.noteViewModel.Note
 fun NoteLayout() {
     val navController = LocalNavController.current
     Column() {
-        Button(onClick = { navController.navigate("NoteListScreenRoute") },
+        Button(onClick = { navController.navigate(Routes.ViewList.route) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp,0.dp,16.dp,2.dp)){
@@ -38,21 +38,5 @@ fun NoteLayout() {
     }
 }
 
-@Composable
-fun EditLayout(note: Note) {
-    val navController = LocalNavController.current
-    Column() {
-        }
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(500.dp)
-                .padding(16.dp),
-            shape = RoundedCornerShape(16.dp),
-        ) {
-            EditNote(note)
-        }
-
-}
 
 

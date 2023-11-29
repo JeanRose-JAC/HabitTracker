@@ -18,13 +18,12 @@ import com.example.habittrackerapp.habit.screens.HabitsForTodayListScreen
 import com.example.habittrackerapp.navigation.AboutScreen
 import com.example.habittrackerapp.navigation.NoteScreen
 import com.example.habittrackerapp.navigation.UserProfileScreen
+import com.example.habittrackerapp.noteInput.EditNote
 import com.example.habittrackerapp.signInSignUp.SignSignUpScreen
 import com.example.habittrackerapp.signInSignUp.UserSignInScreen
 import com.example.habittrackerapp.signInSignUp.UserSignUp
 import com.example.habittrackerapp.noteInput.screens.NoteList
-import com.example.habittrackerapp.noteInput.screens.SingleNote
-import com.example.habittrackerapp.noteInput.screens.SingleNoteEdit
-import com.example.habittrackerapp.noteInput.screens.singleNote.SingleNoteElementDisplay
+import com.example.habittrackerapp.noteInput.screens.SingleNoteElementDisplay
 
 
 /**
@@ -87,7 +86,7 @@ fun Router() {
         composable(Routes.ViewSingle.route){
             SingleNoteElementDisplay(it.arguments?.getString("id")?:"")
         }
-        composable(Routes.EditNote.route){ SingleNoteEdit(it.arguments?.getString("id")?:"" ) }
+        composable(Routes.EditNote.route){ EditNote(it.arguments?.getString("id")?:"" ) }
 
         composable(Routes.SignIn.route){ UserSignInScreen() }
         composable(Routes.SignUpSignIn.route){ SignSignUpScreen() }

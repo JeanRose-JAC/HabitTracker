@@ -59,7 +59,7 @@ fun DisplayNotesList(notesViewModel: NotesViewModel = viewModel(factory= NotesVi
                 Text("You have no notes saved.")
             }
 
-            Button(onClick = {navController.navigate(Routes.Note.route)}){
+            Button(onClick = {navController.navigate(Routes.Note.route)},){
                 Text(text = "Add note")
             }
         }
