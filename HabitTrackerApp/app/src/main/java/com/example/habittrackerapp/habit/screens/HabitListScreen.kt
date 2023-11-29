@@ -104,7 +104,7 @@ private fun HabitList(
         items(items = habitList, key = {it.id}){ habit ->
             Card(
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.inversePrimary
+                    containerColor = Color(	139	,163,	157)
                 ),
                 modifier = Modifier
                     .padding(16.dp)
