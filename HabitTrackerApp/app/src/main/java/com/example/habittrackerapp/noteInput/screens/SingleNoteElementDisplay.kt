@@ -43,44 +43,45 @@ fun SingleNoteElementDisplay(id: String,
     val note by notesViewModel.currentNote.collectAsState()
     notesViewModel.getNote(id)
     Column{
-        Row(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-        )
-        {
-            Button(onClick = { navController.navigate(Routes.ViewList.route)},
+        if (note.id == id) {
+            Row(
                 modifier = Modifier
-                    .padding(top=10.dp),
-                colors =  ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)) {
-                Text("View List",  modifier = Modifier.padding(start=30.dp,end=30.dp));
-            }
-
-            Button(
-                onClick = { navController.navigate("EditNoteScreenRoute/${note.id}") },
-                modifier = Modifier
-                    .padding(start=10.dp,top=10.dp),
-                colors =  ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)
-            ) {
-                Text(text = "edit",  modifier = Modifier
-                    .padding(start=40.dp,end=40.dp))
-            }
-        }
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(600.dp)
-                .padding(16.dp, top = 2.dp, 16.dp, 16.dp),
-            shape = RoundedCornerShape(16.dp),
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(20.dp)
-                    .verticalScroll(rememberScrollState())
+                    .align(Alignment.CenterHorizontally)
             )
             {
+                Button(onClick = { navController.navigate(Routes.ViewList.route)},
+                    modifier = Modifier
+                        .padding(top=10.dp),
+                    colors =  ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)) {
+                    Text("View List",  modifier = Modifier.padding(start=30.dp,end=30.dp));
+                }
 
-                if (note.id == id) {
+                Button(
+                    onClick = { navController.navigate("EditNoteScreenRoute/${note.id}") },
+                    modifier = Modifier
+                        .padding(start=10.dp,top=10.dp),
+                    colors =  ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)
+                ) {
+                    Text(text = "edit",  modifier = Modifier
+                        .padding(start=40.dp,end=40.dp))
+                }
+            }
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(600.dp)
+                    .padding(16.dp, top = 2.dp, 16.dp, 16.dp),
+                shape = RoundedCornerShape(16.dp),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .verticalScroll(rememberScrollState())
+                )
+                {
+
+
                     LoadImage(url = note.urlImage!!)
 
                     //title text field
@@ -98,10 +99,8 @@ fun SingleNoteElementDisplay(id: String,
                             .padding(20.dp, 0.dp),
                     )
                     //add remove button and edit at the top??
-
                 }
             }
-
         }
     }
 }
