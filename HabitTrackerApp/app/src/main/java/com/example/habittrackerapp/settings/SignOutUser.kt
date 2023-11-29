@@ -28,7 +28,7 @@ fun SignOutUser(authViewModel: AuthViewModel = viewModel(factory = AuthViewModel
     var popupControl by rememberSaveable { mutableStateOf(false) }
 
     Button(onClick = {popupControl=true}) {
-        Text("SignOut Account")
+        Text("Sign Out")
     }
 
     if(popupControl){

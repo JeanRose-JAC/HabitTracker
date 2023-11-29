@@ -1,10 +1,13 @@
 package com.example.habittrackerapp.navigation
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -46,6 +49,8 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
+import com.example.habittrackerapp.settings.DeleteUser
+import com.example.habittrackerapp.settings.SignOutUser
 import com.example.habittrackerapp.signInSignUp.ValidateUser
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -66,7 +71,7 @@ fun UserProfileScreen(
         }
     }
     else{
-        DisplayUserInformation()
+        DisplayUserInformation2()
     }
 
 }
@@ -120,29 +125,29 @@ fun DisplayUserInformation2(MyViewModel: UserViewModel = viewModel(factory= User
 
     val focusManager = LocalFocusManager.current
 
-    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
-        item {
+    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
+        item() {
+            Text(userInput.Email, modifier = Modifier.padding(top=20.dp));
             ShowProfilePicture()
             if(userInput.Gender!="" || !userInput.Gender.isEmpty()){
                 Text(text = userInput.Gender)
             }
-            Text(userInput.FirstName)
-            Text(userInput.LastName)
-            Text(userInput.Email);
-
-
-            if(ValidUserProfileChanges(firstName,lastName,email,password)){
-                Button(onClick = {saveChanges=true}) {
-                    Text("Save Changes")
-                }
-                if(saveChanges){
-                    SaveUserProfileChange(firstName,lastName,email,password)
-                    focusManager.clearFocus()
-                    saveChanges = false
-                }
+            Row(){
+                Text(userInput.FirstName, fontSize = 30.sp)
+                Spacer(modifier = Modifier.padding(2.dp))
+                Text(userInput.LastName,fontSize = 30.sp)
             }
 
-            //DeleteUser()
+
+
+
+
+
+
+                SignOutUser();
+                DeleteUser()
+
+
         }
 
     }
