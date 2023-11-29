@@ -23,124 +23,215 @@ import androidx.compose.material3.TextFieldDefaults
 import com.example.habittrackerapp.LocalNavController
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.Note
 import com.example.habittrackerapp.model.NotesViewModel
 import com.example.habittrackerapp.model.NotesViewModelFactory
+import com.google.android.play.integrity.internal.t
 
 /**
  * It contains text-fields for user input and saves it to a list
  * */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditNote(note: Note, notesViewModel: NotesViewModel = viewModel(factory= NotesViewModelFactory())) {
+fun EditNote(id:String, notesViewModel: NotesViewModel = viewModel(factory= NotesViewModelFactory())) {
 
     val userInput= data.current
+
+    val note by notesViewModel.currentNote.collectAsState()
+    notesViewModel.getNote(id)
     var title by rememberSaveable { mutableStateOf(note.title) }
-    val maxLength = 20
+    var description by rememberSaveable { mutableStateOf(note.description) }
     var urlImage by rememberSaveable { mutableStateOf(note.urlImage!!) }
+    val maxLength = 20
     var context = LocalContext.current;
     var navController= LocalNavController.current
-    var description by rememberSaveable { mutableStateOf(note.description) }
+
     val scrollState = rememberScrollState()
-    var openDialog by rememberSaveable { mutableStateOf(true)}
+    var openDialog1 by rememberSaveable { mutableStateOf(false)}
+    var openDialog2 by rememberSaveable { mutableStateOf(false)}
     var clicked by rememberSaveable { mutableStateOf(false) };
+    var calledOnce by rememberSaveable { mutableStateOf(true) };
 
-    Column(modifier = Modifier.padding(2.dp))
-    {
-        //title text field
-        TextField(
-            value = title,
-            onValueChange = {
-                if (it.length <= maxLength) title = it
-                else Toast.makeText(
-                    context,
-                    "Cannot be more than 20 Characters",
-                    Toast.LENGTH_SHORT
-                ).show()
-            },
-            placeholder = { Text(note.title) },
-            singleLine = true,
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.Transparent
-            ),
-            modifier = Modifier
-                .padding(20.dp, 0.dp)
-                .fillMaxWidth()
-        )
-        //body/content description text field
-        TextField(
-            value = description,
-            onValueChange = { description = it },
-            modifier = Modifier
-                .height(250.dp)
-                .padding(20.dp, 0.dp)
-                .verticalScroll(scrollState),
-            placeholder = { Text(note.description) },
-            colors = TextFieldDefaults.textFieldColors(
-                disabledTextColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
-            ),
-        )
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        if(note.id == id){
 
-        OutlinedTextField(value = urlImage, onValueChange = { urlImage = it },
-            modifier = Modifier
-                .padding(10.dp, 40.dp, 10.dp, 10.dp)
-                .fillMaxWidth()
-                .verticalScroll(scrollState),
-            singleLine = true)
+            if(calledOnce){
+                calledOnce = false
+                title=note.title;
+                description=note.description;
+                urlImage=note.urlImage!!
+            }
 
 
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(500.dp)
+                    .padding(16.dp,16.dp,16.dp,2.dp),
+                shape = RoundedCornerShape(16.dp),
+            ) {
+                Column(modifier = Modifier.padding(2.dp))
+                {
+                    //title text field
+                    TextField(
+                        value = title,
+                        onValueChange = {
+                            if (it.length <= maxLength) title = it
+                            else Toast.makeText(
+                                context,
+                                "Cannot be more than 20 Characters",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        placeholder = { Text("Title") },
+                        singleLine = true,
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = Color.Transparent
+                        ),
+                        modifier = Modifier
+                            .padding(20.dp, 0.dp)
+                            .fillMaxWidth()
+                    )
+                    //body/content description text field
+                    TextField(
+                        value = description,
+                        onValueChange = { description = it },
+                        modifier = Modifier
+                            .height(250.dp)
+                            .padding(20.dp, 0.dp)
+                            .verticalScroll(scrollState),
+                        placeholder = { Text("Description") },
+                        colors = TextFieldDefaults.textFieldColors(
+                            disabledTextColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor = Color.Transparent
+                        ),
+                    )
 
-        //Buttons
-        Row(modifier = Modifier
-            .padding(0.dp, 0.dp, 20.dp, 0.dp)
-            .align(Alignment.End))
-        {
-            //saves input to the list
+
+                    OutlinedTextField(
+                        value = urlImage, onValueChange = { urlImage = it },
+                        modifier = Modifier
+                            .padding(10.dp, 40.dp, 10.dp, 10.dp)
+                            .fillMaxWidth()
+                            .verticalScroll(scrollState),
+                        singleLine = true,
+                        placeholder = { Text("Enter Image URL...") }
+                    )
+
+
+                    //Buttons
+                    Row(
+                        modifier = Modifier
+                            .padding(0.dp, 0.dp, 20.dp, 0.dp)
+                            .align(Alignment.End)
+                    )
+                    {
+                        //saves input to the list
+                        Button(
+                            onClick =
+                            {
+                                clicked = true;
+                                openDialog1 = true;
+                            }, modifier = Modifier.padding(0.dp)
+                        )
+                        { Text("save") }
+                        //goes back to list screen
+                        Button(onClick = {
+                            navController.navigate(Routes.ViewList.route)
+                        }, modifier = Modifier.padding(10.dp, 0.dp)) { Text("cancel") }
+
+                    }
+                }
+
+            }
             Button(
-                onClick =
-                {   clicked=true;
-                    openDialog=true;
-                }, modifier = Modifier.padding(0.dp))
-            { Text("save") }
-            //goes back to list screen
-            Button(onClick = {
-                navController.navigate(Routes.ViewList.route)
-            }, modifier = Modifier.padding(10.dp, 0.dp)) { Text("cancel") }
+                onClick = {
+                    clicked = true;
+                    openDialog2 = true
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp,0.dp),
+                colors =  ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)
 
-            if(clicked){
-                if(openDialog){
+            )
+            {
+                Text(text = "remove")
+            }
+            if (clicked) {
+                if (openDialog1) {
                     AlertDialog(
-                        onDismissRequest = {  openDialog=false },
+                        onDismissRequest = { openDialog1 = false },
                         confirmButton = {
                             TextButton(
                                 onClick = {
-                                    openDialog=false
-                                    note.title = title;
-                                    note.description = description;
-                                    note.urlImage = urlImage;
-                                    notesViewModel.addNote(Note(note.title, note.description, note.urlImage, userInput.Email, note.id))
-                                    navController.navigate(Routes.ViewList.route)
+                                    openDialog1 = false
+//                                    note.title = title;
+//                                    note.description = description;
+//                                    note.urlImage = urlImage;
+                                    notesViewModel.addNote(
+                                        Note(
+                                            title,
+                                            description,
+                                            urlImage,
+                                            userInput.Email,
+                                            note.id
+                                        )
+                                    )
+                                    navController.navigate("SingleNoteScreenRoute/${note.id}")
                                 }
-                            ) {Text("confirm")}
+                            ) { Text("confirm") }
                         },
-                        title={
+                        title = {
                             Text("Edit")
                         },
                         text = {
-                            Text(text = "Save the modified note of the title\n$title")
+                            Text(text = "Save the modified note of the title\n${title}")
                         }
+                    )
+                }
+                else if (openDialog2) {
+                    AlertDialog(
+                        onDismissRequest = { openDialog2 = false },
+                        title = {
+                            Text("Delete")
+                        },
+                        text = {
+                            Text(text = "Are you sure?")
+                        },
+                        confirmButton = {
+                            TextButton(
+                                onClick = {
+                                    openDialog2 = false
+                                    notesViewModel.deleteNote(note.id)
+                                    navController.navigate(Routes.ViewList.route)
+                                }
+                            ) { Text("Yes") }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { openDialog2 = false }) {
+                                Text("No")
+                            }
+                        },
                     )
                 }
             }
         }
+
     }
 }
+
+

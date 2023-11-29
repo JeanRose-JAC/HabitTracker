@@ -55,13 +55,13 @@ fun SignSignUpScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory 
             if (myUiState.email != "empty") {
                 if (onceSigned) {
                     authViewModel.signIn(myUiState.email, myUiState.password)
-                    MyViewModel.getUser(myUiState.email)
+                    MyViewModel.getUser(myUiState.email,myUiState.password)
                     onceSigned = false
                 }
 
-                if (activeUser.value.FirstName.isNotEmpty()) {
+                if(activeUser.value.FirstName.isNotEmpty()){
                     println("in signIn-> ${activeUser.value.FirstName}")
-                    userInput.FirstName = activeUser.value.FirstName
+                    userInput.FirstName=activeUser.value.FirstName
                     userInput.Email = activeUser.value.Email
                     userInput.Gender = activeUser.value.Gender
                     userInput.LastName = activeUser.value.LastName

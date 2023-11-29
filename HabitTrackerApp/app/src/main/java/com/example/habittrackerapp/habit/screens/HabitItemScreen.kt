@@ -222,7 +222,7 @@ private fun ResetStreakConfirmationDialog(
 ) {
     AlertDialog(onDismissRequest = { /* Do nothing */ },
         title = { Text("Reset Streak") },
-        text = { Text("You missed a day ($dateMissed) to complete this habit. Your streak will reset.") },
+        text = { Text("You missed a day ($dateMissed) to complete this habit. Your streak will reset. The date will be updated to today.") },
         modifier = modifier,
         confirmButton = {
             TextButton(onClick = onResetConfirm) {

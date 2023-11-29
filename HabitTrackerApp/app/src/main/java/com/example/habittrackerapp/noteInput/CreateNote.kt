@@ -33,6 +33,7 @@ import com.example.habittrackerapp.model.NotesViewModel
 import com.example.habittrackerapp.model.NotesViewModelFactory
 import com.example.habittrackerapp.model.UserViewModel
 import com.example.habittrackerapp.model.UserViewModelFactory
+import java.util.Calendar
 
 
 /**
@@ -52,7 +53,11 @@ fun CreateNote(notesViewModel: NotesViewModel = viewModel(factory= NotesViewMode
     val scrollState = rememberScrollState()
     var openDialog by rememberSaveable { mutableStateOf(true)}
     var clicked by rememberSaveable { mutableStateOf(false) };
+    val calendar = Calendar.getInstance()
 
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH)
+    val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
     Column(modifier = Modifier.padding(2.dp))
     {
         //title text field
@@ -66,7 +71,7 @@ fun CreateNote(notesViewModel: NotesViewModel = viewModel(factory= NotesViewMode
                     Toast.LENGTH_SHORT
                 ).show()
             },
-            placeholder = { Text("Title") },
+            placeholder = { Text("$dayOfMonth/${month + 1}/$year") },
             singleLine = true,
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = Color.Transparent
@@ -113,6 +118,10 @@ fun CreateNote(notesViewModel: NotesViewModel = viewModel(factory= NotesViewMode
             Button(
                 onClick =
                 {
+                    if(title.isEmpty()){
+
+                        title = "$dayOfMonth/${month + 1}/$year"
+                    }
                     var popUp = addToList(title, description, urlImage, userInput.Email,notesList)
                     if(popUp){
                         val newNote = Note(title, description, urlImage, userInput.Email)
@@ -159,6 +168,7 @@ fun addToList(title: String, description: String, urlImage:String?, email:String
         notesList.add(newNote)
         return true;
     }
+
     return false;
 }
 

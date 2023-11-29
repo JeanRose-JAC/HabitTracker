@@ -370,7 +370,8 @@ fun ProfilePicture(profilePic:String, onChange: (String) -> Unit, modifier: Modi
             TextField(
                 value = profilePic,
                 onValueChange = onChange,
-                label={ Text("Please input a profile pic ") }
+                label = {Text("Please input a profile pic.")},
+                placeholder ={ Text("URL") }
             )
 
         }

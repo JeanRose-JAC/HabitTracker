@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -48,6 +49,7 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
     val activeUser = MyViewModel.activeUser.collectAsState()
     var userInput= data.current
     val navController = LocalNavController.current
+    var wrongCredential by rememberSaveable { mutableStateOf(false)}
 
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
 
@@ -86,13 +88,23 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
         }
         Button(onClick = {
             authViewModel.signIn(email,password)
-            MyViewModel.getUser(email)
+            MyViewModel.getUser(email,password)
+
+//            if(activeUser.value.Password != password){
+//                println("yes");
+//                wrongCredential=true;
+//            }
 
         }) {
             Text(text = "Sign in")
+
+        }
+        if(wrongCredential){
+            Text(text = "Wrong username or password\nPlease try again", color = MaterialTheme.colorScheme.error)
         }
     }
-    if(activeUser.value.FirstName.isNotEmpty()){
+    if(activeUser.value.FirstName.isNotEmpty()  && activeUser.value.Password == password){
+        wrongCredential = false
         println("in signIn-> ${activeUser.value.FirstName}")
         userInput.FirstName=activeUser.value.FirstName
         userInput.Email = activeUser.value.Email
@@ -102,6 +114,9 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
         userInput.Password = activeUser.value.Password
         savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
         navController.navigate(Routes.Setting.route)
+    }
+    else if(activeUser.value.Email == "empty"){
+        wrongCredential = true
     }
 
 }
