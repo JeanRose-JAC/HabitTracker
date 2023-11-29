@@ -67,6 +67,7 @@ fun SignSignUpScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory 
                     userInput.LastName = activeUser.value.LastName
                     userInput.ProfilePicture = activeUser.value.ProfilePicture
                     userInput.Password = activeUser.value.Password
+                    
                     navController.navigate(Routes.Setting.route)
                 }
             } else {

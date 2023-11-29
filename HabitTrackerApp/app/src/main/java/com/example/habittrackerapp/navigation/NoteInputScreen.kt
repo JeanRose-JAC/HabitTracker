@@ -62,6 +62,7 @@ fun NoteScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory = Save
                     userInput.LastName = activeUser.value.LastName
                     userInput.ProfilePicture = activeUser.value.ProfilePicture
                     userInput.Password = activeUser.value.Password
+                     
                 }
 
                 if(userInput.Email.isNotEmpty()) {
