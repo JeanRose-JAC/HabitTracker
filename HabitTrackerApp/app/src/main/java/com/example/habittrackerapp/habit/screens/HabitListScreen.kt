@@ -3,6 +3,7 @@ package com.example.habittrackerapp.habit.screens
 import Routes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -50,13 +51,20 @@ fun HabitListScreen(
             textAlign =  TextAlign.Center
         )
 
-        TextButton(onClick = { navController.navigate(Routes.HabitQuestionnaire.route) }) {
-            Text("Add Habit")
+        Row(  modifier = Modifier
+            .align(Alignment.CenterHorizontally)){
+            Button(onClick = { navController.navigate(Routes.HabitForTodayList.route) }) {
+                Text("View List Of Habits For Today")
+            }
+            Button(onClick = { navController.navigate(Routes.HabitQuestionnaire.route)}, modifier = Modifier
+                .padding(start=10.dp)) {
+                Text("Add Habit")
+            }
         }
 
-        Button(onClick = { navController.navigate(Routes.HabitForTodayList.route) }) {
-            Text("View List Of Habits For Today")
-        }
+
+
+
 
         ListBody(habitList = homeUiState.habitList, onHabitClick = navigateToHabitGet)
 
@@ -114,17 +122,17 @@ private fun HabitList(
                         )
                     Row(modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color.Magenta)) {
-                        Column(modifier = Modifier.background(Color.Gray)){
+                       , horizontalArrangement = Arrangement.Center) {
+                        Column{
                             Text(
                                 text = habit.frequency,
                                 modifier = Modifier.padding(10.dp)
                             )
                         }
-
-                        Column(modifier = Modifier.background(Color.Blue)){
+                        Column(modifier = Modifier.padding(80.dp,0.dp)){}
+                        Column{
                             Text(
-                                text = habit.streak.toString(),
+                                text = "Streak: " +habit.streak.toString(),
                                 modifier = Modifier.padding(10.dp),
                                 fontSize = 16.sp,
                             )
