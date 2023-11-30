@@ -127,7 +127,7 @@ fun DisplayUserInformation2(MyViewModel: UserViewModel = viewModel(factory= User
 
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
         item() {
-            Text(userInput.Email, modifier = Modifier.padding(top=20.dp));
+
             ShowProfilePicture()
             if(userInput.Gender!="" || !userInput.Gender.isEmpty()){
                 Text(text = userInput.Gender)
@@ -137,12 +137,7 @@ fun DisplayUserInformation2(MyViewModel: UserViewModel = viewModel(factory= User
                 Spacer(modifier = Modifier.padding(2.dp))
                 Text(userInput.LastName,fontSize = 30.sp)
             }
-
-
-
-
-
-
+            Text(userInput.Email, modifier = Modifier.padding(top=20.dp));
 
                 SignOutUser();
                 DeleteUser()

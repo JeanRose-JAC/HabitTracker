@@ -52,7 +52,7 @@ fun SignOutUser(authViewModel: AuthViewModel = viewModel(factory = AuthViewModel
 
 
 @Composable
-private fun SignOutConfirmationDialog(
+ fun SignOutConfirmationDialog(
     onSignOutConfirm: () -> Unit, onSignOutCancel: () -> Unit, modifier: Modifier = Modifier
 ) {
     AlertDialog(onDismissRequest = { /* Do nothing */ },
