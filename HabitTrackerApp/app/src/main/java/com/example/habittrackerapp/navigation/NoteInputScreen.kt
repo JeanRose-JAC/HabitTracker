@@ -44,7 +44,7 @@ fun NoteScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory = Save
     val userInput= data.current
     val activeUser = MyViewModel.activeUser.collectAsState()
     var onceSigned by rememberSaveable {mutableStateOf(true) }
-    Image(painter= painterResource(R    .drawable.background),
+    Image(painter= painterResource(R.drawable.background),
         contentDescription = null,
         contentScale = ContentScale.FillBounds,
         alpha = 0.45F)

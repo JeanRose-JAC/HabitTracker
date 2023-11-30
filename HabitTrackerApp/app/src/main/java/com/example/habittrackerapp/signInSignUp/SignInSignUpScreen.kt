@@ -83,7 +83,7 @@ fun SignSignUpScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory 
                 ) {
 
 
-                    Card(Modifier.padding(20.dp, 190.dp)) {
+                    Card(Modifier.padding(20.dp, 170.dp)) {
 
                     }
                     Text(
@@ -108,7 +108,7 @@ fun SignSignUpScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory 
                         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(5.dp),
+                            .padding(5.dp,3.dp),
                     ) {
                         Text("GET STARTED")
                     }
@@ -118,7 +118,8 @@ fun SignSignUpScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory 
                             "Already have an account? ",
                             modifier = Modifier.padding(14.dp, 14.dp, 0.dp, 14.dp)
                         )
-                        TextButton(onClick = { navController.navigate(Routes.SignIn.route) },) {
+                        TextButton(onClick = { navController.navigate(Routes.SignIn.route) },
+                         ) {
                             Text("Login")
 
 
