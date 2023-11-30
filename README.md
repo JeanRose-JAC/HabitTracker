@@ -9,35 +9,36 @@ Our application is a habit tracker app. Users must create an account to use it. 
 - Start Android Studio and open the project.
 - Run the application
 
-## Update 15/11/2023
-- Habit data is stored physically on the device. Users can add, view, update, and delete the data. They can also now increase their streak.
-- Users can add, view, update, and delete notes. However, the data does not persist, meaning that when the app is closed, the data disappears. Note data is not yet connected to the account.
-- Users can sign up, sign in and view their information. They can also edit their data and delete their account.
+## Update 29/11/2023
+- All the main functionalities of the app such as the users accounts, notes and habits are up and running well.
+- The UI is also improved.
 
 ## Screenshots of application
 ### About Page
-![image](./AppScreenshots/about.png)
+<div style="display: flex; justify-content: space-between;">
+    <img src="./AppScreenshots/about_light2.png" alt="Image 1" style="width: 50%;">
+</div>
 
 ### Sign Up Page
 
 <div style="display: flex; justify-content: space-between;">
-    <img src="./AppScreenshots/signup_light.png" alt="Image 1" style="length: 50%;">
-    <img src="./AppScreenshots/signin.png" alt="Image 2" style="length: 55%;">
-    <img src="./AppScreenshots/signinsignup.png" alt="Image 2" style="length: 55%;">
+    <img src="./AppScreenshots/signup2.png" alt="Image 1" style="width: 50%;">
+    <img src="./AppScreenshots/signin2.png" alt="Image 2"  style="width: 50%;">
+    <img src="./AppScreenshots/signinsignup2.png" alt="Image 2"  style="width: 50%;">
 </div>
 
 ### Notes Page
 <div style="display: flex; justify-content: space-between;">
-    <img src="./AppScreenshots/note_light.png" alt="Image 1" style="length: 50%;">
-    <img src="./AppScreenshots/onenotes.png" alt="Image 2" style="length: 55%;">
-    <img src="./AppScreenshots/listnotes.png" alt="Image 2" style="length: 55%;">
+    <img src="./AppScreenshots/createnote2.png" alt="Image 1" style="width: 50%;">
+    <img src="./AppScreenshots/onenote2.png" alt="Image 2"  style="width: 50%;">
+    <img src="./AppScreenshots/listnote2.png" alt="Image 2"  style="width: 50%;">
 </div>
 
 ### Habits Page
 <div style="display: flex; justify-content: space-between;">
-    <img src="./AppScreenshots/onehabit.png" alt="Image 1" style="length: 50%;">
-    <img src="./AppScreenshots/addhabit.png" alt="Image 2" style="length: 55%;">
-    <img src="./AppScreenshots/listhabits.png" alt="Image 2" style="length: 55%;">
+    <img src="./AppScreenshots/onehabit2.png" alt="Image 1"  style="width: 50%;">
+    <img src="./AppScreenshots/addhabit2.png" alt="Image 2"  style="width: 50%;">
+    <img src="./AppScreenshots/listhabits2.png" alt="Image 2"  style="width: 50%;">
 </div>
 
 
