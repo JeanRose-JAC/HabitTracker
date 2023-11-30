@@ -17,9 +17,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,6 +46,7 @@ import com.example.habittrackerapp.auth.AuthViewModel
 import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.R
+import com.example.habittrackerapp.auth.ResultAuth
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
@@ -71,6 +76,8 @@ fun UserSignUp(modifier: Modifier = Modifier,
                authViewModel: AuthViewModel= viewModel(factory = AuthViewModelFactory()),
                savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
 ) {
+    val signUpResult by authViewModel.signUpResult.collectAsState(ResultAuth.Inactive)
+    val snackbarHostState = remember { SnackbarHostState() } // Material 3 approach
 
     var firstName by rememberSaveable { mutableStateOf("") }
     var lastName by rememberSaveable { mutableStateOf("") }
@@ -84,10 +91,36 @@ fun UserSignUp(modifier: Modifier = Modifier,
     val userInput= data.current
     val showList=remember{ mutableStateOf(false)};
 
+    LaunchedEffect(signUpResult) {
+        signUpResult?.let {
+            if (it is ResultAuth.Inactive) {
+                println("is inactive")
+                return@LaunchedEffect
+            }
+            if (it is ResultAuth.InProgress) {
+                println("is progress")
+                snackbarHostState.showSnackbar("Sign-up In Progress")
+                return@LaunchedEffect
+            }
+            if (it is ResultAuth.Success && it.data) {
+                println("is signUp successful")
+                snackbarHostState.showSnackbar("Sign-up Successful")
+            } else if (it is ResultAuth.Failure || it is ResultAuth.Success) { // success(false) case
+                println("is signUp unsuccessfull")
+                snackbarHostState.showSnackbar("Sign-up Unsuccessful")
+            }
+        }
+    }
+
     Scaffold(
     ) { it->
         LazyColumn(contentPadding = it){
+
             item{
+                SnackbarHost(
+                    hostState = snackbarHostState,
+                    modifier = Modifier.padding(16.dp)
+                )
                 Row (
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly,
@@ -128,9 +161,13 @@ fun UserSignUp(modifier: Modifier = Modifier,
                 }
             }
             item{
+
                 if(showList.value){
                     savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
-                    authViewModel.signUp(userInput.Email,userInput.Password);
+                    authViewModel.signUp(userInput.Email,userInput.Password)
+
+
+                    // if the user already exist error message before adding it
                     myViewModel.addUser(userInput)
 
                     navController.navigate(Routes.Setting.route)
