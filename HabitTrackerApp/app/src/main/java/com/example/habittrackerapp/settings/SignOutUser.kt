@@ -41,7 +41,7 @@ fun SignOutUser(authViewModel: AuthViewModel = viewModel(factory = AuthViewModel
                 userData.Email="";
                 savedUserViewModel.saveEmailAndPassword("empty", "empty")
                 authViewModel.signOut();
-                navController.navigate(Routes.About.route)
+                navController.navigate(Routes.SignUpSignIn.route)
 
             },
             onSignOutCancel = { popupControl = false },
