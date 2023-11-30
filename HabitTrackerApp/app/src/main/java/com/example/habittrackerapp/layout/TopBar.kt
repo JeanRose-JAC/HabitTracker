@@ -102,7 +102,7 @@ fun TopBarScreen(title:String, savedUserViewModel: SavedUserViewModel = viewMode
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentSize(Alignment.TopEnd)
-                .padding(20.dp, 50.dp)
+                .padding(end=20.dp, top=50.dp)
         ) {
             DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                 DropdownMenuItem(
@@ -128,7 +128,7 @@ fun TopBarScreen(title:String, savedUserViewModel: SavedUserViewModel = viewMode
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentSize(Alignment.TopEnd)
-                .padding(20.dp, 50.dp)
+                .padding(end=20.dp, top=50.dp)
         ) {
             DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                 DropdownMenuItem(
