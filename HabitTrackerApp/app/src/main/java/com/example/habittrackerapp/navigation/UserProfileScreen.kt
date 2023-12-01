@@ -1,7 +1,7 @@
 package com.example.habittrackerapp.navigation
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
+import android.widget.Space
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.habittrackerapp.LocalNavController
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.collectAsState
@@ -44,13 +46,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.R
+import com.example.habittrackerapp.auth.AuthViewModel
+import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
-import com.example.habittrackerapp.settings.DeleteUser
-import com.example.habittrackerapp.settings.SignOutUser
+import com.example.habittrackerapp.settings.SignOutConfirmationDialog
 import com.example.habittrackerapp.signInSignUp.ValidateUser
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -77,7 +80,8 @@ fun UserProfileScreen(
 }
 
 @Composable
-fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
+fun EditProfile(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
+    val navController = LocalNavController.current
     val userInput = data.current
     var firstName by rememberSaveable { mutableStateOf(userInput.FirstName) }
     var lastName by rememberSaveable { mutableStateOf(userInput.LastName) }
@@ -108,6 +112,10 @@ fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserV
                     saveChanges = false
                 }
             }
+            Button(onClick = {navController.navigate(Routes.Profile.route)}){
+                Text(text = "Cancel")
+            }
+
 
             //DeleteUser()
         }
@@ -115,18 +123,15 @@ fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserV
     }
 }
 @Composable
-fun DisplayUserInformation2(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
+fun DisplayUserInformation2(authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
+                            savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())) {
+    val navController = LocalNavController.current
     val userInput = data.current
-    var firstName by rememberSaveable { mutableStateOf(userInput.FirstName) }
-    var lastName by rememberSaveable { mutableStateOf(userInput.LastName) }
-    var email by rememberSaveable { mutableStateOf(userInput.Email) }
-    var password by rememberSaveable { mutableStateOf(userInput.Password) }
-    var saveChanges by rememberSaveable {mutableStateOf(false)}
-
-    val focusManager = LocalFocusManager.current
+    val userData = data.current;
+    var popupControl by rememberSaveable { mutableStateOf(false) }
 
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
-        item() {
+        item {
 
             ShowProfilePicture()
             if(userInput.Gender!="" || !userInput.Gender.isEmpty()){
@@ -137,16 +142,51 @@ fun DisplayUserInformation2(MyViewModel: UserViewModel = viewModel(factory= User
                 Spacer(modifier = Modifier.padding(2.dp))
                 Text(userInput.LastName,fontSize = 30.sp)
             }
-            Text(userInput.Email, modifier = Modifier.padding(top=20.dp));
+            Text(userInput.Email, modifier = Modifier.padding(20.dp))
 
-                SignOutUser();
-                DeleteUser()
+            Spacer(modifier = Modifier.padding(40.dp))
+            Divider()
+            TextButton(onClick = {navController.navigate(Routes.EditProfile.route)},modifier = Modifier.fillMaxWidth()){
+                Text(text = "Edit Profile")
+            }
 
+            Divider()
+            TextButton(onClick = {navController.navigate(Routes.EditProfile.route)},modifier = Modifier.fillMaxWidth()){
+                Text(text = "Account Settings")
+            }
 
+            Divider()
+            TextButton(onClick = {navController.navigate(Routes.EditProfile.route)}, modifier = Modifier.fillMaxWidth()){
+                Text(text = "Appearance")
+            }
+
+            Divider()
+            TextButton(onClick = {popupControl=true},modifier = Modifier.fillMaxWidth()){
+                Text(text = "Sign out")
+            }
+            Divider()
         }
 
     }
+    if(popupControl){
+
+        SignOutConfirmationDialog(
+            onSignOutConfirm = {
+
+                popupControl = false
+                userData.Email="";
+                savedUserViewModel.saveEmailAndPassword("empty", "empty")
+                authViewModel.signOut();
+                navController.navigate(Routes.SignUpSignIn.route)
+
+            },
+            onSignOutCancel = { popupControl = false },
+        )
+    }
 }
+
+
+
 @Composable
 fun ShowProfilePicture() {
     val userInput = data.current
@@ -194,7 +234,7 @@ fun TextCard(name:String,value:String, focusManager: FocusManager, onChange:(Str
                     colors = TextFieldDefaults.colors(MaterialTheme.colorScheme.surfaceTint),
                     modifier = Modifier.focusRequester(focusRequester)
                 )
-//                Icon(painter = Icons.Filled.Create, contentDescription = "Edit")
+
             }
         }
     }

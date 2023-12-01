@@ -14,10 +14,9 @@ fun SettingScreen() {
 
     Column {
         Button(onClick = { navController.navigate(Routes.Profile.route) }) {
-            Text(text = "Profile")
+            Text(text = "Profile ")
         }
 
-        SignOutUser();
 
         DeleteUser()
 

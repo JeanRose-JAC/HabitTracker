@@ -71,7 +71,7 @@ fun SignSignUpScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory 
                     userInput.ProfilePicture = activeUser.value.ProfilePicture
                     userInput.Password = activeUser.value.Password
                     
-                    navController.navigate(Routes.Setting.route)
+                    navController.navigate(Routes.Profile.route)
                 }
             } else {
                 val scrollState = rememberScrollState()

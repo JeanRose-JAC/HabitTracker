@@ -16,6 +16,7 @@ import com.example.habittrackerapp.habit.screens.HabitListScreen
 import com.example.habittrackerapp.habit.screens.HabitQuestionnaireScreen
 import com.example.habittrackerapp.habit.screens.HabitsForTodayListScreen
 import com.example.habittrackerapp.navigation.AboutScreen
+import com.example.habittrackerapp.navigation.EditProfile
 import com.example.habittrackerapp.navigation.NoteScreen
 import com.example.habittrackerapp.navigation.UserProfileScreen
 import com.example.habittrackerapp.noteInput.EditNote
@@ -40,7 +41,7 @@ sealed class Routes(val route:String)  {
     object Setting:Routes("SettingScreenRoute")
     object  Policy: Routes("PolicyScreenRoute")
 
-
+    object  EditProfile: Routes("EditProfileRoute")
     object ViewSingle: Routes("SingleNoteScreenRoute/{id}"){
         fun go(id: String) = "ContactScreenRoute/$id"
     }
@@ -89,6 +90,7 @@ fun Router() {
         composable(Routes.EditNote.route){ EditNote(it.arguments?.getString("id")?:"" ) }
 
         composable(Routes.SignIn.route){ UserSignInScreen() }
+        composable(Routes.EditProfile.route){ EditProfile() }
         composable(Routes.SignUpSignIn.route){ SignSignUpScreen() }
         composable(Routes.HabitQuestionnaire.route){ HabitQuestionnaireScreen() }
         composable(

@@ -41,7 +41,7 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFa
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 import com.example.habittrackerapp.settings.SignOutConfirmationDialog
-import com.example.habittrackerapp.settings.SignOutUser
+
 
 /**
  * Composable for the shared top bar.
