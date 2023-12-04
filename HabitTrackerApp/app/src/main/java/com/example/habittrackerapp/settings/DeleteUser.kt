@@ -39,7 +39,7 @@ fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFact
 
 
     TextButton(onClick = {popupControl=true}) {
-        Text("Delete",color=MaterialTheme.colorScheme.error)
+        Text("Delete Account",color=MaterialTheme.colorScheme.error)
 
         if(allNotes.isNotEmpty()){
             notesViewModel.getNotes(userData.Email)

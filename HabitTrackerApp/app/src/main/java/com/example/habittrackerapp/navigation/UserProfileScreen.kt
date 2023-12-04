@@ -155,13 +155,6 @@ fun AccountSetting(MyViewModel: UserViewModel = viewModel(factory= UserViewModel
                 textAlign =  TextAlign.Center
             )
 
-            Row(){
-                Button(onClick = {navController.navigate(Routes.Policy.route)},
-                    colors =  ButtonDefaults.buttonColors(containerColor =  Color(138, 154, 91))
-                ){
-                    Text(text = "Policy")
-                }
-            }
             TextCard("Email",email, focusManager) { email = it }
             TextCard("Password",password, focusManager) { password = it }
 
@@ -175,11 +168,19 @@ fun AccountSetting(MyViewModel: UserViewModel = viewModel(factory= UserViewModel
                     saveChanges = false
                 }
             }
-            DeleteUser()
-            Button(onClick = {navController.navigate(Routes.Profile.route)}){
+
+            Row(){
+                Button(onClick = {navController.navigate(Routes.Policy.route)},
+                    colors =  ButtonDefaults.buttonColors(containerColor =  Color(138, 154, 91)),
+                    modifier = Modifier.fillMaxWidth().padding(20.dp)
+                ){
+                    Text(text = "Policy")
+                }
+            }
+            Button(onClick = {navController.navigate(Routes.Profile.route)},  colors =  ButtonDefaults.buttonColors(containerColor =  Color(138, 154, 91))){
                 Text(text = "Cancel")
             }
-
+            DeleteUser()
 
             //DeleteUser()
         }
