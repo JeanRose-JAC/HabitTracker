@@ -1,6 +1,7 @@
 package com.example.habittrackerapp.signInSignUp
 
 
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -86,6 +87,9 @@ fun UserSignUp(modifier: Modifier = Modifier,
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
 
+    var clicked by rememberSaveable { mutableStateOf(false) }
+
+    val users by myViewModel.allUsers.collectAsState()
 
     val navController = LocalNavController.current
     val userInput= data.current
@@ -117,10 +121,6 @@ fun UserSignUp(modifier: Modifier = Modifier,
         LazyColumn(contentPadding = it){
 
             item{
-                SnackbarHost(
-                    hostState = snackbarHostState,
-                    modifier = Modifier.padding(16.dp)
-                )
                 Row (
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly,
@@ -142,12 +142,10 @@ fun UserSignUp(modifier: Modifier = Modifier,
             }
             item{
                 Button(
-                    onClick = {
-                        showList.value=true
-                    },
+                    onClick = { clicked = true },
                     modifier = modifier
                         .fillMaxWidth()
-                        .padding(60.dp,8.dp),
+                        .padding(60.dp, 8.dp),
                     enabled = ValidateUser(firstName,lastName,email,password)
 
                 ){
@@ -159,8 +157,24 @@ fun UserSignUp(modifier: Modifier = Modifier,
                     userInput.LastName=lastName
                     userInput.Password=password
                 }
+                SnackbarHost(
+                    hostState = snackbarHostState,
+                    modifier = Modifier.padding(16.dp)
+                )
             }
             item{
+
+                if(clicked){
+
+                    val profile = users.filter { it.Email == email }
+
+                    if(profile.isEmpty()){
+                        showList.value=true
+                    }
+                    else{
+                        clicked = false
+                    }
+                }
 
                 if(showList.value){
                     savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
@@ -228,7 +242,7 @@ fun FirstName(firstName:String,onChange:(String)->Unit,modifier: Modifier = Modi
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp,8.dp)
+            .padding(20.dp, 8.dp)
     ) {
         TextField(
             value = firstName,
@@ -249,7 +263,7 @@ fun LastName(lastName:String,onChange:(String)->Unit,modifier: Modifier = Modifi
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp,8.dp)
+            .padding(20.dp, 8.dp)
     ){
         TextField(
             value = lastName,
@@ -272,7 +286,7 @@ fun Email(email:String, onChange:(String)->Unit,modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp,8.dp)
+            .padding(20.dp, 8.dp)
     ){
         TextField(
             value = email,
@@ -296,7 +310,7 @@ fun Password(password:String, onChange: (String) -> Unit, modifier: Modifier=Mod
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp,8.dp)
+            .padding(20.dp, 8.dp)
     ){
         TextField(
             value = password,
@@ -400,7 +414,7 @@ fun ProfilePicture(profilePic:String, onChange: (String) -> Unit, modifier: Modi
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp,8.dp)
+            .padding(20.dp, 8.dp)
     ){
         Column {
             TextField(
