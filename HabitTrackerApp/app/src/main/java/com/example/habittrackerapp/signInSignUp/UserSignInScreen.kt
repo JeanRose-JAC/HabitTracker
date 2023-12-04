@@ -113,7 +113,7 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
         userInput.ProfilePicture = activeUser.value.ProfilePicture
         userInput.Password = activeUser.value.Password
         savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
-        navController.navigate(Routes.Setting.route)
+        navController.navigate(Routes.Profile.route)
     }
     else if(activeUser.value.Email == "empty"){
         wrongCredential = true

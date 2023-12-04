@@ -16,7 +16,7 @@ fun PolicyScreen(modifier: Modifier = Modifier) {
 
     val scrollState = rememberScrollState();
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier.verticalScroll(scrollState)) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier.verticalScroll(scrollState).padding(20.dp)) {
         Text("Habit Minder App Policy Guidelines", fontWeight = FontWeight.Bold, modifier = modifier.padding(5.dp))
         Text("1. Overview",fontWeight = FontWeight.Bold, modifier = modifier.padding(5.dp))
         Text("1.1 Purpose: These guidelines outline how Habit Minder collects, " +

@@ -2,6 +2,8 @@ package com.example.habittrackerapp.layout
 
 import Routes
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Create
@@ -29,7 +31,7 @@ val items = listOf(
     NavBarIcon(route= Routes.About.route, icon= Icons.Filled.Home, "Home"),
     NavBarIcon(route= Routes.HabitList.route, icon= Icons.Filled.List, "Habits"),
     NavBarIcon(route= Routes.Note.route, icon= Icons.Filled.AddCircle, "Notes"),
-    NavBarIcon(route= Routes.SignUpSignIn.route, icon= Icons.Filled.Settings,"Settings")
+    NavBarIcon(route= Routes.SignUpSignIn.route, icon= Icons.Filled.AccountCircle,"Profile")
 )
 
 /**

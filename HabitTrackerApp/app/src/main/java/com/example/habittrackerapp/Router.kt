@@ -16,6 +16,7 @@ import com.example.habittrackerapp.habit.screens.HabitListScreen
 import com.example.habittrackerapp.habit.screens.HabitQuestionnaireScreen
 import com.example.habittrackerapp.habit.screens.HabitsForTodayListScreen
 import com.example.habittrackerapp.navigation.AboutScreen
+import com.example.habittrackerapp.navigation.AccountSetting
 import com.example.habittrackerapp.navigation.EditProfile
 import com.example.habittrackerapp.navigation.NoteScreen
 import com.example.habittrackerapp.navigation.UserProfileScreen
@@ -37,11 +38,9 @@ sealed class Routes(val route:String)  {
     object SignIn : Routes("SignInScreenRoute")
     object About : Routes("AboutScreenRoute")
     object Note: Routes("NoteScreenRoute")
-    object Profile:Routes("ProfileScreenRoute")
-    object Setting:Routes("SettingScreenRoute")
-    object  Policy: Routes("PolicyScreenRoute")
 
-    object  EditProfile: Routes("EditProfileRoute")
+
+
     object ViewSingle: Routes("SingleNoteScreenRoute/{id}"){
         fun go(id: String) = "ContactScreenRoute/$id"
     }
@@ -61,6 +60,12 @@ sealed class Routes(val route:String)  {
         val routeWithArgs = "${route}/{$habitIdArg}"
     }
 
+    // profile screen routes
+    object Profile:Routes("ProfileScreenRoute")
+    object Setting:Routes("SettingScreenRoute")
+    object  Policy: Routes("PolicyScreenRoute")
+    object  EditProfile: Routes("EditProfileRoute")
+    object AccountSetting: Routes("AccountSettingRoute")
 }
 
 /**
@@ -78,9 +83,7 @@ fun Router() {
         composable(Routes.SignUp.route) { UserSignUp() }
         composable(Routes.About.route) { AboutScreen()}
         composable(Routes.Note.route){ NoteScreen() }
-        composable(Routes.Profile.route){ UserProfileScreen()}
-        composable(Routes.Setting.route){ SettingScreen()}
-        composable(Routes.Policy.route){ PolicyScreen()}
+
 
         composable(Routes.ViewList.route){ NoteList()}
         //how to extract the elements from the text fields.....
@@ -90,7 +93,7 @@ fun Router() {
         composable(Routes.EditNote.route){ EditNote(it.arguments?.getString("id")?:"" ) }
 
         composable(Routes.SignIn.route){ UserSignInScreen() }
-        composable(Routes.EditProfile.route){ EditProfile() }
+
         composable(Routes.SignUpSignIn.route){ SignSignUpScreen() }
         composable(Routes.HabitQuestionnaire.route){ HabitQuestionnaireScreen() }
         composable(
@@ -118,6 +121,14 @@ fun Router() {
             })){
             HabitEditScreen()
         }
+
+        // profile screen routes
+        composable(Routes.EditProfile.route){ EditProfile() }
+        composable(Routes.Profile.route){ UserProfileScreen()}
+        composable(Routes.Setting.route){ SettingScreen()}
+        composable(Routes.Policy.route){ PolicyScreen()}
+        composable(Routes.AccountSetting.route){ AccountSetting()}
+
     }
 
 }

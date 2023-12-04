@@ -138,7 +138,7 @@ fun TopBarScreen(title:String, savedUserViewModel: SavedUserViewModel = viewMode
                         expanded=false}
                 )
                 DropdownMenuItem(
-                    text = { Text("Setting")},
+                    text = { Text("Policy")},
                     onClick = {
                         navController.navigate(Routes.Policy.route)
                         expanded=false}
