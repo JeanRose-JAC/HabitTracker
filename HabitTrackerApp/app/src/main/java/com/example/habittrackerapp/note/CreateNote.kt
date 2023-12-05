@@ -1,5 +1,6 @@
 package com.example.habittrackerapp.note
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -79,6 +80,7 @@ fun CreateNote(notesViewModel: NotesViewModel = viewModel(factory= NotesViewMode
     ActivityResultContracts.GetContent()) { uri: Uri? ->
         imageUri = uri
     }
+    val flag = Intent.FLAG_GRANT_READ_URI_PERMISSION
 
     val year = calendar.get(Calendar.YEAR)
     val month = calendar.get(Calendar.MONTH)
@@ -175,6 +177,8 @@ fun CreateNote(notesViewModel: NotesViewModel = viewModel(factory= NotesViewMode
                     Button(
                         onClick =
                         {
+                            imageUri?.let { context.contentResolver.takePersistableUriPermission(it, flag) }
+                            urlImage = imageUri.toString()
                             if(title.isEmpty()){
 
                                 title = "$dayOfMonth/${month + 1}/$year"
