@@ -1,7 +1,6 @@
 package com.example.habittrackerapp.navigation
 
 import android.annotation.SuppressLint
-import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -65,7 +64,6 @@ import com.example.habittrackerapp.signInSignUp.ValidateUser
 fun UserProfileScreen(
     MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
 
-    val activeUser = MyViewModel.activeUser.collectAsState()
     val userInput = data.current
     val navController = LocalNavController.current
 
@@ -114,7 +112,7 @@ fun EditProfile(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFac
             //TextCard("Profile Pic",profilePic, focusManager) {  profilePic= it }
 
             if(ValidUserProfileEditChanges(firstName,lastName,profilePic)){
-                Button(onClick = {saveChanges=true}) {
+                Button(onClick = {saveChanges=true},modifier=Modifier.fillMaxWidth().padding(start=20.dp, top = 20.dp,end=20.dp) ) {
                     Text("Save Changes")
                 }
                 if(saveChanges){
@@ -155,34 +153,43 @@ fun AccountSetting(MyViewModel: UserViewModel = viewModel(factory= UserViewModel
                 textAlign =  TextAlign.Center
             )
 
-            TextCard("Email",email, focusManager) { email = it }
-            TextCard("Password",password, focusManager) { password = it }
-
-            if(ValidUserProfileSettingChanges(email,password)){
-                Button(onClick = {saveChanges=true}) {
-                    Text("Save Changes")
-                }
-                if(saveChanges){
-                    SaveUserProfileChange(userInput.FirstName,userInput.LastName,email,password,userInput.ProfilePicture)
-                    focusManager.clearFocus()
-                    saveChanges = false
-                }
-            }
-
-            Row(){
                 Button(onClick = {navController.navigate(Routes.Policy.route)},
                     colors =  ButtonDefaults.buttonColors(containerColor =  Color(138, 154, 91)),
-                    modifier = Modifier.fillMaxWidth().padding(20.dp)
+                    modifier = Modifier.fillMaxWidth().padding(20.dp,0.dp,20.dp,20.dp)
                 ){
                     Text(text = "Policy")
                 }
-            }
-            Button(onClick = {navController.navigate(Routes.Profile.route)},  colors =  ButtonDefaults.buttonColors(containerColor =  Color(138, 154, 91))){
-                Text(text = "Cancel")
-            }
-            DeleteUser()
 
-            //DeleteUser()
+            Box(modifier = Modifier.fillMaxWidth().background(Color(243, 240, 228)), contentAlignment = Alignment.Center){
+                Column(horizontalAlignment = Alignment.CenterHorizontally){
+                    Text("Change: ", fontSize = 18.sp, modifier = Modifier.fillMaxWidth(), textAlign =  TextAlign.Center)
+                    TextCard("Email",email, focusManager) { email = it }
+                    TextCard("Password",password, focusManager) { password = it }
+
+                    if(ValidUserProfileSettingChanges(email,password)){
+                        Button(onClick = {saveChanges=true},modifier=Modifier.fillMaxWidth().padding(start=20.dp, top = 20.dp,end=20.dp)) {
+                            Text("Save Changes")
+                        }
+                        if(saveChanges){
+                            SaveUserProfileChange(userInput.FirstName,userInput.LastName,email,password,userInput.ProfilePicture)
+                            focusManager.clearFocus()
+                            saveChanges = false
+                        }
+                    }
+
+
+                    Button(
+                        onClick = {navController.navigate(Routes.Profile.route)},
+                        colors =  ButtonDefaults.buttonColors(containerColor =  Color(138, 154, 91)),
+                        modifier = Modifier.padding(20.dp)){
+                        Text(text = "Cancel", modifier = Modifier.padding(40.dp,0.dp))
+                    }
+                }
+
+            }
+
+
+            DeleteUser()
         }
 
     }
@@ -192,7 +199,7 @@ fun DisplayUserInformation2(authViewModel: AuthViewModel = viewModel(factory = A
                             savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())) {
     val navController = LocalNavController.current
     val userInput = data.current
-    val userData = data.current;
+    val userData = data.current
     var popupControl by rememberSaveable { mutableStateOf(false) }
 
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
@@ -207,9 +214,9 @@ fun DisplayUserInformation2(authViewModel: AuthViewModel = viewModel(factory = A
                 Spacer(modifier = Modifier.padding(2.dp))
                 Text(userInput.LastName,fontSize = 30.sp)
             }
-            Text(userInput.Email, modifier = Modifier.padding(20.dp))
+            Text(userInput.Email, modifier = Modifier.padding(16.dp))
 
-            Spacer(modifier = Modifier.padding(40.dp))
+            Spacer(modifier = Modifier.padding(20.dp))
             Divider()
             TextButton(onClick = {navController.navigate(Routes.EditProfile.route)},modifier = Modifier.fillMaxWidth()){
                 Text(text = "Edit Profile")
@@ -224,7 +231,10 @@ fun DisplayUserInformation2(authViewModel: AuthViewModel = viewModel(factory = A
             TextButton(onClick = {navController.navigate(Routes.EditProfile.route)}, modifier = Modifier.fillMaxWidth()){
                 Text(text = "Appearance")
             }
-
+            Divider()
+            TextButton(onClick = {navController.navigate(Routes.AboutUs.route)}, modifier = Modifier.fillMaxWidth()){
+                Text(text = "About Us")
+            }
             Divider()
             TextButton(onClick = {popupControl=true},modifier = Modifier.fillMaxWidth()){
                 Text(text = "Sign out")
@@ -239,9 +249,9 @@ fun DisplayUserInformation2(authViewModel: AuthViewModel = viewModel(factory = A
             onSignOutConfirm = {
 
                 popupControl = false
-                userData.Email="";
+                userData.Email=""
                 savedUserViewModel.saveEmailAndPassword("empty", "empty")
-                authViewModel.signOut();
+                authViewModel.signOut()
                 navController.navigate(Routes.SignUpSignIn.route)
 
             },
@@ -327,7 +337,7 @@ fun SaveUserProfileChange(firstName: String, lastName: String, email: String, pa
     userInput.Email=email
     userInput.Password=password
     userInput.ProfilePicture=profilePic
-    MyViewModel.addUser(userInput);
+    MyViewModel.addUser(userInput)
     savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
 }
 

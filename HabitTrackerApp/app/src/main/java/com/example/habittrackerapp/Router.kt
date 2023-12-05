@@ -15,7 +15,8 @@ import com.example.habittrackerapp.habit.screens.HabitItemScreen
 import com.example.habittrackerapp.habit.screens.HabitListScreen
 import com.example.habittrackerapp.habit.screens.HabitQuestionnaireScreen
 import com.example.habittrackerapp.habit.screens.HabitsForTodayListScreen
-import com.example.habittrackerapp.navigation.AboutScreen
+import com.example.habittrackerapp.navigation.AboutTheAppScreen
+import com.example.habittrackerapp.navigation.AboutUsScreen
 import com.example.habittrackerapp.navigation.AccountSetting
 import com.example.habittrackerapp.navigation.EditProfile
 import com.example.habittrackerapp.navigation.NoteScreen
@@ -36,14 +37,13 @@ sealed class Routes(val route:String)  {
     object SignUp : Routes("SignUpScreenRoute")
     object SignUpSignIn : Routes("SignUpSignUpScreenRoute")
     object SignIn : Routes("SignInScreenRoute")
-    object About : Routes("AboutScreenRoute")
+    object AboutApp : Routes("AboutAppScreenRoute")
+    object AboutUs : Routes("AboutUsScreenRoute")
     object Note: Routes("NoteScreenRoute")
 
 
 
-    object ViewSingle: Routes("SingleNoteScreenRoute/{id}"){
-        fun go(id: String) = "ContactScreenRoute/$id"
-    }
+    object ViewSingle: Routes("SingleNoteScreenRoute")
     object EditNote: Routes("EditNoteScreenRoute/{id}")
     object ViewList: Routes("NoteListScreenRoute")
 
@@ -76,12 +76,14 @@ sealed class Routes(val route:String)  {
 fun Router() {
     val navController = LocalNavController.current
     NavHost(navController = navController as NavHostController,
-        startDestination = Routes.About.route,
+        startDestination = Routes.AboutApp.route,
         enterTransition = { EnterTransition.None },
         exitTransition = { fadeOut() }) {
 
+
         composable(Routes.SignUp.route) { UserSignUp() }
-        composable(Routes.About.route) { AboutScreen()}
+        composable(Routes.AboutApp.route) { AboutTheAppScreen()}
+        composable(Routes.AboutUs.route) { AboutUsScreen()}
         composable(Routes.Note.route){ NoteScreen() }
 
 

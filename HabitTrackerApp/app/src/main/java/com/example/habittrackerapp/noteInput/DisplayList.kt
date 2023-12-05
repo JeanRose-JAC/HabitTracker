@@ -48,8 +48,8 @@ fun DisplayNotesList(notesViewModel: NotesViewModel = viewModel(factory= NotesVi
     val allNotes by notesViewModel.allNotes.collectAsState()
     val notesList by notesViewModel.allUserNotes.collectAsState()
     val navController= LocalNavController.current
-    var clicked by rememberSaveable { mutableStateOf(false) };
     LazyColumn{
+
         if(allNotes.isNotEmpty()){
             notesViewModel.getNotes(userInput.Email)
         }
@@ -59,7 +59,8 @@ fun DisplayNotesList(notesViewModel: NotesViewModel = viewModel(factory= NotesVi
                 Text("You have no notes saved.")
             }
 
-            Button(onClick = {navController.navigate(Routes.Note.route)},){
+            Button(onClick = {navController.navigate(Routes.Note.route)},modifier = Modifier.fillMaxWidth()
+                .padding(16.dp,16.dp,16.dp,0.dp)){
                 Text(text = "Add note")
             }
         }

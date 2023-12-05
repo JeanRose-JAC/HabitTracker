@@ -2,9 +2,11 @@ package com.example.habittrackerapp.habit.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,7 +22,7 @@ import com.example.habittrackerapp.model.habitViewModel.Habit
 
 
 @Composable
-fun HabitQuestionnaireScreen(modifier: Modifier = Modifier) {
+fun HabitQuestionnaireScreen() {
     var desc by rememberSaveable { mutableStateOf("") }
     var startDate by rememberSaveable { mutableStateOf("") }
     var frequency by rememberSaveable { mutableStateOf("") }
@@ -35,9 +37,12 @@ fun HabitQuestionnaireScreen(modifier: Modifier = Modifier) {
     ){
         Text(
             text = "What habit do you want to track?",
-            textAlign = TextAlign.Center,
-            fontSize = 26.sp,
-            modifier = Modifier.padding(bottom = 10.dp)
+            fontSize = 24.sp,
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            style = MaterialTheme.typography.headlineMedium,
+            textAlign =  TextAlign.Center
         )
 
         Text(

@@ -25,7 +25,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -57,7 +56,7 @@ fun TopBarScreen(title:String, savedUserViewModel: SavedUserViewModel = viewMode
     val navController = LocalNavController.current
     var expanded by rememberSaveable { mutableStateOf(false) }
     var clicked by rememberSaveable { mutableStateOf(false) }
-    val userData = data.current;
+    val userData = data.current
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
@@ -76,7 +75,7 @@ fun TopBarScreen(title:String, savedUserViewModel: SavedUserViewModel = viewMode
 
 
         }, actions = {
-            IconButton(onClick = { navController.navigate(Routes.About.route) }) {
+            IconButton(onClick = { navController.navigate(Routes.AboutApp.route) }) {
                 Icon(
                     painter = rememberAsyncImagePainter(
                         R.drawable.logo3,
@@ -138,6 +137,12 @@ fun TopBarScreen(title:String, savedUserViewModel: SavedUserViewModel = viewMode
                         expanded=false}
                 )
                 DropdownMenuItem(
+                    text = { Text("About Us")},
+                    onClick = {
+                        navController.navigate(Routes.AboutUs.route)
+                        expanded=false}
+                )
+                DropdownMenuItem(
                     text = { Text("Policy")},
                     onClick = {
                         navController.navigate(Routes.Policy.route)
@@ -154,8 +159,8 @@ fun TopBarScreen(title:String, savedUserViewModel: SavedUserViewModel = viewMode
             clicked = false
             userData.Email="";
             savedUserViewModel.saveEmailAndPassword("empty", "empty")
-            authViewModel.signOut();
-            navController.navigate(Routes.About.route)
+            authViewModel.signOut()
+            navController.navigate(Routes.SignUpSignIn.route)
 
         },
             onSignOutCancel = { clicked = false },
