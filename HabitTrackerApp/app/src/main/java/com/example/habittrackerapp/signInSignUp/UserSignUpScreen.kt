@@ -15,10 +15,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -46,6 +51,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -105,6 +111,8 @@ fun UserSignUp(modifier: Modifier = Modifier,
     val navController = LocalNavController.current
     val userInput= data.current
     val showList=remember{ mutableStateOf(false)};
+
+
 
     Scaffold(
     ) { it->
@@ -246,6 +254,9 @@ fun FirstName(firstName:String,onChange:(String)->Unit,modifier: Modifier = Modi
             .padding(20.dp, 8.dp)
     ) {
         TextField(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(20.dp, 0.dp),
             value = firstName,
             onValueChange = onChange,
             label={ Text("Please enter your first name") },
@@ -267,6 +278,9 @@ fun LastName(lastName:String,onChange:(String)->Unit,modifier: Modifier = Modifi
             .padding(20.dp, 8.dp)
     ){
         TextField(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(20.dp, 0.dp),
             value = lastName,
             onValueChange = onChange,
             label={ Text("Please enter your last name") },
@@ -290,6 +304,9 @@ fun Email(email:String, onChange:(String)->Unit,modifier: Modifier = Modifier) {
             .padding(20.dp, 8.dp)
     ){
         TextField(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(20.dp, 0.dp),
             value = email,
             onValueChange = onChange,
             label={ Text("Please enter your email") },
@@ -308,18 +325,35 @@ fun Email(email:String, onChange:(String)->Unit,modifier: Modifier = Modifier) {
  */
 @Composable
 fun Password(password:String, onChange: (String) -> Unit, modifier: Modifier=Modifier) {
+    var passwordVisible by rememberSaveable { mutableStateOf(false) }
+
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(20.dp, 8.dp)
     ){
         TextField(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(20.dp, 0.dp),
             value = password,
             onValueChange = onChange,
             label={ Text("Please enter your Password") },
             isError = password.length<8,
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            trailingIcon = {
+                val image = if (passwordVisible)
+                    Icons.Filled.Visibility
+                else Icons.Filled.VisibilityOff
+
+                // Please provide localized description for accessibility services
+                val description = if (passwordVisible) "Hide password" else "Show password"
+
+                IconButton(onClick = {passwordVisible = !passwordVisible}){
+                    Icon(imageVector  = image, description)
+                }
+            }
         )
     }
 }
@@ -430,6 +464,9 @@ fun ProfilePicture(profilePic:String, onChange: (String) -> Unit, modifier: Modi
     ){
         Column {
             TextField(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(20.dp, 0.dp),
                 value = profilePic,
                 onValueChange = onChange,
                 label = {Text("Please input a profile pic.")},

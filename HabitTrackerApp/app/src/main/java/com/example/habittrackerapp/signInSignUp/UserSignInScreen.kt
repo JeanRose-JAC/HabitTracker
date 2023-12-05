@@ -7,8 +7,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -28,6 +33,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
@@ -55,6 +61,8 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
     var userInput= data.current
     val navController = LocalNavController.current
     var wrongCredential by rememberSaveable { mutableStateOf(false)}
+
+    var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
     val signInResult by authViewModel.signInResult.collectAsState(ResultAuth.Inactive)
@@ -89,6 +97,9 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
                 .padding(30.dp,8.dp)
         ){
             TextField(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(20.dp, 0.dp),
                 value = email,
                 onValueChange = {email=it},
                 label={ Text("Please enter your email") },
@@ -102,12 +113,27 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
                 .padding(30.dp,8.dp)
         ){
             TextField(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(20.dp, 0.dp),
                 value = password,
                 onValueChange = {password=it},
                 label={ Text("Please enter your Password") },
                 isError = password.length<8,
-                visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                trailingIcon = {
+                    val image = if (passwordVisible)
+                        Icons.Filled.Visibility
+                    else Icons.Filled.VisibilityOff
+
+                    // Please provide localized description for accessibility services
+                    val description = if (passwordVisible) "Hide password" else "Show password"
+
+                    IconButton(onClick = {passwordVisible = !passwordVisible}){
+                        Icon(imageVector  = image, description)
+                    }
+                }
             )
         }
         Button(onClick = {
