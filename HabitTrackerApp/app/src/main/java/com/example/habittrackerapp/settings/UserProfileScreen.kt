@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.navigation
+package com.example.habittrackerapp.settings
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -28,7 +28,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,8 +54,6 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
-import com.example.habittrackerapp.settings.DeleteUser
-import com.example.habittrackerapp.settings.SignOutConfirmationDialog
 import com.example.habittrackerapp.signInSignUp.ValidateUser
 
 @SuppressLint("StateFlowValueCalledInComposition")

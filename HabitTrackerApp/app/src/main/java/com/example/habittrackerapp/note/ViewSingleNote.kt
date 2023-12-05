@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.noteInput
+package com.example.habittrackerapp.note
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

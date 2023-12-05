@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.navigation
+package com.example.habittrackerapp
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

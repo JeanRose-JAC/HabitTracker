@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.noteInput
+package com.example.habittrackerapp.note
 
 import android.widget.Toast
 import androidx.compose.ui.unit.dp

@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.navigation
+package com.example.habittrackerapp.note
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -32,7 +32,6 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
-import com.example.habittrackerapp.noteInput.CreateNote
 
 
 @Composable

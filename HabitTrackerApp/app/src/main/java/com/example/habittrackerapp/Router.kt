@@ -15,19 +15,18 @@ import com.example.habittrackerapp.habit.screens.HabitItemScreen
 import com.example.habittrackerapp.habit.screens.HabitListScreen
 import com.example.habittrackerapp.habit.screens.HabitQuestionnaireScreen
 import com.example.habittrackerapp.habit.screens.HabitsForTodayListScreen
-import com.example.habittrackerapp.navigation.AboutTheAppScreen
-import com.example.habittrackerapp.navigation.AboutUsScreen
-import com.example.habittrackerapp.navigation.AccountSetting
-import com.example.habittrackerapp.navigation.EditProfile
-import com.example.habittrackerapp.navigation.NoteScreen
-import com.example.habittrackerapp.navigation.UserProfileScreen
-import com.example.habittrackerapp.noteInput.DisplayNotesList
-import com.example.habittrackerapp.noteInput.EditNote
+import com.example.habittrackerapp.AboutTheAppScreen
+import com.example.habittrackerapp.AboutUsScreen
+import com.example.habittrackerapp.settings.AccountSetting
+import com.example.habittrackerapp.settings.EditProfile
+import com.example.habittrackerapp.note.NoteScreen
+import com.example.habittrackerapp.settings.UserProfileScreen
+import com.example.habittrackerapp.note.DisplayNotesList
+import com.example.habittrackerapp.note.EditNote
 import com.example.habittrackerapp.signInSignUp.SignSignUpScreen
 import com.example.habittrackerapp.signInSignUp.UserSignInScreen
 import com.example.habittrackerapp.signInSignUp.UserSignUp
-import com.example.habittrackerapp.noteInput.NoteList
-import com.example.habittrackerapp.noteInput.ViewSingleNote
+import com.example.habittrackerapp.note.ViewSingleNote
 
 
 /**
@@ -83,8 +82,8 @@ fun Router() {
 
 
         composable(Routes.SignUp.route) { UserSignUp() }
-        composable(Routes.AboutApp.route) { AboutTheAppScreen()}
-        composable(Routes.AboutUs.route) { AboutUsScreen()}
+        composable(Routes.AboutApp.route) { AboutTheAppScreen() }
+        composable(Routes.AboutUs.route) { AboutUsScreen() }
         composable(Routes.Note.route){ NoteScreen() }
 
 
@@ -127,10 +126,10 @@ fun Router() {
 
         // profile screen routes
         composable(Routes.EditProfile.route){ EditProfile() }
-        composable(Routes.Profile.route){ UserProfileScreen()}
+        composable(Routes.Profile.route){ UserProfileScreen() }
         composable(Routes.Setting.route){ SettingScreen()}
         composable(Routes.Policy.route){ PolicyScreen()}
-        composable(Routes.AccountSetting.route){ AccountSetting()}
+        composable(Routes.AccountSetting.route){ AccountSetting() }
 
     }
 
