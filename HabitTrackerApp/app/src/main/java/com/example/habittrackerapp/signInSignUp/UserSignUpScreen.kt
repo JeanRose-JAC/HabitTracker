@@ -15,15 +15,21 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,6 +54,7 @@ import com.example.habittrackerapp.auth.AuthViewModel
 import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.R
+import com.example.habittrackerapp.auth.ResultAuth
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
@@ -77,6 +84,8 @@ fun UserSignUp(modifier: Modifier = Modifier,
                authViewModel: AuthViewModel= viewModel(factory = AuthViewModelFactory()),
                savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
 ) {
+    val signUpResult by authViewModel.signUpResult.collectAsState(ResultAuth.Inactive)
+    val snackbarHostState = remember { SnackbarHostState() } // Material 3 approach
 
     var firstName by rememberSaveable { mutableStateOf("") }
     var lastName by rememberSaveable { mutableStateOf("") }
@@ -85,6 +94,11 @@ fun UserSignUp(modifier: Modifier = Modifier,
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
 
+    var submitClicked by rememberSaveable { mutableStateOf(false) }
+    var popup by rememberSaveable { mutableStateOf(false) }
+    var createdOnce by rememberSaveable { mutableStateOf(true) }
+
+    val users by myViewModel.allUsers.collectAsState()
 
     val navController = LocalNavController.current
     val userInput= data.current
@@ -92,7 +106,8 @@ fun UserSignUp(modifier: Modifier = Modifier,
 
     Scaffold(
     ) { it->
-        LazyColumn(contentPadding = it, horizontalAlignment = Alignment.CenterHorizontally){
+        LazyColumn(contentPadding = it){
+
             item{
                 Row (
                     modifier = Modifier.fillMaxWidth(),
@@ -115,9 +130,7 @@ fun UserSignUp(modifier: Modifier = Modifier,
             }
             item{
                 Button(
-                    onClick = {
-                        showList.value=true
-                    },
+                    onClick = { submitClicked = true },
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(60.dp, 8.dp),
@@ -132,17 +145,43 @@ fun UserSignUp(modifier: Modifier = Modifier,
                     userInput.LastName=lastName
                     userInput.Password=password
                 }
+                SnackbarHost(
+                    hostState = snackbarHostState,
+                    modifier = Modifier.padding(16.dp)
+                )
             }
             item{
-                if(showList.value){
+
+                if(submitClicked){
+                    submitClicked = false
+                    val profile = users.filter { it.Email == email }
+                    if(profile.isEmpty()){
+                        showList.value=true
+                    }
+                    else{
+                        popup = true
+                    }
+                }
+
+                if(showList.value && createdOnce){
+                    createdOnce = false
                     savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
-                    authViewModel.signUp(userInput.Email,userInput.Password);
+                    authViewModel.signUp(userInput.Email,userInput.Password)
                     myViewModel.addUser(userInput)
-
                     navController.navigate(Routes.Setting.route)
-                    Text(text = "Congrats you are logged in")
+                }
 
-
+                if(popup){
+                    AlertDialog(onDismissRequest = { popup = false },
+                        title = { Text("Email Already In Use") },
+                        text = { Text("Please enter in a another email. The current email has already an account.") },
+                        modifier = modifier,
+                        confirmButton = {
+                            TextButton(onClick = {popup = false}) {
+                                Text("OK")
+                            }
+                        }
+                    )
                 }
             }
         }

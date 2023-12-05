@@ -10,12 +10,16 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -30,6 +34,7 @@ import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.auth.AuthViewModel
 import com.example.habittrackerapp.auth.AuthViewModelFactory
+import com.example.habittrackerapp.auth.ResultAuth
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
@@ -52,6 +57,25 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
     var wrongCredential by rememberSaveable { mutableStateOf(false)}
 
     val regex="""^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})${'$'}""".toRegex()
+    val signInResult by authViewModel.signInResult.collectAsState(ResultAuth.Inactive)
+    val snackbarHostState = remember { SnackbarHostState() } // Material 3 approach
+
+    LaunchedEffect(signInResult) {
+        signInResult?.let {
+            if (it is ResultAuth.Inactive) {
+                return@LaunchedEffect
+            }
+            if (it is ResultAuth.InProgress) {
+                snackbarHostState.showSnackbar("Sign-in In Progress")
+                return@LaunchedEffect
+            }
+            if (it is ResultAuth.Success && it.data) {
+                snackbarHostState.showSnackbar("Sign-in Successful")
+            } else if (it is ResultAuth.Failure || it is ResultAuth.Success) { // success(false) case) {
+                snackbarHostState.showSnackbar("Sign-in Unsuccessful")
+            }
+        }
+    }
 
     Image(   painter = painterResource(R.drawable.logo2),
         contentDescription = null,
@@ -97,8 +121,13 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
 
         }) {
             Text(text = "Sign in")
-
         }
+
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.padding(16.dp)
+        )
+
         if(wrongCredential){
             Text(text = "Wrong username or password\nPlease try again", color = MaterialTheme.colorScheme.error)
         }
