@@ -73,126 +73,13 @@ fun UserProfileScreen(
         }
     }
     else{
-        DisplayUserInformation2()
+        DisplayUserInformation()
     }
 
 }
 
 @Composable
-fun EditProfile(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
-    val navController = LocalNavController.current
-    val userInput = data.current
-    var profilePic by rememberSaveable { mutableStateOf(userInput.ProfilePicture)}
-    var firstName by rememberSaveable { mutableStateOf(userInput.FirstName) }
-    var lastName by rememberSaveable { mutableStateOf(userInput.LastName) }
-    var saveChanges by rememberSaveable {mutableStateOf(false)}
-
-    val focusManager = LocalFocusManager.current
-
-    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
-        item {
-            Text(
-                text = "Edit Profile",
-                fontSize = 24.sp,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                style = MaterialTheme.typography.headlineMedium,
-                textAlign =  TextAlign.Center
-            )
-            ShowProfilePicture()
-            if(userInput.Gender!="" || !userInput.Gender.isEmpty()){
-                Text(text = userInput.Gender)
-            }
-            TextCard("Firstname",firstName, focusManager) { firstName = it }
-            TextCard("LastName",lastName, focusManager) { lastName = it }
-            //TextCard("Profile Pic",profilePic, focusManager) {  profilePic= it }
-
-            if(ValidUserProfileEditChanges(firstName,lastName,profilePic)){
-                Button(onClick = {saveChanges=true},modifier=Modifier.fillMaxWidth().padding(start=20.dp, top = 20.dp,end=20.dp) ) {
-                    Text("Save Changes")
-                }
-                if(saveChanges){
-                    SaveUserProfileChange(firstName,lastName,userInput.Email,userInput.Password,userInput.ProfilePicture)
-                    focusManager.clearFocus()
-                    saveChanges = false
-                }
-            }
-            Button(onClick = {navController.navigate(Routes.Profile.route)},modifier =Modifier.padding(20.dp)){
-                Text(text = "Cancel")
-            }
-
-
-            //DeleteUser()
-        }
-
-    }
-}
-@Composable
-fun AccountSetting(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
-    val navController = LocalNavController.current
-    val userInput = data.current
-    var email by rememberSaveable { mutableStateOf(userInput.Email) }
-    var password by rememberSaveable { mutableStateOf(userInput.Password) }
-    var saveChanges by rememberSaveable {mutableStateOf(false)}
-
-    val focusManager = LocalFocusManager.current
-
-    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
-        item {
-            Text(
-                text = "Account Settings",
-                fontSize = 24.sp,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                style = MaterialTheme.typography.headlineMedium,
-                textAlign =  TextAlign.Center
-            )
-
-                Button(onClick = {navController.navigate(Routes.Policy.route)},
-                    colors =  ButtonDefaults.buttonColors(containerColor =  Color(138, 154, 91)),
-                    modifier = Modifier.fillMaxWidth().padding(20.dp,0.dp,20.dp,20.dp)
-                ){
-                    Text(text = "Policy")
-                }
-
-            Box(modifier = Modifier.fillMaxWidth().background(Color(243, 240, 228)), contentAlignment = Alignment.Center){
-                Column(horizontalAlignment = Alignment.CenterHorizontally){
-                    Text("Change: ", fontSize = 18.sp, modifier = Modifier.fillMaxWidth(), textAlign =  TextAlign.Center)
-                    TextCard("Email",email, focusManager) { email = it }
-                    TextCard("Password",password, focusManager) { password = it }
-
-                    if(ValidUserProfileSettingChanges(email,password)){
-                        Button(onClick = {saveChanges=true},modifier=Modifier.fillMaxWidth().padding(start=20.dp, top = 20.dp,end=20.dp)) {
-                            Text("Save Changes")
-                        }
-                        if(saveChanges){
-                            SaveUserProfileChange(userInput.FirstName,userInput.LastName,email,password,userInput.ProfilePicture)
-                            focusManager.clearFocus()
-                            saveChanges = false
-                        }
-                    }
-
-
-                    Button(
-                        onClick = {navController.navigate(Routes.Profile.route)},
-                        colors =  ButtonDefaults.buttonColors(containerColor =  Color(138, 154, 91)),
-                        modifier = Modifier.padding(20.dp)){
-                        Text(text = "Cancel", modifier = Modifier.padding(40.dp,0.dp))
-                    }
-                }
-
-            }
-
-
-            DeleteUser()
-        }
-
-    }
-}
-@Composable
-fun DisplayUserInformation2(authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
+fun DisplayUserInformation(authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
                             savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())) {
     val navController = LocalNavController.current
     val userInput = data.current
@@ -225,7 +112,7 @@ fun DisplayUserInformation2(authViewModel: AuthViewModel = viewModel(factory = A
             }
 
             Divider()
-            TextButton(onClick = {navController.navigate(Routes.EditProfile.route)}, modifier = Modifier.fillMaxWidth()){
+            TextButton(onClick = {navController.navigate(Routes.Appearance.route)}, modifier = Modifier.fillMaxWidth()){
                 Text(text = "Appearance")
             }
             Divider()

@@ -9,7 +9,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.settings.PolicyScreen
-import com.example.habittrackerapp.settings.SettingScreen
 import com.example.habittrackerapp.habit.screens.HabitEditScreen
 import com.example.habittrackerapp.habit.screens.HabitItemScreen
 import com.example.habittrackerapp.habit.screens.HabitListScreen
@@ -27,6 +26,7 @@ import com.example.habittrackerapp.signInSignUp.SignSignUpScreen
 import com.example.habittrackerapp.signInSignUp.UserSignInScreen
 import com.example.habittrackerapp.signInSignUp.UserSignUp
 import com.example.habittrackerapp.note.ViewSingleNote
+import com.example.habittrackerapp.settings.Appearance
 
 
 /**
@@ -68,6 +68,7 @@ sealed class Routes(val route:String)  {
     object  Policy: Routes("PolicyScreenRoute")
     object  EditProfile: Routes("EditProfileRoute")
     object AccountSetting: Routes("AccountSettingRoute")
+    object Appearance: Routes("AppearanceScreen")
 }
 
 /**
@@ -127,11 +128,11 @@ fun Router() {
         }
 
         // profile screen routes
-        composable(Routes.EditProfile.route){ EditProfile() }
-        composable(Routes.Profile.route){ UserProfileScreen() }
-        composable(Routes.Setting.route){ SettingScreen()}
+        composable(Routes.EditProfile.route){ EditProfile()}
+        composable(Routes.Profile.route){ UserProfileScreen()}
         composable(Routes.Policy.route){ PolicyScreen()}
-        composable(Routes.AccountSetting.route){ AccountSetting() }
+        composable(Routes.AccountSetting.route){ AccountSetting()}
+        composable(Routes.Appearance.route){ Appearance()}
 
     }
 
