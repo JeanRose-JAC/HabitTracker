@@ -1,6 +1,8 @@
 package com.example.habittrackerapp.signInSignUp
 
 
+import android.app.Activity
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,6 +36,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
@@ -70,12 +73,14 @@ import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun UserSignUp(modifier: Modifier = Modifier,
+fun UserSignUp(name: String? = null, modifier: Modifier = Modifier,
                myViewModel: UserViewModel =
                    viewModel(factory= UserViewModelFactory()),
                authViewModel: AuthViewModel= viewModel(factory = AuthViewModelFactory()),
                savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
 ) {
+    val localContext = LocalContext.current
+    val activity = localContext as ComponentActivity
     val signUpResult by authViewModel.signUpResult.collectAsState(ResultAuth.Inactive)
     val snackbarHostState = remember { SnackbarHostState() } // Material 3 approach
 
@@ -95,6 +100,12 @@ fun UserSignUp(modifier: Modifier = Modifier,
     val navController = LocalNavController.current
     val userInput= data.current
     val showList=remember{ mutableStateOf(false)};
+
+    var fromLauncher = false
+    if(name!=null){
+        firstName=name;
+        fromLauncher = true
+    }
 
     LaunchedEffect(signUpResult) {
         signUpResult?.let {
@@ -142,6 +153,19 @@ fun UserSignUp(modifier: Modifier = Modifier,
                 Password(password,{password=it})
             }
             item{
+                if(fromLauncher){
+                    Button(onClick = {
+                        val resultIntent = activity.intent
+                        resultIntent.putExtra("resultData", "You are back at the launcher app.") // Set the value to return as a result
+                        localContext.setResult(Activity.RESULT_OK, resultIntent)
+                        localContext.finish() // Finish the activity
+                    },
+                        modifier=Modifier.fillMaxWidth()
+                            .padding(60.dp, 8.dp)) {
+                        Text("Send back a value to launching app")
+                    }
+                }
+
                 Button(
                     onClick = { submitClicked = true },
                     modifier = modifier
