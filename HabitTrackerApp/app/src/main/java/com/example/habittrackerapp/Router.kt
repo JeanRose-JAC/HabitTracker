@@ -21,12 +21,13 @@ import com.example.habittrackerapp.navigation.AccountSetting
 import com.example.habittrackerapp.navigation.EditProfile
 import com.example.habittrackerapp.navigation.NoteScreen
 import com.example.habittrackerapp.navigation.UserProfileScreen
+import com.example.habittrackerapp.noteInput.DisplayNotesList
 import com.example.habittrackerapp.noteInput.EditNote
 import com.example.habittrackerapp.signInSignUp.SignSignUpScreen
 import com.example.habittrackerapp.signInSignUp.UserSignInScreen
 import com.example.habittrackerapp.signInSignUp.UserSignUp
-import com.example.habittrackerapp.noteInput.screens.NoteList
-import com.example.habittrackerapp.noteInput.screens.SingleNoteElementDisplay
+import com.example.habittrackerapp.noteInput.NoteList
+import com.example.habittrackerapp.noteInput.ViewSingleNote
 
 
 /**
@@ -87,10 +88,10 @@ fun Router() {
         composable(Routes.Note.route){ NoteScreen() }
 
 
-        composable(Routes.ViewList.route){ NoteList()}
+        composable(Routes.ViewList.route){ DisplayNotesList() }
         //how to extract the elements from the text fields.....
         composable(Routes.ViewSingle.route){
-            SingleNoteElementDisplay(it.arguments?.getString("id")?:"")
+            ViewSingleNote(it.arguments?.getString("id")?:"")
         }
         composable(Routes.EditNote.route){ EditNote(it.arguments?.getString("id")?:"" ) }
 

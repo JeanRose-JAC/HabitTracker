@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.noteInput.screens
+package com.example.habittrackerapp.noteInput
 
 import androidx.compose.runtime.Composable
 import com.example.habittrackerapp.LocalNotesList
