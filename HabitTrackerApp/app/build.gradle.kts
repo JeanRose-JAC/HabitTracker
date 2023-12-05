@@ -104,6 +104,10 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-pager:0.28.0")
     implementation ("com.google.accompanist:accompanist-pager-indicators:0.28.0")
 
+
+    implementation ("androidx.activity:activity-ktx:1.2.0-rc01")
+    implementation ("dev.chrisbanes.accompanist:accompanist-glide:0.4.2")
+
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

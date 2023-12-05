@@ -1,5 +1,8 @@
 package com.example.habittrackerapp.note
 
+import android.graphics.BitmapFactory
+import android.util.Base64
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -74,7 +78,15 @@ fun ViewSingleNote(id: String,
                 )
                 {
 
+//                    val imgBytes = Base64.decode(note.urlImage, 0)
+//                    val image= BitmapFactory.decodeByteArray(imgBytes,0,imgBytes.size)
+//                    println(image.toString())
+                    println(note.urlImage)
 
+//                    Image(
+//                        bitmap = image.asImageBitmap(),
+//                        contentDescription = "user image",
+//                        modifier = Modifier.padding(20.dp) )
                     LoadImage(url = note.urlImage!!)
 
                     //title text field

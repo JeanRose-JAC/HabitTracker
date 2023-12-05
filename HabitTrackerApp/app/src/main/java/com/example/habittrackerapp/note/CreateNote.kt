@@ -1,6 +1,16 @@
 package com.example.habittrackerapp.note
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+
+import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
@@ -16,18 +26,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import com.example.habittrackerapp.LocalNotesList
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.data
@@ -49,17 +63,28 @@ fun CreateNote(notesViewModel: NotesViewModel = viewModel(factory= NotesViewMode
     var title by rememberSaveable { mutableStateOf("") }
     val maxLength = 20
     var urlImage by rememberSaveable { mutableStateOf("") }
-    var context = LocalContext.current;
     var notesList= LocalNotesList.current
     var description by rememberSaveable { mutableStateOf("") }
     val scrollState = rememberScrollState()
     val calendar = Calendar.getInstance()
+    var imageUri by rememberSaveable {
+        mutableStateOf<Uri?>(null)
+    }
+    val context = LocalContext.current
+    val bitmap =  rememberSaveable {
+        mutableStateOf<Bitmap?>(null)
+    }
+
+    val launcher = rememberLauncherForActivityResult(contract =
+    ActivityResultContracts.GetContent()) { uri: Uri? ->
+        imageUri = uri
+    }
 
     val year = calendar.get(Calendar.YEAR)
     val month = calendar.get(Calendar.MONTH)
     val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
     val navController = LocalNavController.current
-    Column(modifier = Modifier.verticalScroll(scrollState)) {
+    Column() {
         Button(onClick = { navController.navigate(Routes.ViewList.route) },
             modifier = Modifier
                 .fillMaxWidth()
@@ -69,8 +94,8 @@ fun CreateNote(notesViewModel: NotesViewModel = viewModel(factory= NotesViewMode
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(500.dp)
-                .padding(16.dp, 0.dp, 16.dp, 16.dp),
+                .height(700.dp)
+                .padding(16.dp, 0.dp, 16.dp, 16.dp).verticalScroll(scrollState),
             shape = RoundedCornerShape(16.dp),
         ) {
             Column(modifier = Modifier.padding(2.dp))
@@ -112,15 +137,32 @@ fun CreateNote(notesViewModel: NotesViewModel = viewModel(factory= NotesViewMode
                     ),
                 )
 
-                OutlinedTextField(
-                    value = urlImage, onValueChange = { urlImage = it },
-                    modifier = Modifier
-                        .padding(10.dp, 40.dp, 10.dp, 10.dp)
-                        .fillMaxWidth()
-                        .verticalScroll(scrollState),
-                    placeholder = { Text("Enter Image URL...") },
-                    singleLine = true
-                )
+                Button(onClick = {
+                    launcher.launch("image/*")
+                }) {
+                    Text(text = "Pick image")
+                }
+
+
+                imageUri?.let {
+                    if (Build.VERSION.SDK_INT < 28) {
+                        bitmap.value = MediaStore.Images
+                            .Media.getBitmap(context.contentResolver,it)
+
+                    } else {
+                        val source = ImageDecoder
+                            .createSource(context.contentResolver,it)
+                        bitmap.value = ImageDecoder.decodeBitmap(source)
+                    }
+
+                    urlImage=bitmap.value.toString()
+                    println(bitmap.value.toString())
+                    bitmap.value?.let {  btm ->
+                        Image(bitmap = btm.asImageBitmap(),
+                            contentDescription =null,
+                            modifier = Modifier.size(20.dp))
+                    }
+                }
 
                 //Buttons
                 Row(
@@ -190,5 +232,12 @@ fun addToList(title: String, description: String, urlImage:String?, email:String
     return false;
 }
 
+@Composable
+fun RequestContent() {
+    val scrollState = rememberScrollState()
 
+    Column() {
+
+    }
+}
 
