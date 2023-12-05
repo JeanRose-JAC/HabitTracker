@@ -260,10 +260,6 @@ fun EditNote(id:String, notesViewModel: NotesViewModel = viewModel(factory= Note
         }
 
     }
-
-
-
-
 }
 
 

@@ -43,7 +43,9 @@ sealed class Routes(val route:String)  {
 
 
 
-    object ViewSingle: Routes("SingleNoteScreenRoute")
+    object ViewSingle: Routes("SingleNoteScreenRoute/{id}"){
+        fun go(id: String) = "ContactScreenRoute/$id"
+    }
     object EditNote: Routes("EditNoteScreenRoute/{id}")
     object ViewList: Routes("NoteListScreenRoute")
 

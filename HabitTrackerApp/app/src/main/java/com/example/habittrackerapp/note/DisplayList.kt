@@ -52,15 +52,18 @@ fun DisplayNotesList(notesViewModel: NotesViewModel = viewModel(factory= NotesVi
             notesViewModel.getNotes(userInput.Email)
         }
 
-        item{
-            if(notesList.isEmpty()){
-                Text("You have no notes saved.")
-            }
 
+        item{
             Button(onClick = {navController.navigate(Routes.Note.route)},modifier = Modifier.fillMaxWidth()
                 .padding(16.dp,16.dp,16.dp,0.dp)){
                 Text(text = "Add note")
             }
+            if(notesList.isEmpty()){
+
+                Text("You have no notes saved.",modifier=Modifier.fillMaxWidth().padding(start=20.dp,top=20.dp))
+            }
+
+
         }
             itemsIndexed(notesList) { index, note ->
                 Card(  modifier = Modifier
