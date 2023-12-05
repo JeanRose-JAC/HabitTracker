@@ -1,17 +1,15 @@
 package com.example.habittrackerapp.signInSignUp
 
 
-import androidx.compose.animation.core.updateTransition
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,6 +19,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -87,7 +86,9 @@ fun UserSignUp(modifier: Modifier = Modifier,
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
 
-    var clicked by rememberSaveable { mutableStateOf(false) }
+    var submitClicked by rememberSaveable { mutableStateOf(false) }
+    var popup by rememberSaveable { mutableStateOf(false) }
+    var createdOnce by rememberSaveable { mutableStateOf(true) }
 
     val users by myViewModel.allUsers.collectAsState()
 
@@ -142,7 +143,7 @@ fun UserSignUp(modifier: Modifier = Modifier,
             }
             item{
                 Button(
-                    onClick = { clicked = true },
+                    onClick = { submitClicked = true },
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(60.dp, 8.dp),
@@ -164,30 +165,36 @@ fun UserSignUp(modifier: Modifier = Modifier,
             }
             item{
 
-                if(clicked){
-
+                if(submitClicked){
+                    submitClicked = false
                     val profile = users.filter { it.Email == email }
-
                     if(profile.isEmpty()){
                         showList.value=true
                     }
                     else{
-                        clicked = false
+                        popup = true
                     }
                 }
 
-                if(showList.value){
+                if(showList.value && createdOnce){
+                    createdOnce = false
                     savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
                     authViewModel.signUp(userInput.Email,userInput.Password)
-
-
-                    // if the user already exist error message before adding it
                     myViewModel.addUser(userInput)
-
                     navController.navigate(Routes.Setting.route)
-                    Text(text = "Congrats you are logged in")
+                }
 
-
+                if(popup){
+                    AlertDialog(onDismissRequest = { popup = false },
+                        title = { Text("Email Already In Use") },
+                        text = { Text("Please enter in a another email. The current email has already an account.") },
+                        modifier = modifier,
+                        confirmButton = {
+                            TextButton(onClick = {popup = false}) {
+                                Text("OK")
+                            }
+                        }
+                    )
                 }
             }
         }
