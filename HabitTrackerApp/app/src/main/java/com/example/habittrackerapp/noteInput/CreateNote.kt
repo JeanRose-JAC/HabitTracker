@@ -23,10 +23,13 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.noteViewModel.Note
 import com.example.habittrackerapp.model.noteViewModel.NotesViewModel
@@ -50,113 +53,129 @@ fun CreateNote(notesViewModel: NotesViewModel = viewModel(factory= NotesViewMode
     var notesList= LocalNotesList.current
     var description by rememberSaveable { mutableStateOf("") }
     val scrollState = rememberScrollState()
-    var openDialog by rememberSaveable { mutableStateOf(true)}
-    var clicked by rememberSaveable { mutableStateOf(false) };
     val calendar = Calendar.getInstance()
 
     val year = calendar.get(Calendar.YEAR)
     val month = calendar.get(Calendar.MONTH)
     val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-    Column(modifier = Modifier.padding(2.dp))
-    {
-        //title text field
-        TextField(
-            value = title,
-            onValueChange = {
-                if (it.length <= maxLength) title = it
-                else Toast.makeText(
-                    context,
-                    "Cannot be more than 20 Characters",
-                    Toast.LENGTH_SHORT
-                ).show()
-            },
-            placeholder = { Text("$dayOfMonth/${month + 1}/$year") },
-            singleLine = true,
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.Transparent
-            ),
+    val navController = LocalNavController.current
+    Column(modifier = Modifier.verticalScroll(scrollState)) {
+        Button(onClick = { navController.navigate(Routes.ViewList.route) },
             modifier = Modifier
-                .padding(20.dp, 0.dp)
                 .fillMaxWidth()
-        )
-        //body/content description text field
-        TextField(
-            value = description,
-            onValueChange = { description = it },
+                .padding(16.dp, 0.dp, 16.dp, 2.dp)){
+            Text("view List")
+        }
+        Card(
             modifier = Modifier
-                .height(250.dp)
-                .padding(20.dp, 0.dp)
-                .verticalScroll(scrollState),
-            placeholder = { Text("Enter Text...") },
-            colors = TextFieldDefaults.textFieldColors(
-                disabledTextColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
-            ),
-        )
-
-        OutlinedTextField(
-            value = urlImage, onValueChange = { urlImage = it },
-            modifier = Modifier
-                .padding(10.dp, 40.dp, 10.dp, 10.dp)
                 .fillMaxWidth()
-                .verticalScroll(scrollState),
-            placeholder = { Text("Enter Image URL...") },
-            singleLine = true
-        )
-
-        //Buttons
-        Row(
-            modifier = Modifier
-                .padding(0.dp, 0.dp, 20.dp, 0.dp)
-                .align(Alignment.End)
-        )
-        {
-            //saves input to the list
-            Button(
-                onClick =
-                {
-                    if(title.isEmpty()){
-
-                        title = "$dayOfMonth/${month + 1}/$year"
-                    }
-                    var popUp = addToList(title, description, urlImage, userInput.Email,notesList)
-                    if(popUp){
-                        val newNote = Note(title, description, urlImage, userInput.Email)
-                        notesList.add(newNote);
-                        notesViewModel.addNote(newNote)
-
-                        Toast.makeText(
+                .height(500.dp)
+                .padding(16.dp, 0.dp, 16.dp, 16.dp),
+            shape = RoundedCornerShape(16.dp),
+        ) {
+            Column(modifier = Modifier.padding(2.dp))
+            {
+                //title text field
+                TextField(
+                    value = title,
+                    onValueChange = {
+                        if (it.length <= maxLength) title = it
+                        else Toast.makeText(
                             context,
-                            "Note has been added to the list",
-                            Toast.LENGTH_LONG
-                        ).show();
+                            "Cannot be more than 20 Characters",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    },
+                    placeholder = { Text("$dayOfMonth/${month + 1}/$year") },
+                    singleLine = true,
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = Color.Transparent
+                    ),
+                    modifier = Modifier
+                        .padding(20.dp, 0.dp)
+                        .fillMaxWidth()
+                )
+                //body/content description text field
+                TextField(
+                    value = description,
+                    onValueChange = { description = it },
+                    modifier = Modifier
+                        .height(250.dp)
+                        .padding(20.dp, 0.dp)
+                        .verticalScroll(scrollState),
+                    placeholder = { Text("Enter Text...") },
+                    colors = TextFieldDefaults.textFieldColors(
+                        disabledTextColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    ),
+                )
 
+                OutlinedTextField(
+                    value = urlImage, onValueChange = { urlImage = it },
+                    modifier = Modifier
+                        .padding(10.dp, 40.dp, 10.dp, 10.dp)
+                        .fillMaxWidth()
+                        .verticalScroll(scrollState),
+                    placeholder = { Text("Enter Image URL...") },
+                    singleLine = true
+                )
+
+                //Buttons
+                Row(
+                    modifier = Modifier
+                        .padding(0.dp, 0.dp, 20.dp, 0.dp)
+                        .align(Alignment.End)
+                )
+                {
+                    //saves input to the list
+                    Button(
+                        onClick =
+                        {
+                            if(title.isEmpty()){
+
+                                title = "$dayOfMonth/${month + 1}/$year"
+                            }
+                            var popUp = addToList(title, description, urlImage, userInput.Email,notesList)
+                            if(popUp){
+                                val newNote = Note(title, description, urlImage, userInput.Email)
+                                notesList.add(newNote);
+                                notesViewModel.addNote(newNote)
+
+                                Toast.makeText(
+                                    context,
+                                    "Note has been added to the list",
+                                    Toast.LENGTH_LONG
+                                ).show();
+
+                                title = ""
+                                description = ""
+                                urlImage = ""
+                            }
+                            else{
+                                Toast.makeText(
+                                    context,
+                                    "Missing input",
+                                    Toast.LENGTH_LONG
+                                ).show();
+                            }
+
+                        }, modifier = Modifier.padding(0.dp)
+                    )
+                    { Text("save") }
+                    //clears user input
+                    Button(onClick = {
                         title = ""
                         description = ""
                         urlImage = ""
-                    }
-                   else{
-                        Toast.makeText(
-                            context,
-                            "Missing input",
-                            Toast.LENGTH_LONG
-                        ).show();
-                    }
+                    }, modifier = Modifier.padding(10.dp, 0.dp)) { Text("clear") }
+                }
 
-                }, modifier = Modifier.padding(0.dp)
-            )
-            { Text("save") }
-            //clears user input
-            Button(onClick = {
-                title = ""
-                description = ""
-                urlImage = ""
-            }, modifier = Modifier.padding(10.dp, 0.dp)) { Text("clear") }
+            }
         }
-
     }
+
 }
 
 ///adds the new notes to the list if the items aren't empty

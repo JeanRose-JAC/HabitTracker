@@ -4,10 +4,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -33,6 +37,7 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
+import com.example.habittrackerapp.noteInput.CreateNote
 import com.example.habittrackerapp.noteInput.ViewNote
 
 
@@ -53,7 +58,7 @@ fun NoteScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory = Save
         modifier = Modifier.fillMaxSize(),
         alpha = 0.45F)
 
-    Column(modifier = Modifier.verticalScroll(scrollState)) {
+    Column {
         if( !myUiState.email.isEmpty()){
             if(myUiState.email != "empty"){
                 if(onceSigned){
@@ -82,7 +87,7 @@ fun NoteScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory = Save
                         style = MaterialTheme.typography.headlineMedium,
                         textAlign =  TextAlign.Center)
 
-                    ViewNote()
+                    CreateNote()
                 }
 
             }
@@ -100,3 +105,5 @@ fun NoteScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory = Save
 
     }
 }
+
+

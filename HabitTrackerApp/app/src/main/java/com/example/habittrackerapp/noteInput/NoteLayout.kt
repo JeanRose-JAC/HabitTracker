@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -18,8 +20,9 @@ import com.example.habittrackerapp.model.noteViewModel.Note
  * Formats the note elements to look prettier*/
 @Composable
 fun NoteLayout() {
+    val scrollState = rememberScrollState()
     val navController = LocalNavController.current
-    Column() {
+    Column(modifier = Modifier.verticalScroll(scrollState)) {
         Button(onClick = { navController.navigate(Routes.ViewList.route) },
             modifier = Modifier
                 .fillMaxWidth()
