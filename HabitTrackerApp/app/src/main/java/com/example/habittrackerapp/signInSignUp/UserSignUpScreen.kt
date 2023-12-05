@@ -46,8 +46,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.auth.AuthViewModel
@@ -116,7 +118,12 @@ fun UserSignUp(modifier: Modifier = Modifier,
                 ){
                     Text(
                         text = "Sign Up",
-                        style = MaterialTheme.typography.displaySmall,
+                        fontSize = 24.sp,
+                        modifier = modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        style = MaterialTheme.typography.headlineMedium,
+                        textAlign =  TextAlign.Center
                     )
 
                 }
@@ -396,7 +403,7 @@ fun ValidateUser(firstName: String,lastName: String,email: String,password: Stri
 @Composable
 fun ProfilePicture(profilePic:String, onChange: (String) -> Unit, modifier: Modifier=Modifier) {
     val userInput= data.current
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally ,modifier= Modifier.fillMaxWidth()) {
         Box(  modifier = Modifier.padding(20.dp).align(Alignment.CenterHorizontally)) {
             AsyncImage(
                 model = profilePic,
