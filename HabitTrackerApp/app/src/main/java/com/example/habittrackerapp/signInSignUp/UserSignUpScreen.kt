@@ -183,7 +183,7 @@ fun UserSignUp(modifier: Modifier = Modifier,
                     savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
                     authViewModel.signUp(userInput.Email,userInput.Password)
                     myViewModel.addUser(userInput)
-                    navController.navigate(Routes.Setting.route)
+                    navController.navigate(Routes.Profile.route)
                 }
 
                 if(popup){

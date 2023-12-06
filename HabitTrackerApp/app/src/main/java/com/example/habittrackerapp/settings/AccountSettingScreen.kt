@@ -11,6 +11,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -24,22 +25,39 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
+import com.example.habittrackerapp.auth.AuthViewModel
+import com.example.habittrackerapp.auth.AuthViewModelFactory
 import com.example.habittrackerapp.data
+import com.example.habittrackerapp.model.noteViewModel.Note
+import com.example.habittrackerapp.model.noteViewModel.NotesViewModel
+import com.example.habittrackerapp.model.noteViewModel.NotesViewModelFactory
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
+import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 
 @Composable
-fun AccountSetting(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
+fun AccountSetting(myViewModel: UserViewModel =
+                       viewModel(factory= UserViewModelFactory()),
+                   authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
+                   savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory()),
+                   notesViewModel: NotesViewModel = viewModel(factory= NotesViewModelFactory())) {
     val navController = LocalNavController.current
     val userInput = data.current
     var email by rememberSaveable { mutableStateOf(userInput.Email) }
     var password by rememberSaveable { mutableStateOf(userInput.Password) }
     var saveChanges by rememberSaveable { mutableStateOf(false) }
+    val allNotes by notesViewModel.allNotes.collectAsState()
+    val notesList by notesViewModel.allUserNotes.collectAsState()
 
     val focusManager = LocalFocusManager.current
 
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
         item {
+            if(allNotes.isNotEmpty()){
+                notesViewModel.getNotes(userInput.Email)
+            }
+
             Text(
                 text = "Account Settings",
                 fontSize = 24.sp,
@@ -69,6 +87,9 @@ fun AccountSetting(MyViewModel: UserViewModel = viewModel(factory= UserViewModel
                         }
                         if(saveChanges){
                             SaveUserProfileChange(userInput.FirstName,userInput.LastName,email,password,userInput.ProfilePicture)
+                            notesList.forEach(){
+                                notesViewModel.addNote(Note(it.title, it.description, it.urlImage, email, it.id))
+                            }
                             focusManager.clearFocus()
                             saveChanges = false
                         }
