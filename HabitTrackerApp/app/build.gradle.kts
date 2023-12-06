@@ -70,6 +70,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
     val nav_version = "2.7.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("androidx.compose.material3:material3:1.1.2")
