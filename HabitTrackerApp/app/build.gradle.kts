@@ -70,6 +70,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
     val nav_version = "2.7.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("androidx.compose.material3:material3:1.1.2")
@@ -101,7 +102,10 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
-
+    //hide password toggle
+    implementation ("androidx.compose.material:material-icons-extended:1.5.4")
+    //Splashscreen
+    implementation ("androidx.core:core-splashscreen:1.0.0-beta02")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

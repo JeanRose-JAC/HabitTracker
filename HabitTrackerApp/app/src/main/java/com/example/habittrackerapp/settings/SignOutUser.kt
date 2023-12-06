@@ -20,50 +20,13 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFa
 
 
 /**
- * This function allows the user to signOut, and we have a dialog to make sure that they
- * want to signOut.
- * @param authViewModel this is used to signOut the user of the app and remove their information
- * @param savedUserViewModel this remove the user information and when they run the app again they wont be signIn
- */
-@Composable
-fun SignOutUser(authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
-                savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
-) {
-    val navController = LocalNavController.current
-    val userData = data.current;
-    var popupControl by rememberSaveable { mutableStateOf(false) }
-
-    Button(onClick = {popupControl=true}) {
-        Text("SignOut Account")
-    }
-
-    if(popupControl){
-
-
-        SignOutConfirmationDialog(
-            onSignOutConfirm = {
-
-                popupControl = false
-                userData.Email="";
-                savedUserViewModel.saveEmailAndPassword("empty", "empty")
-                authViewModel.signOut();
-                navController.navigate(Routes.About.route)
-
-            },
-            onSignOutCancel = { popupControl = false },
-        )
-    }
-
-}
-
-/**
  * This is the confirmation dialog if to make sure that the user
  * wants to signOut.
  * @param onSignOutCancel what will happen if the user cancel the confirmation dialog, aka go back to were they were
  * @param onSignOutConfirm what will happen if the user sign out, aka remove all their information
  */
 @Composable
-private fun SignOutConfirmationDialog(
+ fun SignOutConfirmationDialog(
     onSignOutConfirm: () -> Unit, onSignOutCancel: () -> Unit, modifier: Modifier = Modifier
 ) {
     AlertDialog(onDismissRequest = { /* Do nothing */ },
