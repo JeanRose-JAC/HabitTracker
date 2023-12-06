@@ -34,8 +34,10 @@ fun ViewSingleNote(id: String,
 ) {
     val navController = LocalNavController.current
     val note by notesViewModel.currentNote.collectAsState()
+    val scrollState = rememberScrollState()
     notesViewModel.getNote(id)
-    Column{
+    Column(modifier = Modifier
+        .padding(16.dp).verticalScroll(scrollState)){
         if (note.id == id) {
             Row(
                 modifier = Modifier

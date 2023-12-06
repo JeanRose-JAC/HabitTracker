@@ -37,10 +37,10 @@ import com.example.habittrackerapp.R
 fun AboutTheAppScreen(name: String? = null, modifier : Modifier = Modifier) {
     val localContext = LocalContext.current
     val activity = localContext as ComponentActivity
+    val scrollState = rememberScrollState()
     Column (
         modifier = Modifier
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState())
+            .padding(16.dp).verticalScroll(scrollState)
     ) {
         if (name != null) {
             if(name.isNotEmpty()){
@@ -100,7 +100,7 @@ fun AboutTheAppScreen(name: String? = null, modifier : Modifier = Modifier) {
                 painterResource(id = R.drawable.brain_5983810_1280),
                 contentDescription = "Habit Minder",
                 modifier = modifier
-                    .size(225.dp),
+                    .size(200.dp),
                 contentScale = ContentScale.Crop,
             )
         }
@@ -111,9 +111,11 @@ fun AboutTheAppScreen(name: String? = null, modifier : Modifier = Modifier) {
 
 @Composable
 fun AboutUsScreen() {
-
-    Column(modifier = Modifier
-        .verticalScroll(rememberScrollState()))
+    val scrollState = rememberScrollState()
+    Column (
+        modifier = Modifier
+            .padding(16.dp).verticalScroll(scrollState)
+    )
     {
         Text(
             text = "About Us",

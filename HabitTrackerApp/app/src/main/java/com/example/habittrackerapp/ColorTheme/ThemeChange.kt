@@ -1,8 +1,10 @@
 package com.example.habittrackerapp.ColorTheme
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -21,13 +23,14 @@ fun ThemeSwitcher(
     onThemeChange: () -> Unit,
 ) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxWidth().background(Color(153,158,135)),
         contentAlignment = Alignment.Center
     ) {
+
         Row(verticalAlignment = Alignment.CenterVertically) {
 
             Text(
-                modifier = Modifier.padding(12.dp),
+                modifier = Modifier.padding(12.dp,0.dp),
                 text = if (darkTheme) "Dark Theme" else "Light Theme",
                 color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold

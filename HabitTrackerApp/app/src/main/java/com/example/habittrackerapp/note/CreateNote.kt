@@ -59,7 +59,7 @@ fun CreateNote(notesViewModel: NotesViewModel = viewModel(factory= NotesViewMode
     val month = calendar.get(Calendar.MONTH)
     val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
     val navController = LocalNavController.current
-    Column(modifier = Modifier.verticalScroll(scrollState)) {
+    Column() {
         Button(onClick = { navController.navigate(Routes.ViewList.route) },
             modifier = Modifier
                 .fillMaxWidth()

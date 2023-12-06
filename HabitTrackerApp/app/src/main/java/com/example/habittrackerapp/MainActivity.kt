@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -67,13 +68,17 @@ class MainActivity : ComponentActivity() {
                     CompositionLocalProvider(LocalNavController provides navController, data provides userInput, LocalNotesList provides notesList, darkMode provides isDark) {
                         MainLayout("Habit Minder") {
 
-                            Router()
-                            ThemeSwitcher(
-                                darkTheme = isDark,
-                                onThemeChange = {
-                                    isDark = !isDark
-                                }
-                            )
+                            Column {
+                                ThemeSwitcher(
+                                    darkTheme = isDark,
+                                    onThemeChange = {
+                                        isDark = !isDark
+                                    }
+                                )
+                                Router()
+                            }
+
+
                         }
 
                     }
