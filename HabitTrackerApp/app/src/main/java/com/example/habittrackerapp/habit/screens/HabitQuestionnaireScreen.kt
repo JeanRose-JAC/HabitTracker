@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -49,9 +50,12 @@ fun HabitQuestionnaireScreen(desc2: String? = null, modifier: Modifier = Modifie
     ){
         Text(
             text = "What habit do you want to track?",
-            textAlign = TextAlign.Center,
-            fontSize = 26.sp,
-            modifier = Modifier.padding(bottom = 10.dp)
+            fontSize = 24.sp,
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            style = MaterialTheme.typography.headlineMedium,
+            textAlign =  TextAlign.Center
         )
 
         Text(

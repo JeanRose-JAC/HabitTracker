@@ -3,18 +3,29 @@ package com.example.habittrackerapp.signInSignUp
 
 import android.app.Activity
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -37,12 +48,17 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.habittrackerapp.auth.AuthViewModel
@@ -140,7 +156,12 @@ fun UserSignUp(name: String? = null, modifier: Modifier = Modifier,
                 ){
                     Text(
                         text = "Sign Up",
-                        style = MaterialTheme.typography.displaySmall,
+                        fontSize = 24.sp,
+                        modifier = modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        style = MaterialTheme.typography.headlineMedium,
+                        textAlign =  TextAlign.Center
                     )
 
                 }
@@ -205,7 +226,7 @@ fun UserSignUp(name: String? = null, modifier: Modifier = Modifier,
                     savedUserViewModel.saveEmailAndPassword(userInput.Email, userInput.Password)
                     authViewModel.signUp(userInput.Email,userInput.Password)
                     myViewModel.addUser(userInput)
-                    navController.navigate(Routes.Setting.route)
+                    navController.navigate(Routes.Profile.route)
                 }
 
                 if(popup){
@@ -276,6 +297,9 @@ fun FirstName(firstName:String,onChange:(String)->Unit,modifier: Modifier = Modi
             .padding(20.dp, 8.dp)
     ) {
         TextField(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(20.dp, 0.dp),
             value = firstName,
             onValueChange = onChange,
             label={ Text("Please enter your first name") },
@@ -297,6 +321,9 @@ fun LastName(lastName:String,onChange:(String)->Unit,modifier: Modifier = Modifi
             .padding(20.dp, 8.dp)
     ){
         TextField(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(20.dp, 0.dp),
             value = lastName,
             onValueChange = onChange,
             label={ Text("Please enter your last name") },
@@ -320,6 +347,9 @@ fun Email(email:String, onChange:(String)->Unit,modifier: Modifier = Modifier) {
             .padding(20.dp, 8.dp)
     ){
         TextField(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(20.dp, 0.dp),
             value = email,
             onValueChange = onChange,
             label={ Text("Please enter your email") },
@@ -338,18 +368,35 @@ fun Email(email:String, onChange:(String)->Unit,modifier: Modifier = Modifier) {
  */
 @Composable
 fun Password(password:String, onChange: (String) -> Unit, modifier: Modifier=Modifier) {
+    var passwordVisible by rememberSaveable { mutableStateOf(false) }
+
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(20.dp, 8.dp)
     ){
         TextField(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(20.dp, 0.dp),
             value = password,
             onValueChange = onChange,
             label={ Text("Please enter your Password") },
             isError = password.length<8,
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            trailingIcon = {
+                val image = if (passwordVisible)
+                    Icons.Filled.Visibility
+                else Icons.Filled.VisibilityOff
+
+                // Please provide localized description for accessibility services
+                val description = if (passwordVisible) "Hide password" else "Show password"
+
+                IconButton(onClick = {passwordVisible = !passwordVisible}){
+                    Icon(imageVector  = image, description)
+                }
+            }
         )
     }
 }
@@ -367,7 +414,7 @@ fun Gender(gender:String,onChange: (String) -> Unit) {
     val isSelectedItem: (String) -> Boolean = { gender == it }
     val onChangeState: (String) -> Unit = onChange
 
-    val genders=listOf("no","female","male","non-binary")
+    val genders=listOf("Female","Male","Non-binary")
 
     Column(Modifier.padding(20.dp,8.dp)){
         Text(text = "Please choose a gender")
@@ -433,14 +480,25 @@ fun ValidateUser(firstName: String,lastName: String,email: String,password: Stri
 @Composable
 fun ProfilePicture(profilePic:String, onChange: (String) -> Unit, modifier: Modifier=Modifier) {
     val userInput= data.current
+    Column(horizontalAlignment = Alignment.CenterHorizontally ,modifier= Modifier.fillMaxWidth()) {
+        Box(  modifier = Modifier.padding(20.dp).align(Alignment.CenterHorizontally)) {
+            AsyncImage(
+                model = profilePic,
+                contentDescription = "Translated description of what the image contains",
+                error = painterResource(R.drawable.noprofilepic),
+                alignment = Alignment.Center,
+                modifier = Modifier
+                    .size(150.dp)
+                    .clip(CircleShape)
+                    .border(
+                        width = 1.dp,
+                        color = Color.LightGray,
+                        shape = CircleShape
+                    ),
+            )
+        }
+    }
 
-    AsyncImage(
-        model = profilePic,
-        contentDescription = "Translated description of what the image contains",
-        error = painterResource( R.drawable.notgood),
-        alignment = Alignment.Center,
-        modifier = Modifier.fillMaxWidth()
-    )
 
     Card(
         modifier = modifier
@@ -449,6 +507,9 @@ fun ProfilePicture(profilePic:String, onChange: (String) -> Unit, modifier: Modi
     ){
         Column {
             TextField(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(20.dp, 0.dp),
                 value = profilePic,
                 onValueChange = onChange,
                 label = {Text("Please input a profile pic.")},

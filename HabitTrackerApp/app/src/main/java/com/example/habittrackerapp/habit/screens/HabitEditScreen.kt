@@ -2,9 +2,11 @@ package com.example.habittrackerapp.habit.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,9 +20,8 @@ import com.example.habittrackerapp.model.habitViewModel.HabitUpdateViewModel
 import com.example.habittrackerapp.model.habitViewModel.HabitViewModelProvider
 
 @Composable
-fun HabitEditScreen (
-                     myViewModel: HabitUpdateViewModel = viewModel(factory = HabitViewModelProvider.Factory),
-                     modifier: Modifier = Modifier) {
+fun HabitEditScreen (myViewModel: HabitUpdateViewModel = viewModel(factory = HabitViewModelProvider.Factory))
+{
     val item = myViewModel.habitUiState.habitDetails
 
     Column(
@@ -32,9 +33,12 @@ fun HabitEditScreen (
     ){
         Text(
             text = "Edit Habit",
-            textAlign = TextAlign.Center,
-            fontSize = 26.sp,
-            modifier = Modifier.padding(bottom = 10.dp)
+            fontSize = 24.sp,
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            style = MaterialTheme.typography.headlineMedium,
+            textAlign =  TextAlign.Center
         )
 
         Text(
@@ -52,8 +56,7 @@ fun HabitEditScreen (
 @Composable
 fun EditForm(
     habitDetails: HabitDetails,
-    onValueChange: (HabitDetails) -> Unit = {},
-    modifier: Modifier = Modifier,
+    onValueChange: (HabitDetails) -> Unit = {}
     ) {
     HabitDescription(habitDetails.description, {
         if(it.length <= 75){
