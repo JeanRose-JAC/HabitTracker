@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -28,6 +30,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,28 +57,49 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
+import com.example.habittrackerapp.note.CreateNote
 import com.example.habittrackerapp.signInSignUp.ValidateUser
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun UserProfileScreen(
-    MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
+    savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory()),
+    MyViewModel: UserViewModel =viewModel(factory= UserViewModelFactory()),
+    authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory())) {
 
+    val myUiState by savedUserViewModel.uiState.collectAsState()
+    val activeUser = MyViewModel.activeUser.collectAsState()
+    var onceSigned by rememberSaveable {mutableStateOf(true) }
+    val scrollState = rememberScrollState()
     val userInput = data.current
     val navController = LocalNavController.current
 
-    if(!ValidateUser(firstName = userInput.FirstName, lastName = userInput.LastName, email = userInput.Email, password = userInput.Password)){
-        Column {
-            Text(text = "Please sign Up")
-            Button(onClick = {navController.navigate(Routes.SignUp.route)}) {
-                Text(text = "Go to Sign Up")
+    Column {
+        if( !myUiState.email.isEmpty()){
+            if(myUiState.email != "empty"){
+                if(onceSigned){
+                    authViewModel.signIn(myUiState.email,myUiState.password)
+                    MyViewModel.getUser(myUiState.email, myUiState.password)
+                    onceSigned = false
+                }
+
+                if(activeUser.value.FirstName.isNotEmpty()){
+                    println("in signIn-> ${activeUser.value.FirstName}")
+                    userInput.FirstName=activeUser.value.FirstName
+                    userInput.Email = activeUser.value.Email
+                    userInput.Gender = activeUser.value.Gender
+                    userInput.LastName = activeUser.value.LastName
+                    userInput.ProfilePicture = activeUser.value.ProfilePicture
+                    userInput.Password = activeUser.value.Password
+
+                }
+
+                if(userInput.Email.isNotEmpty()) {
+                    DisplayUserInformation()
+                }
             }
         }
     }
-    else{
-        DisplayUserInformation()
-    }
-
 }
 
 @Composable

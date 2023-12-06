@@ -108,15 +108,16 @@ fun TopBarScreen(title:String, savedUserViewModel: SavedUserViewModel = viewMode
                     text = { Text("Profile") },
                     onClick = {navController.navigate(Routes.Profile.route)
                     expanded=false})
+                DropdownMenuItem(
+                    text = { Text("About Us")},
+                    onClick = {navController.navigate(Routes.AboutUs.route)
+                        expanded=false})
                 DropdownMenuItem(text = { Text("Sign Out") },
                     onClick = {
                     expanded=false
                     clicked=true
                     })
-                DropdownMenuItem(
-                    text = { Text("Setting")},
-                    onClick = {navController.navigate(Routes.Setting.route)
-                        expanded=false})
+
 
             }
 
