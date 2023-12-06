@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.habittrackerapp.ColorTheme.ThemeSwitcher
+import com.example.habittrackerapp.colorTheme.ThemeSwitcher
 import com.example.habittrackerapp.layout.MainLayout
 import com.example.habittrackerapp.signInSignUp.rememberMutableStateListOf
 import com.example.habittrackerapp.model.noteViewModel.Note
