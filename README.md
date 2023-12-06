@@ -9,36 +9,39 @@ Our application is a habit tracker app. Users must create an account to use it. 
 - Start Android Studio and open the project.
 - Run the application
 
-## Update 29/11/2023
-- All the main functionalities of the app such as the users accounts, notes and habits are up and running well.
-- The UI is also improved.
+## Update 06/12/2023
+- Improve UI to enhance user experience.
+- Fixed minor bugs.
 
 ## Screenshots of application
 ### About Page
 <div style="display: flex; justify-content: space-between;">
-    <img src="./AppScreenshots/about_light2.png" alt="Image 1" style="width: 50%;">
+    <img src="./AppScreenshots/HabitMinder/about.png" alt="Image 1" style="width: 50%;">
+    <img src="./AppScreenshots/HabitMinder/aboutus.png" alt="Image 1" style="width: 50%;">
 </div>
 
-### Sign Up Page
+### User Pages
 
 <div style="display: flex; justify-content: space-between;">
-    <img src="./AppScreenshots/signup2.png" alt="Image 1" style="width: 50%;">
-    <img src="./AppScreenshots/signin2.png" alt="Image 2"  style="width: 50%;">
-    <img src="./AppScreenshots/signinsignup2.png" alt="Image 2"  style="width: 50%;">
+    <img src="./AppScreenshots/HabitMinder/signupsingin_final2.png" alt="Image 1" style="width: 50%;">
+    <img src="./AppScreenshots/HabitMinder/signup3.png" alt="Image 2"  style="width: 50%;">
+    <img src="./AppScreenshots/HabitMinder/signin3.png" alt="Image 2"  style="width: 50%;">
+    <img src="./AppScreenshots/HabitMinder/mainprofile.png" alt="Image 2"  style="width: 50%;">
 </div>
 
-### Notes Page
+### Note Pages
 <div style="display: flex; justify-content: space-between;">
-    <img src="./AppScreenshots/createnote2.png" alt="Image 1" style="width: 50%;">
-    <img src="./AppScreenshots/onenote2.png" alt="Image 2"  style="width: 50%;">
-    <img src="./AppScreenshots/listnote2.png" alt="Image 2"  style="width: 50%;">
+    <img src="./AppScreenshots/HabitMinder/createnote3.png" alt="Image 2"  style="width: 50%;">
+    <img src="./AppScreenshots/HabitMinder/onenote3.png" alt="Image 2"  style="width: 50%;">
+    <img src="./AppScreenshots/HabitMinder/onenote4.png" alt="Image 2"  style="width: 50%;">
 </div>
 
-### Habits Page
+### Habit Pages
 <div style="display: flex; justify-content: space-between;">
-    <img src="./AppScreenshots/onehabit2.png" alt="Image 1"  style="width: 50%;">
-    <img src="./AppScreenshots/addhabit2.png" alt="Image 2"  style="width: 50%;">
-    <img src="./AppScreenshots/listhabits2.png" alt="Image 2"  style="width: 50%;">
+    <img src="./AppScreenshots/HabitMinder/allhabitlist2.png" alt="Image 2"  style="width: 50%;">
+    <img src="./AppScreenshots/HabitMinder/createhabit3.png" alt="Image 2"  style="width: 50%;">
+    <img src="./AppScreenshots/HabitMinder/onehabit3.png" alt="Image 2"  style="width: 50%;">
+
 </div>
 
 
