@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import com.example.habittrackerapp.LocalNavController
 
 @Composable
-fun Appearance(){
+fun Appearance() {
     val navController = LocalNavController.current
     AlertDialog(onDismissRequest = {navController.popBackStack() },
         title = { Text("Feature to come") },

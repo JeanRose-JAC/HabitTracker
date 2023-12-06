@@ -78,7 +78,7 @@ fun AboutTheAppScreen(modifier : Modifier = Modifier) {
 
 
 @Composable
-fun AboutUsScreen(){
+fun AboutUsScreen() {
 
     Column(modifier = Modifier
         .verticalScroll(rememberScrollState()))
