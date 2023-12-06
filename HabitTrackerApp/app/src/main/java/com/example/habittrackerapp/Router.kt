@@ -9,21 +9,24 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.settings.PolicyScreen
-import com.example.habittrackerapp.settings.SettingScreen
 import com.example.habittrackerapp.habit.screens.HabitEditScreen
 import com.example.habittrackerapp.habit.screens.HabitItemScreen
 import com.example.habittrackerapp.habit.screens.HabitListScreen
 import com.example.habittrackerapp.habit.screens.HabitQuestionnaireScreen
 import com.example.habittrackerapp.habit.screens.HabitsForTodayListScreen
-import com.example.habittrackerapp.navigation.AboutScreen
-import com.example.habittrackerapp.navigation.NoteScreen
-import com.example.habittrackerapp.navigation.UserProfileScreen
-import com.example.habittrackerapp.noteInput.EditNote
+import com.example.habittrackerapp.AboutTheAppScreen
+import com.example.habittrackerapp.AboutUsScreen
+import com.example.habittrackerapp.settings.AccountSetting
+import com.example.habittrackerapp.settings.EditProfile
+import com.example.habittrackerapp.note.NoteScreen
+import com.example.habittrackerapp.settings.UserProfileScreen
+import com.example.habittrackerapp.note.DisplayNotesList
+import com.example.habittrackerapp.note.EditNote
 import com.example.habittrackerapp.signInSignUp.SignSignUpScreen
 import com.example.habittrackerapp.signInSignUp.UserSignInScreen
 import com.example.habittrackerapp.signInSignUp.UserSignUp
-import com.example.habittrackerapp.noteInput.screens.NoteList
-import com.example.habittrackerapp.noteInput.screens.SingleNoteElementDisplay
+import com.example.habittrackerapp.note.ViewSingleNote
+import com.example.habittrackerapp.settings.Appearance
 
 
 /**
@@ -34,11 +37,10 @@ sealed class Routes(val route:String)  {
     object SignUp : Routes("SignUpScreenRoute")
     object SignUpSignIn : Routes("SignUpSignUpScreenRoute")
     object SignIn : Routes("SignInScreenRoute")
-    object About : Routes("AboutScreenRoute")
+    object AboutApp : Routes("AboutAppScreenRoute")
+    object AboutUs : Routes("AboutUsScreenRoute")
     object Note: Routes("NoteScreenRoute")
-    object Profile:Routes("ProfileScreenRoute")
-    object Setting:Routes("SettingScreenRoute")
-    object  Policy: Routes("PolicyScreenRoute")
+
 
 
     object ViewSingle: Routes("SingleNoteScreenRoute/{id}"){
@@ -60,6 +62,13 @@ sealed class Routes(val route:String)  {
         val routeWithArgs = "${route}/{$habitIdArg}"
     }
 
+    // profile screen routes
+    object Profile:Routes("ProfileScreenRoute")
+    object Setting:Routes("SettingScreenRoute")
+    object  Policy: Routes("PolicyScreenRoute")
+    object  EditProfile: Routes("EditProfileRoute")
+    object AccountSetting: Routes("AccountSettingRoute")
+    object Appearance: Routes("AppearanceScreen")
 }
 
 /**
@@ -70,25 +79,26 @@ sealed class Routes(val route:String)  {
 fun Router() {
     val navController = LocalNavController.current
     NavHost(navController = navController as NavHostController,
-        startDestination = Routes.About.route,
+        startDestination = Routes.AboutApp.route,
         enterTransition = { EnterTransition.None },
         exitTransition = { fadeOut() }) {
 
-        composable(Routes.SignUp.route) { UserSignUp() }
-        composable(Routes.About.route) { AboutScreen()}
-        composable(Routes.Note.route){ NoteScreen() }
-        composable(Routes.Profile.route){ UserProfileScreen()}
-        composable(Routes.Setting.route){ SettingScreen()}
-        composable(Routes.Policy.route){ PolicyScreen()}
 
-        composable(Routes.ViewList.route){ NoteList()}
+        composable(Routes.SignUp.route) { UserSignUp() }
+        composable(Routes.AboutApp.route) { AboutTheAppScreen() }
+        composable(Routes.AboutUs.route) { AboutUsScreen() }
+        composable(Routes.Note.route){ NoteScreen() }
+
+
+        composable(Routes.ViewList.route){ DisplayNotesList() }
         //how to extract the elements from the text fields.....
         composable(Routes.ViewSingle.route){
-            SingleNoteElementDisplay(it.arguments?.getString("id")?:"")
+            ViewSingleNote(it.arguments?.getString("id")?:"")
         }
         composable(Routes.EditNote.route){ EditNote(it.arguments?.getString("id")?:"" ) }
 
         composable(Routes.SignIn.route){ UserSignInScreen() }
+
         composable(Routes.SignUpSignIn.route){ SignSignUpScreen() }
         composable(Routes.HabitQuestionnaire.route){ HabitQuestionnaireScreen() }
         composable(
@@ -116,6 +126,14 @@ fun Router() {
             })){
             HabitEditScreen()
         }
+
+        // profile screen routes
+        composable(Routes.EditProfile.route){ EditProfile()}
+        composable(Routes.Profile.route){ UserProfileScreen()}
+        composable(Routes.Policy.route){ PolicyScreen()}
+        composable(Routes.AccountSetting.route){ AccountSetting()}
+        composable(Routes.Appearance.route){ Appearance()}
+
     }
 
 }

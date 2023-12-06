@@ -2,8 +2,10 @@ package com.example.habittrackerapp.signInSignUp
 
 import Routes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -23,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -68,24 +71,21 @@ fun SignSignUpScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory 
                     userInput.ProfilePicture = activeUser.value.ProfilePicture
                     userInput.Password = activeUser.value.Password
                     
-                    navController.navigate(Routes.Setting.route)
+                    navController.navigate(Routes.Profile.route)
                 }
             } else {
                 val scrollState = rememberScrollState()
-                Image(
-                    painter = painterResource(R.drawable.splashclock),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
-                )
+
                 Column(
                     modifier = Modifier.verticalScroll(scrollState),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-
-                    Card(Modifier.padding(20.dp, 190.dp)) {
-
-                    }
+                    Image(
+                        painter = painterResource(R.drawable.splashclock4),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                     Text(
                         "Habit Minder",
                         modifier = Modifier.fillMaxWidth(),
@@ -108,7 +108,7 @@ fun SignSignUpScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory 
                         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(5.dp),
+                            .padding(5.dp,3.dp),
                     ) {
                         Text("GET STARTED")
                     }
@@ -118,7 +118,8 @@ fun SignSignUpScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory 
                             "Already have an account? ",
                             modifier = Modifier.padding(14.dp, 14.dp, 0.dp, 14.dp)
                         )
-                        TextButton(onClick = { navController.navigate(Routes.SignIn.route) },) {
+                        TextButton(onClick = { navController.navigate(Routes.SignIn.route) },
+                         ) {
                             Text("Login")
 
 
