@@ -131,7 +131,7 @@ fun Router() {
         }
 
         composable("deeplink?name={name}",
-            deepLinks = listOf(navDeepLink { uriPattern = "example://compose.deeplink/?name={name}"})
+            deepLinks = listOf(navDeepLink { uriPattern = "example://compose.deeplink2/?name={name}"})
         ) { backStackEntry ->
             UserSignUp(backStackEntry.arguments?.getString("name"))
         }
