@@ -43,6 +43,12 @@ import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 import com.example.habittrackerapp.signInSignUp.ValidateUser
 
+
+/**
+ * The UserProfileScreen checks if the user is or isn't signIn.
+ * if they arent they will have the choise to signIn or signUp else it
+ * will display the user informations
+ */
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun UserProfileScreen(
@@ -66,6 +72,10 @@ fun UserProfileScreen(
 
 }
 
+/**
+ * The DisplayUserInformation gets the user information
+ * and displays them and allow the user to edit their different informations
+ */
 @Composable
 fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
     val userInput = data.current
@@ -104,6 +114,10 @@ fun DisplayUserInformation(MyViewModel: UserViewModel = viewModel(factory= UserV
 
     }
 }
+
+/**
+ * allows the user to see their profilePicture
+ */
 @Composable
 fun ShowProfilePicture() {
     val userInput = data.current
@@ -115,6 +129,13 @@ fun ShowProfilePicture() {
         modifier = Modifier.fillMaxWidth()
     )
 }
+
+/**
+ * the different card to see the user informations
+ * @param name the name of the information being display
+ * @param value what is the current value of the information
+ * @param onChange what happens if the value changes in the card
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextCard(name:String,value:String, focusManager: FocusManager, onChange:(String)->Unit) {
@@ -147,6 +168,14 @@ fun TextCard(name:String,value:String, focusManager: FocusManager, onChange:(Str
 
 }
 
+/**
+ * check if any changes were make in the user information
+ *@param firstName check if the firstname param is different then the current data
+ *@param lastName check if the lastname param is different then the current data
+ *@param email check if the email param is different then the current data
+ *@param password check if the password param is different then the current data
+ * @return boolean if their were any changed in the user information
+ */
 @Composable
 fun ValidUserProfileChanges(firstName: String,lastName: String,email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())):Boolean {
     val userInput = data.current
@@ -154,6 +183,16 @@ fun ValidUserProfileChanges(firstName: String,lastName: String,email: String,pas
     return (firstName!=userInput.FirstName) || (lastName !=userInput.LastName) || (email!=userInput.Email) || (password!=userInput.Password)
 }
 
+
+/**
+ * This updates the user informations if anything was edited
+ * @param firstName the new edited firstname
+ * @param lastName the edited lastname
+ * @param email the edited email
+ * @param password the edited password
+ * @param MyViewModel the viewModel to update the user informations
+ *
+ */
 @Composable
 fun SaveUserProfileChange(firstName: String, lastName: String, email: String, password: String, MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory()), savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
 ) {

@@ -40,6 +40,14 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFa
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 
+/**
+ * The SignInSignUpScreen is a route that checks if the user is signIn or not.
+ * if they aren't signIn there will be a display to allow them to signUp or signIn
+ * else there will see the setting screen.
+ * @param savedUserViewModel this is to save the user credential even if they close their phone
+ * @param authViewModel this the authentication with firestore that will allow use to sign them in
+ * @param MyViewModel is the firestore user information and get their different information
+ */
 @Composable
 fun SignSignUpScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory()),
                      MyViewModel: UserViewModel =viewModel(factory= UserViewModelFactory()),

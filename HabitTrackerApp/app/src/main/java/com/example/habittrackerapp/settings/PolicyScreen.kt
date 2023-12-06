@@ -11,6 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+
+/**
+ * The policyScreen is just a text route that shows the user the policy of the application
+ */
 @Composable
 fun PolicyScreen(modifier: Modifier = Modifier) {
 

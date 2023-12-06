@@ -8,6 +8,12 @@ import androidx.compose.runtime.Composable
 import com.example.habittrackerapp.LocalNavController
 
 
+/**
+ * This is the main Setting screen that allows the user to signOut
+ * of their account, see their profile information, delete their account
+ * or go see the app policy
+ */
+
 @Composable
 fun SettingScreen() {
     val navController = LocalNavController.current

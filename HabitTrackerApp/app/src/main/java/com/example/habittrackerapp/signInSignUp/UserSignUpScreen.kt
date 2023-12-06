@@ -55,13 +55,6 @@ import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
 
 
-/**
- * all of the user's log in logic is here
- */
-
-/**
- * the different type of Input the user as
- */
 
 /**
  * this is where most of the information abt the sign Up page is
