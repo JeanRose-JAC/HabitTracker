@@ -11,7 +11,9 @@ import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.model.habitViewModel.HabitUpdateViewModel
 import com.example.habittrackerapp.model.habitViewModel.HabitViewModelProvider
 
-
+/**
+ * Composable for the save changes button when editing a habit
+ */
 @Composable
 fun SaveChanges (
                  myViewModel: HabitUpdateViewModel = viewModel(factory = HabitViewModelProvider.Factory),

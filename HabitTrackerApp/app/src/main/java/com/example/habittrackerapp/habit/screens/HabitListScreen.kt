@@ -32,6 +32,9 @@ import com.example.habittrackerapp.model.habitViewModel.Habit
 import com.example.habittrackerapp.model.habitViewModel.HabitCreateAndListViewModel
 import com.example.habittrackerapp.model.habitViewModel.HabitViewModelProvider
 
+/**
+ * Composable to display all of the user's habits
+ */
 @Composable
 fun HabitListScreen(
     navigateToHabitGet: (Int) -> Unit,

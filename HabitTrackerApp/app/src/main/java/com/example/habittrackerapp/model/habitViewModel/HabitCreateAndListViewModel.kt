@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+/**
+ * Habits view model to use when creating a new habit and to access all the habits stored in the local database
+ */
 class HabitCreateAndListViewModel(private val habitsRepository: HabitRepository): ViewModel() {
 
     var habitUiState by mutableStateOf(HabitUiState())

@@ -13,6 +13,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
+/**
+ * Habits view model to use when accessing one single habit and deleting it
+ */
 class HabitReadAndDeleteViewModel (savedStateHandle: SavedStateHandle,
                                    private val habitsRepository: HabitRepository
 ) : ViewModel() {
