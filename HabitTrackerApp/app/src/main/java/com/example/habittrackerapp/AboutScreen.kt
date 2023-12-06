@@ -1,5 +1,7 @@
 package com.example.habittrackerapp
 
+import android.app.Activity
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -30,13 +34,26 @@ import com.example.habittrackerapp.R
  * Composable for the About screen
  */
 @Composable
-fun AboutTheAppScreen(modifier : Modifier = Modifier) {
-
+fun AboutTheAppScreen(name: String? = null, modifier : Modifier = Modifier) {
+    val localContext = LocalContext.current
+    val activity = localContext as ComponentActivity
     Column (
         modifier = Modifier
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
+        if (name != null) {
+            if(name.isNotEmpty()){
+                Text(
+                    text = "Hello $name !",
+                    textAlign = TextAlign.Justify,
+                    modifier = Modifier.fillMaxWidth(),
+                    lineHeight = 25.sp)
+
+                Spacer(modifier = Modifier.padding(16.dp))
+            }
+        }
+
         Text(
             text = "Track your daily progress effortlessly with Habit Minder. " +
                     "Build positive habits and break old routines with ease. " +
@@ -57,6 +74,21 @@ fun AboutTheAppScreen(modifier : Modifier = Modifier) {
             textAlign = TextAlign.Justify,
             modifier = Modifier.fillMaxWidth(),
             lineHeight = 25.sp)
+
+        if (name != null) {
+            Button(onClick = {
+                val resultIntent = activity.intent
+                resultIntent.putExtra("resultData", "You are back at the launcher app.") // Set the value to return as a result
+                localContext.setResult(Activity.RESULT_OK, resultIntent)
+                localContext.finish() // Finish the activity
+            },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+            ) {
+                Text("Go back to launcher app")
+            }
+        }
 
         Column(
             modifier = Modifier

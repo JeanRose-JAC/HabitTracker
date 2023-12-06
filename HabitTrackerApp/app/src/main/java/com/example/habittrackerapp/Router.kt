@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.settings.PolicyScreen
 import com.example.habittrackerapp.habit.screens.HabitEditScreen
@@ -134,6 +135,24 @@ fun Router() {
         composable(Routes.AccountSetting.route){ AccountSetting()}
         composable(Routes.Appearance.route){ Appearance()}
 
+
+        composable("deeplink2?desc={desc}",
+            deepLinks = listOf(navDeepLink { uriPattern = "example://compose.deeplink2/?desc={desc}" })
+        ) { backStackEntry ->
+            HabitQuestionnaireScreen(backStackEntry.arguments?.getString("desc"))
+        }
+
+        composable("deeplink2?id={id}",
+            deepLinks = listOf(navDeepLink { uriPattern = "example://compose.deeplink2/?id={id}" })
+        ) { backStackEntry ->
+            AboutTheAppScreen(backStackEntry.arguments?.getString("id"))
+        }
+
+        composable("deeplink2?name={name}",
+            deepLinks = listOf(navDeepLink { uriPattern = "example://compose.deeplink2/?name={name}"})
+        ) { backStackEntry ->
+            UserSignUp(backStackEntry.arguments?.getString("name"))
+        }
     }
 
 }

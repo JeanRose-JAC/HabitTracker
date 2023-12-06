@@ -1,6 +1,8 @@
 package com.example.habittrackerapp.signInSignUp
 
 
+import android.app.Activity
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -45,6 +47,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -86,12 +89,14 @@ import com.example.habittrackerapp.ui.theme.HabitTrackerAppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun UserSignUp(modifier: Modifier = Modifier,
+fun UserSignUp(name: String? = null, modifier: Modifier = Modifier,
                myViewModel: UserViewModel =
                    viewModel(factory= UserViewModelFactory()),
                authViewModel: AuthViewModel= viewModel(factory = AuthViewModelFactory()),
                savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
 ) {
+    val localContext = LocalContext.current
+    val activity = localContext as ComponentActivity
     val signUpResult by authViewModel.signUpResult.collectAsState(ResultAuth.Inactive)
     val snackbarHostState = remember { SnackbarHostState() } // Material 3 approach
 
@@ -112,7 +117,32 @@ fun UserSignUp(modifier: Modifier = Modifier,
     val userInput= data.current
     val showList=remember{ mutableStateOf(false)};
 
+    var fromLauncher = false
+    if(name!=null){
+        firstName=name;
+        fromLauncher = true
+    }
 
+    LaunchedEffect(signUpResult) {
+        signUpResult?.let {
+            if (it is ResultAuth.Inactive) {
+                println("is inactive")
+                return@LaunchedEffect
+            }
+            if (it is ResultAuth.InProgress) {
+                println("is progress")
+                snackbarHostState.showSnackbar("Sign-up In Progress")
+                return@LaunchedEffect
+            }
+            if (it is ResultAuth.Success && it.data) {
+                println("is signUp successful")
+                snackbarHostState.showSnackbar("Sign-up Successful")
+            } else if (it is ResultAuth.Failure || it is ResultAuth.Success) { // success(false) case
+                println("is signUp unsuccessfull")
+                snackbarHostState.showSnackbar("Sign-up Unsuccessful")
+            }
+        }
+    }
 
     Scaffold(
     ) { it->
@@ -144,6 +174,19 @@ fun UserSignUp(modifier: Modifier = Modifier,
                 Password(password,{password=it})
             }
             item{
+                if(fromLauncher){
+                    Button(onClick = {
+                        val resultIntent = activity.intent
+                        resultIntent.putExtra("resultData", "You are back at the launcher app.") // Set the value to return as a result
+                        localContext.setResult(Activity.RESULT_OK, resultIntent)
+                        localContext.finish() // Finish the activity
+                    },
+                        modifier=Modifier.fillMaxWidth()
+                            .padding(60.dp, 8.dp)) {
+                        Text("Send back a value to launching app")
+                    }
+                }
+
                 Button(
                     onClick = { submitClicked = true },
                     modifier = modifier
