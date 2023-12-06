@@ -12,7 +12,7 @@ interface AuthRepository {
 
     suspend fun signIn(email: String, password: String): Boolean
 
-    fun signOut()
+    fun signOut():Boolean
 
-    suspend fun delete()
+    suspend fun delete():Boolean
 }

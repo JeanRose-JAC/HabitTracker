@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.noteInput
+package com.example.habittrackerapp.note
 
 import Routes
 import coil.compose.AsyncImage
@@ -31,8 +31,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.data
@@ -48,20 +46,24 @@ fun DisplayNotesList(notesViewModel: NotesViewModel = viewModel(factory= NotesVi
     val allNotes by notesViewModel.allNotes.collectAsState()
     val notesList by notesViewModel.allUserNotes.collectAsState()
     val navController= LocalNavController.current
-    var clicked by rememberSaveable { mutableStateOf(false) };
     LazyColumn{
+
         if(allNotes.isNotEmpty()){
             notesViewModel.getNotes(userInput.Email)
         }
 
-        item{
-            if(notesList.isEmpty()){
-                Text("You have no notes saved.")
-            }
 
-            Button(onClick = {navController.navigate(Routes.Note.route)},){
+        item{
+            Button(onClick = {navController.navigate(Routes.Note.route)},modifier = Modifier.fillMaxWidth()
+                .padding(16.dp,16.dp,16.dp,0.dp)){
                 Text(text = "Add note")
             }
+            if(notesList.isEmpty()){
+
+                Text("You have no notes saved.",modifier=Modifier.fillMaxWidth().padding(start=20.dp,top=20.dp))
+            }
+
+
         }
             itemsIndexed(notesList) { index, note ->
                 Card(  modifier = Modifier

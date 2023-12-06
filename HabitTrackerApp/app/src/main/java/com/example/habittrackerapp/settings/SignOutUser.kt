@@ -20,39 +20,7 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFa
 
 
 @Composable
-fun SignOutUser(authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
-                savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
-) {
-    val navController = LocalNavController.current
-    val userData = data.current;
-    var popupControl by rememberSaveable { mutableStateOf(false) }
-
-    Button(onClick = {popupControl=true}) {
-        Text("SignOut Account")
-    }
-
-    if(popupControl){
-
-
-        SignOutConfirmationDialog(
-            onSignOutConfirm = {
-
-                popupControl = false
-                userData.Email="";
-                savedUserViewModel.saveEmailAndPassword("empty", "empty")
-                authViewModel.signOut();
-                navController.navigate(Routes.About.route)
-
-            },
-            onSignOutCancel = { popupControl = false },
-        )
-    }
-
-}
-
-
-@Composable
-private fun SignOutConfirmationDialog(
+ fun SignOutConfirmationDialog(
     onSignOutConfirm: () -> Unit, onSignOutCancel: () -> Unit, modifier: Modifier = Modifier
 ) {
     AlertDialog(onDismissRequest = { /* Do nothing */ },

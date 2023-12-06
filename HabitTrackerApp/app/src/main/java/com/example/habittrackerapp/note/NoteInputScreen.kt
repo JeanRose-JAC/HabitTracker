@@ -1,8 +1,11 @@
-package com.example.habittrackerapp.navigation
+package com.example.habittrackerapp.note
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,11 +16,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.R
@@ -28,7 +32,6 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
-import com.example.habittrackerapp.noteInput.ViewNote
 
 
 @Composable
@@ -41,10 +44,13 @@ fun NoteScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory = Save
     val userInput= data.current
     val activeUser = MyViewModel.activeUser.collectAsState()
     var onceSigned by rememberSaveable {mutableStateOf(true) }
-    Image(painter= painterResource(R    .drawable.background),
+    val scrollState = rememberScrollState()
+    Image(painter= painterResource(R.drawable.background),
         contentDescription = null,
         contentScale = ContentScale.FillBounds,
+        modifier = Modifier.fillMaxSize(),
         alpha = 0.45F)
+
     Column {
         if( !myUiState.email.isEmpty()){
             if(myUiState.email != "empty"){
@@ -67,12 +73,14 @@ fun NoteScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory = Save
 
                 if(userInput.Email.isNotEmpty()) {
                     Text(text = "Notes",
+                        fontSize = 24.sp,
                         modifier = Modifier
-                            .padding(20.dp, 10.dp)
-                            .align(Alignment.CenterHorizontally),
-                        style= MaterialTheme.typography.displaySmall)
+                            .padding(10.dp)
+                            .fillMaxWidth(),
+                        style = MaterialTheme.typography.headlineMedium,
+                        textAlign =  TextAlign.Center)
 
-                    ViewNote()
+                    CreateNote()
                 }
 
             }
@@ -90,3 +98,5 @@ fun NoteScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory = Save
 
     }
 }
+
+
