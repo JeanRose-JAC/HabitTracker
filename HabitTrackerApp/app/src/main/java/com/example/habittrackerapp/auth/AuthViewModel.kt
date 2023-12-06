@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 
+
 class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     // Return a StateFlow so that the composable can always update
     // based when the value changes

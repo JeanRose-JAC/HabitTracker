@@ -7,6 +7,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.tasks.await
 
+
+/**
+ *this will allow to authenticate themself properly using firebase
+ */
 class AuthRepositoryFirebase(private val auth: FirebaseAuth) : AuthRepository {
     private val currentUserStateFlow = MutableStateFlow(auth.currentUser?.toUser())
 

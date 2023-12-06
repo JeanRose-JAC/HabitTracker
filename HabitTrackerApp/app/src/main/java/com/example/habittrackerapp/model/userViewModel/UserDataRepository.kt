@@ -2,6 +2,9 @@ package com.example.habittrackerapp.model.userViewModel
 
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * this is the interface that allows to get the user information through fireStore
+ */
 interface UserDataRepository {
     suspend fun saveUser(oldName: String, profileData: User)
 
