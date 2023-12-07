@@ -48,9 +48,9 @@ class MainActivity : ComponentActivity() {
 
         splashScreen.setKeepOnScreenCondition{viewModel.isLoading.value}
         FirebaseApp.initializeApp(this)
-        var isDark by mutableStateOf(false)
-        setContent {
 
+        setContent {
+            var isDark by rememberSaveable { mutableStateOf(false) }
             HabitTrackerAppTheme(isDark) {
                 // A surface container using the 'background' color from the theme
                 Surface(

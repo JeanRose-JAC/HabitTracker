@@ -18,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -65,7 +66,7 @@ fun ViewSingleNote(id: String,
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(600.dp)
+                    .height(450.dp)
                     .padding(16.dp, top = 2.dp, 16.dp, 16.dp),
                 shape = RoundedCornerShape(16.dp),
             ) {
@@ -75,7 +76,6 @@ fun ViewSingleNote(id: String,
                         .verticalScroll(rememberScrollState())
                 )
                 {
-
 
                     LoadImage(url = note.urlImage!!)
 
@@ -106,7 +106,10 @@ fun LoadImage(url:String) {
         model = url,
         error= painterResource(id = R.drawable.no_image_placeholder),
         contentDescription = "user image",
-        modifier = Modifier.padding(20.dp) )
+        modifier = Modifier.padding(20.dp),
+        contentScale = ContentScale.Fit,
+        alignment = Alignment.Center,
+    )
 }
 
 

@@ -60,6 +60,11 @@ import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 import com.example.habittrackerapp.note.CreateNote
 import com.example.habittrackerapp.signInSignUp.ValidateUser
 
+/**
+ * The UserProfileScreen checks if the user is or isn't signIn.
+ * if they arent they will have the choise to signIn or signUp else it
+ * will display the user information
+ */
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun UserProfileScreen(
@@ -102,6 +107,10 @@ fun UserProfileScreen(
     }
 }
 
+/**
+ * The DisplayUserInformation gets the user information
+ * and displays them and allow the user to edit their different informations
+ */
 @Composable
 fun DisplayUserInformation(authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
                             savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())) {
@@ -169,7 +178,9 @@ fun DisplayUserInformation(authViewModel: AuthViewModel = viewModel(factory = Au
 }
 
 
-
+/**
+ * Allows the user to see their profilePicture.
+ */
 @Composable
 fun ShowProfilePicture() {
     val userInput = data.current
@@ -192,7 +203,12 @@ fun ShowProfilePicture() {
         )
     }
 }
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * The different card to see the user information
+ * @param name the name of the information being display
+ * @param value what is the current value of the information
+ * @param onChange what happens if the value changes in the card
+ */
 @Composable
 fun TextCard(name:String,value:String, focusManager: FocusManager, onChange:(String)->Unit) {
     val focusRequester = remember { FocusRequester() }
@@ -224,18 +240,28 @@ fun TextCard(name:String,value:String, focusManager: FocusManager, onChange:(Str
 
 }
 
+/**
+ * Validates if the user has modified their profile email or password
+ * */
 @Composable
 fun ValidUserProfileSettingChanges(email: String,password: String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())):Boolean {
     val userInput = data.current
 
     return  (email!=userInput.Email) || (password!=userInput.Password)
 }
+
+/**
+ * Validates if the user has modified their profile first name or last name
+ * */
 @Composable
 fun ValidUserProfileEditChanges(firstName: String,lastName: String,profilePic:String,MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())):Boolean {
     val userInput = data.current
 
     return (firstName!=userInput.FirstName) || (lastName !=userInput.LastName)|| (profilePic!=userInput.ProfilePicture)
 }
+/**
+ * Validates if the user has modified their profile first name or last name
+ * */
 @Composable
 fun SaveUserProfileChange(firstName: String, lastName: String, email: String, password: String,profilePic:String, MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory()), savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory())
 ) {
