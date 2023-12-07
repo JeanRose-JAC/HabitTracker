@@ -34,7 +34,11 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFa
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 
-
+/**
+ * This is the main screen that is shown when first launching the app, it contains the create note composable.
+ * Checks if the user is logged in or not, if yes show the create composable,
+ * else shows an alert dialogue that redirects them to the login page
+ * */
 @Composable
 fun NoteScreen(savedUserViewModel: SavedUserViewModel = viewModel(factory = SavedUserViewModelSavedFactory()),
                MyViewModel: UserViewModel =viewModel(factory= UserViewModelFactory()),

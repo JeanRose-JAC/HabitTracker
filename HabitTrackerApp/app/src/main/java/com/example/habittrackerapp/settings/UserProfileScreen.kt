@@ -109,7 +109,12 @@ fun UserProfileScreen(
 
 /**
  * The DisplayUserInformation gets the user information
- * and displays them and allow the user to edit their different informations
+ * and displays them as well as contains setting buttons redirecting either to
+ *  -EditProfileScreen
+ *  -AccountSettingScreen
+ *  -AppearanceScreen
+ *  -AboutUsScreen
+ *  -SignOut button
  */
 @Composable
 fun DisplayUserInformation(authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),

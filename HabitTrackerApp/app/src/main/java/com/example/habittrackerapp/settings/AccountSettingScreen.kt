@@ -36,6 +36,11 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFa
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 
+/**
+ * The AccountSetting gets the user information
+ * and displays their email and password and allow the user to edit those different information
+ * it also contain the policy and the option to delete their account with validation
+ */
 @Composable
 fun AccountSetting(myViewModel: UserViewModel =
                        viewModel(factory= UserViewModelFactory()),

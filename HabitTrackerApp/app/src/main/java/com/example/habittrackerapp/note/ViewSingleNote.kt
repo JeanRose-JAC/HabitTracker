@@ -28,7 +28,10 @@ import com.example.habittrackerapp.LocalNavController
 import com.example.habittrackerapp.model.noteViewModel.NotesViewModel
 import com.example.habittrackerapp.model.noteViewModel.NotesViewModelFactory
 
-
+/**
+ * A screen that has 2 button redirecting to edit or view list, it has
+ * a composable that just shows the note elements-> title, description and imageUrl inside a card
+ * */
 @Composable
 fun ViewSingleNote(id: String,
                    notesViewModel: NotesViewModel = viewModel(factory= NotesViewModelFactory())

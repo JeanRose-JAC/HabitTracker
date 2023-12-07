@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+/**
+ * Notes view model to use when updating an existing Note inheriting the notes repository
+ */
 class NotesViewModel (private val noteRepository: NoteRepository) : ViewModel() {
     // private UI state (MutableStateFlow)
     private val _currentNote = MutableStateFlow(Note())
