@@ -87,7 +87,7 @@ fun UserSignInScreen(modifier: Modifier = Modifier,
 
     Image(   painter = painterResource(R.drawable.logo2),
         contentDescription = null,
-        modifier = Modifier.padding(start = 60.dp,top=20.dp)
+        modifier = Modifier.fillMaxWidth().padding(top=20.dp), alignment = Alignment.Center
     )
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(top=300.dp)) {
 
