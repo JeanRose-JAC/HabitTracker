@@ -29,6 +29,9 @@ import com.example.habittrackerapp.model.habitViewModel.Habit
 import com.example.habittrackerapp.model.habitViewModel.HabitCreateAndListViewModel
 import com.example.habittrackerapp.model.habitViewModel.HabitViewModelProvider
 
+/**
+ * Composable to display the habits due for the day
+ */
 @Composable
 fun HabitsForTodayListScreen(navigateToHabitGet: (Int) -> Unit,
                              myViewModel: HabitCreateAndListViewModel = viewModel(factory = HabitViewModelProvider.Factory),

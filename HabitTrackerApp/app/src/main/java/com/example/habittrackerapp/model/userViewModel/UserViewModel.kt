@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-/** Simple view model that keeps track of a single value (count in this case) */
+/** Simple view model that keeps track of a the user informations */
 
 class UserViewModel (private val profileRepository: UserDataRepository) : ViewModel() {
     // private UI state (MutableStateFlow)

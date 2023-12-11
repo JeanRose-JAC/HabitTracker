@@ -10,6 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/**
+ * Composable to get user input on habit description
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitDescription(desc: String, onDescChange: (String) -> Unit, modifier: Modifier = Modifier) {

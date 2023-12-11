@@ -24,6 +24,16 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFa
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 
+
+/**
+ * This function allows the user to delete their account, and we have a dialog to make sure that they
+ * want to signOut.
+ * @param authViewModel this is used to delete the user of the app and remove their information on firebase
+ * @param savedUserViewModel this remove the user information and when they run the app again they wont be signIn or
+ * be able to sign In
+ * @param notesViewModel delete all the notes related to the user when the user is deleted
+ * @param MyViewModel delete the user in firebase
+ */
 @Composable
 fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory()),
                authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory()),
@@ -69,6 +79,13 @@ fun DeleteUser(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFact
     }
 }
 
+/**
+ * This function allows the user to delete their account, and we have a dialog to make sure that they
+ * want to delete their account.
+ * @param authViewModel this is used to delete the user of the app and remove their information
+ * @param savedUserViewModel this remove the user information and when they run the app again they wont be signIn and
+ * wont be able to signUp
+ */
 @Composable
 private fun DeleteConfirmationDialog(
     onDeleteConfirm: () -> Unit, onDeleteCancel: () -> Unit, modifier: Modifier = Modifier

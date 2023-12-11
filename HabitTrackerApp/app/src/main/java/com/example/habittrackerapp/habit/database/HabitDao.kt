@@ -9,6 +9,9 @@ import androidx.room.Update
 import com.example.habittrackerapp.model.habitViewModel.Habit
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Database schema for the habits table
+ */
 @Dao
 interface HabitDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)

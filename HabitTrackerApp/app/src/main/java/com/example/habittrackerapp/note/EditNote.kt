@@ -47,7 +47,7 @@ import com.example.habittrackerapp.model.noteViewModel.NotesViewModel
 import com.example.habittrackerapp.model.noteViewModel.NotesViewModelFactory
 
 /**
- * It contains text-fields for user input and saves it to a list
+ * A composable that allows the user to edit a note item and has user validation on new action
  * */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -43,6 +43,9 @@ import com.example.habittrackerapp.model.habitViewModel.HabitViewModelProvider
 import com.example.habittrackerapp.model.habitViewModel.toHabit
 import java.text.SimpleDateFormat
 
+/**
+ * Composable to display a single habit
+ */
 @SuppressLint("SimpleDateFormat")
 @Composable
 fun HabitItemScreen(

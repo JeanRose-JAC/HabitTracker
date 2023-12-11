@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+/**
+ * Habits view model to use when updating an existing habit
+ */
 class HabitUpdateViewModel (savedStateHandle: SavedStateHandle,
                             private val habitsRepository: HabitRepository
 ) : ViewModel() {

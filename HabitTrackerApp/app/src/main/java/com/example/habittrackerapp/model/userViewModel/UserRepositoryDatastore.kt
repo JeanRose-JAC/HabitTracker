@@ -12,6 +12,12 @@ import kotlinx.coroutines.flow.map
 const val SAVED_USER_DATASTORE ="saved_user_datastore"
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = SAVED_USER_DATASTORE)
 
+
+/**
+ * this implements the SaveUserRepository to kae a datastore and allow the user to stay signIn if they stop running
+ * the application
+ * @param context it takes in the application context to let the phone remember the user information
+ */
 class UserRepositoryDatastore(private val context: Context) : SavedUserRepository {
     companion object {
         val EMAIL = stringPreferencesKey("EMAIL")

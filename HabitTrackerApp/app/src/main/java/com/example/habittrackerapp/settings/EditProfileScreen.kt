@@ -23,6 +23,10 @@ import com.example.habittrackerapp.data
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 
+/**
+ * The EditProfile gets the user information
+ * and displays their first name, last name, and urlImage and allow the user to edit those different information
+ */
 @Composable
 fun EditProfile(MyViewModel: UserViewModel = viewModel(factory= UserViewModelFactory())) {
     val navController = LocalNavController.current

@@ -16,6 +16,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+
+/**
+ * A composable that checks if the user wants to switch the color mode of the app*/
 @Composable
 fun ThemeSwitcher(
     darkTheme: Boolean,

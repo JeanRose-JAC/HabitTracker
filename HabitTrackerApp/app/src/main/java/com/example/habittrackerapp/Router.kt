@@ -35,21 +35,25 @@ import com.example.habittrackerapp.settings.Appearance
  */
 
 sealed class Routes(val route:String)  {
+    //==============================================================================
+    //Sign in Sign out screens
     object SignUp : Routes("SignUpScreenRoute")
     object SignUpSignIn : Routes("SignUpSignUpScreenRoute")
     object SignIn : Routes("SignInScreenRoute")
+    //==============================================================================
+    //Information pages
     object AboutApp : Routes("AboutAppScreenRoute")
     object AboutUs : Routes("AboutUsScreenRoute")
+    //==============================================================================
+    //Notes Routes
     object Note: Routes("NoteScreenRoute")
-
-
-
     object ViewSingle: Routes("SingleNoteScreenRoute/{id}"){
         fun go(id: String) = "ContactScreenRoute/$id"
     }
     object EditNote: Routes("EditNoteScreenRoute/{id}")
     object ViewList: Routes("NoteListScreenRoute")
-
+    //==============================================================================
+    //Habit Routes
     object HabitQuestionnaire: Routes("HabitQuestionnaireRoute")
     object HabitItem: Routes("HabitItemRoute"){
         const val habitIdArg = "habitId"
@@ -57,12 +61,11 @@ sealed class Routes(val route:String)  {
     }
     object HabitList: Routes("HabitListRoute")
     object HabitForTodayList: Routes("HabitForTodayListRoute")
-
     object EditHabit: Routes("HabitEditRoute"){
         const val habitIdArg = "habitId"
         val routeWithArgs = "${route}/{$habitIdArg}"
     }
-
+    //==============================================================================
     // profile screen routes
     object Profile:Routes("ProfileScreenRoute")
     object Setting:Routes("SettingScreenRoute")
@@ -70,6 +73,7 @@ sealed class Routes(val route:String)  {
     object  EditProfile: Routes("EditProfileRoute")
     object AccountSetting: Routes("AccountSettingRoute")
     object Appearance: Routes("AppearanceScreen")
+    //==============================================================================
 }
 
 /**
@@ -84,23 +88,25 @@ fun Router() {
         enterTransition = { EnterTransition.None },
         exitTransition = { fadeOut() }) {
 
-
-        composable(Routes.SignUp.route) { UserSignUp() }
+        //navigation bar routes
         composable(Routes.AboutApp.route) { AboutTheAppScreen() }
         composable(Routes.AboutUs.route) { AboutUsScreen() }
         composable(Routes.Note.route){ NoteScreen() }
 
+        //sign in sign out
+        composable(Routes.SignIn.route){ UserSignInScreen() }
+        composable(Routes.SignUpSignIn.route){ SignSignUpScreen() }
+        composable(Routes.SignUp.route) { UserSignUp() }
 
+        //Notes
         composable(Routes.ViewList.route){ DisplayNotesList() }
-        //how to extract the elements from the text fields.....
         composable(Routes.ViewSingle.route){
             ViewSingleNote(it.arguments?.getString("id")?:"")
         }
         composable(Routes.EditNote.route){ EditNote(it.arguments?.getString("id")?:"" ) }
 
-        composable(Routes.SignIn.route){ UserSignInScreen() }
 
-        composable(Routes.SignUpSignIn.route){ SignSignUpScreen() }
+        //Habits
         composable(Routes.HabitQuestionnaire.route){ HabitQuestionnaireScreen() }
         composable(
             route = Routes.HabitItem.routeWithArgs,
@@ -109,17 +115,14 @@ fun Router() {
             })){
             HabitItemScreen(
                 navigateToEditItem = { navController.navigate("${Routes.EditHabit.route}/$it") },
-                )
+            )
         }
         composable(Routes.HabitList.route){ HabitListScreen(
             navigateToHabitGet = { navController.navigate("${Routes.HabitItem.route}/${it}")}
         )}
-
         composable(Routes.HabitForTodayList.route){ HabitsForTodayListScreen(
             navigateToHabitGet = { navController.navigate("${Routes.HabitItem.route}/${it}")}
-        )
-        }
-
+        )}
         composable(
             route = Routes.EditHabit.routeWithArgs,
             arguments = listOf(navArgument(Routes.EditHabit.habitIdArg){
@@ -136,18 +139,20 @@ fun Router() {
         composable(Routes.Appearance.route){ Appearance()}
 
 
+        //Deep Links for Launcher Apps
+        //- goes to habit screen
         composable("deeplink2?desc={desc}",
             deepLinks = listOf(navDeepLink { uriPattern = "example://compose.deeplink2/?desc={desc}" })
         ) { backStackEntry ->
             HabitQuestionnaireScreen(backStackEntry.arguments?.getString("desc"))
         }
-
+        //- goes to about screen
         composable("deeplink2?id={id}",
             deepLinks = listOf(navDeepLink { uriPattern = "example://compose.deeplink2/?id={id}" })
         ) { backStackEntry ->
             AboutTheAppScreen(backStackEntry.arguments?.getString("id"))
         }
-
+        //- goes to the signup screen
         composable("deeplink2?name={name}",
             deepLinks = listOf(navDeepLink { uriPattern = "example://compose.deeplink2/?name={name}"})
         ) { backStackEntry ->

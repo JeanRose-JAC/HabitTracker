@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 
-//Code taken from https://surajmyt.hashnode.dev/splash-screen-in-jetpack-compose
+/**Code taken from https://surajmyt.hashnode.dev/splash-screen-in-jetpack-compose*/
 class SplashViewModel: ViewModel() {
 
     private val mutableStateFlow = MutableStateFlow(true)

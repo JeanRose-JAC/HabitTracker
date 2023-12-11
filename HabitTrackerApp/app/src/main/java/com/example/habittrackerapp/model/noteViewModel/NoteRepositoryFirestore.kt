@@ -7,6 +7,10 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
+/**
+ * This uses the userDataRepository to allow the user to do it different functions related
+ * to fireStore and save the note, get the note and delete a note in fireStore
+ */
 class NoteRepositoryFirestore (val auth: AuthRepository, val db: FirebaseFirestore) :
     NoteRepository {
     val dbNote: CollectionReference = db.collection("Notes")

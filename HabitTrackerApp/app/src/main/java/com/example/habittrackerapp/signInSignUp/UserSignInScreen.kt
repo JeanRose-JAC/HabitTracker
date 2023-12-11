@@ -47,6 +47,12 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFa
 import com.example.habittrackerapp.model.userViewModel.UserViewModel
 import com.example.habittrackerapp.model.userViewModel.UserViewModelFactory
 
+/**
+ * This is the SignInScreen that allows the user to signIn using their email and password
+ * @param MyViewModel is to get the user information in firestore if they are correctly authenticated
+ * @param authViewModel is to authenticate the user and make sure that the email is correct with the user email
+ * @param savedUserViewModel if the user is properly authenticated keep their information stored even if the phone is shutoff
+ */
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun UserSignInScreen(modifier: Modifier = Modifier,

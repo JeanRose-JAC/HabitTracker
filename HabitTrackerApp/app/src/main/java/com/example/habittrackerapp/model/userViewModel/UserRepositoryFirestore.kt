@@ -7,6 +7,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
+/**
+ * this uses the userDataRepository to allow the user to do it different functions related
+ * to fireStore and save the User, get the User and delete a user in fireStore
+ */
 class UserRepositoryFirestore (val auth: AuthRepository, val db: FirebaseFirestore) :
     UserDataRepository {
 

@@ -7,6 +7,9 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.habittrackerapp.MyApp
 
+/**
+ * Initializes all the habit view model
+ */
 object HabitViewModelProvider {
     val Factory = viewModelFactory {
         initializer {

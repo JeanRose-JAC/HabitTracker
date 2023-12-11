@@ -19,6 +19,12 @@ import com.example.habittrackerapp.model.userViewModel.SavedUserViewModel
 import com.example.habittrackerapp.model.userViewModel.SavedUserViewModelSavedFactory
 
 
+/**
+ * This is the confirmation dialog if to make sure that the user
+ * wants to signOut.
+ * @param onSignOutCancel what will happen if the user cancel the confirmation dialog, aka go back to were they were
+ * @param onSignOutConfirm what will happen if the user sign out, aka remove all their information
+ */
 @Composable
  fun SignOutConfirmationDialog(
     onSignOutConfirm: () -> Unit, onSignOutCancel: () -> Unit, modifier: Modifier = Modifier

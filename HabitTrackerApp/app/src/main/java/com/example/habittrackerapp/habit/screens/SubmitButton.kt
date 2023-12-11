@@ -17,7 +17,6 @@ import com.example.habittrackerapp.model.habitViewModel.toHabitDetails
 /**
  * Composable for the submit button.
  * All fields must be filled before submitting.
- * Go to item display after submission.
  */
 @Composable
 fun SubmitButton (habit: Habit,

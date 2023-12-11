@@ -19,6 +19,9 @@ import com.example.habittrackerapp.model.habitViewModel.HabitDetails
 import com.example.habittrackerapp.model.habitViewModel.HabitUpdateViewModel
 import com.example.habittrackerapp.model.habitViewModel.HabitViewModelProvider
 
+/**
+ * Composable for editing a habit
+ */
 @Composable
 fun HabitEditScreen (myViewModel: HabitUpdateViewModel = viewModel(factory = HabitViewModelProvider.Factory))
 {

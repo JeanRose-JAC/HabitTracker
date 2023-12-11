@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+/**
+ * this is the SavedUSerViewModel that allows the user to be stay signIn if the user is shut the phone
+ */
 class SavedUserViewModel(private val savedUserRepository: SavedUserRepository) : ViewModel() {
     // private UI state (MutableStateFlow)
     private val _uiState = MutableStateFlow(SavedUser())

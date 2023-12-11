@@ -24,7 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.habittrackerapp.model.habitViewModel.Habit
 
-
+/**
+ * Composable to get user input to create a habit
+ */
 @Composable
 fun HabitQuestionnaireScreen(desc2: String? = null, modifier: Modifier = Modifier) {
     val localContext = LocalContext.current
